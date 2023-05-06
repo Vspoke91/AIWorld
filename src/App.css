@@ -1,0 +1,156 @@
+#root {
+  margin: 0 auto;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: grid;
+  grid: auto-flow / repeat(3, min-content);
+  gap: 1.2vw;
+  width: min-content;
+  margin: 30px auto;
+}
+
+.tittle-div {
+  height: 100px;
+  text-align: center;
+}
+
+.tittle-div h1 {
+  font-family: "Bruno Ace SC";
+  font-size: 3rem;
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.tittle-div .quote-div p {
+  display: inline-block;
+  margin: 0;
+}
+
+.tittle-div .quote-div p::before,
+.tittle-div .quote-div p::after {
+  content: '"';
+}
+
+.tittle-div .quote-div span {
+  font-style: italic;
+}
+
+.tittle-div .quote-div span::before {
+  content: " - ";
+}
+
+
+.content-div {
+  height: 70vh;
+  width: 30vw;
+
+  border-radius: 5px;
+  background-color: rgb(31, 31, 31);
+  box-shadow: -2px 2px 5px black;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+
+  transition: ease-in 0.2s;
+}
+
+.content-div:hover {
+  transform: scale(1.01);
+  box-shadow: -5px 5px 5px black;
+}
+
+.content-div .tag {
+  position: absolute;
+  transform-origin: center;
+  transform: translate(50%, -50%) rotate(45deg);
+  top: 1.6vw;
+  right: 1.6vw;
+
+  width: 6.5vw;
+  padding: 0.5em;
+
+  font-size: 1.3vw;
+  font-weight: bold;
+}
+
+.content-div h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.content-div .img-div {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.237);
+  padding: 10px 0;
+}
+
+.content-div .img-div img {
+  width: 50%;
+  max-width: 100%;
+  height: auto;
+}
+
+.category-div {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.6em;
+
+  font-size: 0.9rem;
+  font-weight: bold;
+
+  background-color: rgb(38, 38, 38);
+  overflow-x: auto;
+}
+
+.category-div span {
+  background-color: rgb(76, 78, 84);
+  padding: 0.3em 0.8em;
+  margin: 0 0.1em;
+  border-radius: 10px;
+}
+
+.content-div .description {
+  box-sizing: border-box;
+  padding: 0.7em;
+  overflow: hidden;
+}
+
+.content-div .description p {
+  margin: 0;
+}
+
+/* SHOW DIV - div that will pop up */
+
+.show-Div {
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%);
+
+
+  width: 90vw;
+  max-width: 700px;
+  height: 90vh;
+  position: fixed;
+
+  background-color: rgba(255, 0, 0, 0.21);
+  display: none;
+}
+
+.show-Div .title {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 3rem;
+}
