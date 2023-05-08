@@ -13,14 +13,16 @@ const tags = {
 
 const items = [
     {
-        tittle: "ChatGPT",
+        title: "ChatGPT",
+        webLink: "https://chat.openai.com/",
         logo: LOGOS_PATH+"ChatGPT.svg",
         description: "ChatGPT is an AI-powered chatbot that can hold conversations with users on a wide range of topics.",
         category: ['Chat','Searching'],
         tagType: tags.free,
     },
     {
-        tittle: "BlueWillow",
+        title: "BlueWillow",
+        webLink: "https://www.bluewillow.ai/",
         logo: LOGOS_PATH+"BlueWillow.png",
         description: "AI-powered tool that can generate a wide variety of graphics based on user input.",
         category: ['Images', 'Art', 'Graphics'],

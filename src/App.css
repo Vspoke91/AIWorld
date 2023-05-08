@@ -15,33 +15,33 @@ main {
   margin: 30px auto;
 }
 
-.tittle-div {
+.title-div {
   height: 100px;
   text-align: center;
 }
 
-.tittle-div h1 {
+.title-div h1 {
   font-family: "Bruno Ace SC";
   font-size: 3rem;
   margin-top: 40px;
   margin-bottom: 0;
 }
 
-.tittle-div .quote-div p {
+.title-div .quote-div p {
   display: inline-block;
   margin: 0;
 }
 
-.tittle-div .quote-div p::before,
-.tittle-div .quote-div p::after {
+.title-div .quote-div p::before,
+.title-div .quote-div p::after {
   content: '"';
 }
 
-.tittle-div .quote-div span {
+.title-div .quote-div span {
   font-style: italic;
 }
 
-.tittle-div .quote-div span::before {
+.title-div .quote-div span::before {
   content: " - ";
 }
 
@@ -83,12 +83,23 @@ main {
   font-weight: bold;
 }
 
-.content-div h2 {
-  font-size: 2rem;
-  margin: 10px 0;
+h2 {
+  font-size: 2em;
+  margin: 10px auto;
+  width: fit-content;
+  position: relative;
 }
 
-.content-div .img-div {
+
+h2 a {
+  color: var(--font-color);
+}
+
+h2 a:hover {
+  color: rgb(181, 230, 255)
+}
+
+.img-div {
   width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -96,10 +107,9 @@ main {
   padding: 10px 0;
 }
 
-.content-div .img-div img {
-  width: 50%;
-  max-width: 100%;
-  height: auto;
+.img-div img {
+  height: 10em;
+  width: auto;
 }
 
 .category-div {
@@ -107,7 +117,7 @@ main {
   width: 100%;
   padding: 0.6em;
 
-  font-size: 0.9rem;
+  font-size: 0.9em;
   font-weight: bold;
 
   background-color: rgb(38, 38, 38);
@@ -121,36 +131,101 @@ main {
   border-radius: 10px;
 }
 
-.content-div .description {
+.description {
   box-sizing: border-box;
   padding: 0.7em;
   overflow: hidden;
 }
 
-.content-div .description p {
+.description p {
   margin: 0;
 }
 
 /* SHOW DIV - div that will pop up */
 
 .show-Div {
-  top: 50%;
-  left: 50%;
-  transform-origin: center;
-  transform: translate(-50%, -50%);
+  font-size: 20px;
+  text-align: center;
 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
 
   width: 90vw;
   max-width: 700px;
   height: 90vh;
   position: fixed;
 
-  background-color: rgba(255, 0, 0, 0.21);
-  display: none;
+  background-color: rgb(31, 31, 31);
+  border-radius: 5px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 3;
 }
 
-.show-Div .title {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 3rem;
+.show-Div .show-title-div {
+  position: relative;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.3em;
+}
+
+.show-Div h2 {
+  display: inline;
+}
+
+.show-Div .tag {
+  position: absolute;
+  bottom: 0.5em;
+
+  font-weight: bold;
+  font-size: 0.7em;
+  margin-left: 0.4em;
+
+  background-color: rgb(1, 71, 11);
+  padding: 0.2em 0.6em;
+  border-radius: 10px;
+
+}
+
+.show-Div .controls {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.show-animate {
+  animation: showpopup 0.6s;
+}
+
+@keyframes showpopup {
+  0% {
+    transform:
+      scale(0);
+  }
+
+  60% {
+    transform:
+      scale(1, 0.01);
+  }
+
+  100% {
+    transform:
+      scale(1);
+  }
+}
+
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(42, 42, 42, 0.58);
+
+  z-index: 2;
 }
