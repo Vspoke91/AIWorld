@@ -55,6 +55,9 @@ function App() {
 
   return (
     <>
+      <div className='underDevelopmentDiv'>
+        <p>🚧 Website under development, features are limited 🚧</p>
+      </div>
       <div className="title-div">
           <h1>AI World</h1>
           <div className='quote-div'>
