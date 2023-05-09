@@ -257,20 +257,14 @@ h2 a:hover {
 
 footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   background-color: rgb(31, 31, 31);
-  height: 100px;
-  padding: 0 40px;
+  padding: 10px 0;
 }
 
-footer .opensource-div {
-  text-align: center;
-}
-
-footer .opensource-div p {
-  white-space: nowrap;
+footer p {
   margin: 0;
 }
 
@@ -282,4 +276,11 @@ footer .opensource-div a img {
 footer .velta-logo-div a img {
   height: 70px;
   width: auto;
+}
+
+footer .opensource-div,
+footer .copyright-div,
+footer .velta-logo-div {
+  flex: 1;
+  text-align: center;
 }
