@@ -252,3 +252,34 @@ h2 a:hover {
 
   z-index: 2;
 }
+
+/*--Footer--*/
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: rgb(31, 31, 31);
+  height: 100px;
+  padding: 0 40px;
+}
+
+footer .opensource-div {
+  text-align: center;
+}
+
+footer .opensource-div p {
+  white-space: nowrap;
+  margin: 0;
+}
+
+footer .opensource-div a img {
+  height: 60px;
+  width: auto;
+}
+
+footer .velta-logo-div a img {
+  height: 80px;
+  width: auto;
+}
