@@ -84,7 +84,7 @@ function App() {
               <span className='tag' style={{backgroundColor: showDivTag.color}}>{showDivTag.text}</span>
             </div>
             <div className='img-div'>
-                <img src={showDivLogoPath}/>
+                <img src={showDivLogoPath} alt={showDivName + " Logo"}/>
             </div>
             <div className='category-div'>
               {showDivCategory.map((category, index)=><span key={index}>{category}</span>)}
