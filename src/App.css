@@ -268,6 +268,28 @@ footer p {
   margin: 0;
 }
 
+footer .opensource-div {
+  flex: 1;
+  text-align: left;
+  padding-left: 1vw;
+}
+
+footer .opensource-div>div {
+  text-align: center;
+  width: fit-content;
+}
+
+footer .opensource-div footer .velta-logo-div {
+  flex: 1;
+  text-align: center;
+}
+
+footer .copyright-div {
+  flex: 1;
+  text-align: right;
+  padding-right: 1vw;
+}
+
 footer .opensource-div a img {
   height: 50px;
   width: auto;
@@ -276,11 +298,4 @@ footer .opensource-div a img {
 footer .velta-logo-div a img {
   height: 70px;
   width: auto;
-}
-
-footer .opensource-div,
-footer .copyright-div,
-footer .velta-logo-div {
-  flex: 1;
-  text-align: center;
 }

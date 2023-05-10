@@ -97,14 +97,16 @@ function App() {
 
       <footer>
         <div className='opensource-div'>
-          <p>Open Source Code</p>
-          <a href='https://github.com/Vspoke91/AIWorld'><img src="/img/logos/GitHub.svg" alt="Github Logo"/></a>
+          <div>
+            <p>Open Source Code</p>
+            <a href='https://github.com/Vspoke91/AIWorld'><img src="/img/logos/GitHub.svg" alt="Github Logo"/></a>
+          </div>
         </div>
         <div className='velta-logo-div'>
           <a href="https://www.veltaproject.com"><img src="https://veltaproject.com/VeltaLogo.png" alt="Velta Logo"/></a>
         </div>
         <div className='copyright-div'>
-          <p>© 2023 AI World</p>
+          <p>© 2023 AI World, VeltaProjects.com</p>
         </div>
       </footer>
     </>
