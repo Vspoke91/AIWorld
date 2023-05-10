@@ -58,13 +58,13 @@ function App() {
       <div className='underDevelopmentDiv'>
         <p>🚧 Website under development, features are limited 🚧</p>
       </div>
-      <div className="title-div">
+      <header>
           <h1>AI World</h1>
           <div className='quote-div'>
             <p>Artificial intelligence is the next stage in the evolution of human beings</p>
             <span>Stephen Hawking</span>
           </div>
-      </div>
+      </header>
       
       <main>
         <ContentElements />

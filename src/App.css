@@ -38,33 +38,33 @@ main {
   margin: 30px auto;
 }
 
-.title-div {
+header {
   height: 100px;
   text-align: center;
 }
 
-.title-div h1 {
+header h1 {
   font-family: "Bruno Ace SC";
   font-size: 3rem;
   margin-top: 40px;
   margin-bottom: 0;
 }
 
-.title-div .quote-div p {
+header .quote-div p {
   display: inline-block;
   margin: 0;
 }
 
-.title-div .quote-div p::before,
-.title-div .quote-div p::after {
+header .quote-div p::before,
+header .quote-div p::after {
   content: '"';
 }
 
-.title-div .quote-div span {
+header .quote-div span {
   font-style: italic;
 }
 
-.title-div .quote-div span::before {
+header .quote-div span::before {
   content: " - ";
 }
 
