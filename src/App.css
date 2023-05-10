@@ -38,33 +38,33 @@ main {
   margin: 30px auto;
 }
 
-.title-div {
+header {
   height: 100px;
   text-align: center;
 }
 
-.title-div h1 {
+header h1 {
   font-family: "Bruno Ace SC";
   font-size: 3rem;
   margin-top: 40px;
   margin-bottom: 0;
 }
 
-.title-div .quote-div p {
+header .quote-div p {
   display: inline-block;
   margin: 0;
 }
 
-.title-div .quote-div p::before,
-.title-div .quote-div p::after {
+header .quote-div p::before,
+header .quote-div p::after {
   content: '"';
 }
 
-.title-div .quote-div span {
+header .quote-div span {
   font-style: italic;
 }
 
-.title-div .quote-div span::before {
+header .quote-div span::before {
   content: " - ";
 }
 
@@ -251,4 +251,51 @@ h2 a:hover {
   background-color: rgba(42, 42, 42, 0.58);
 
   z-index: 2;
+}
+
+/*--Footer--*/
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(31, 31, 31);
+  padding: 10px 0;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer .opensource-div {
+  flex: 1;
+  text-align: left;
+  padding-left: 1vw;
+}
+
+footer .opensource-div>div {
+  text-align: center;
+  width: fit-content;
+}
+
+footer .opensource-div footer .velta-logo-div {
+  flex: 1;
+  text-align: center;
+}
+
+footer .copyright-div {
+  flex: 1;
+  text-align: right;
+  padding-right: 1vw;
+}
+
+footer .opensource-div a img {
+  height: 50px;
+  width: auto;
+}
+
+footer .velta-logo-div a img {
+  height: 70px;
+  width: auto;
 }

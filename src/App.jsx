@@ -58,13 +58,13 @@ function App() {
       <div className='underDevelopmentDiv'>
         <p>🚧 Website under development, features are limited 🚧</p>
       </div>
-      <div className="title-div">
+      <header>
           <h1>AI World</h1>
           <div className='quote-div'>
             <p>Artificial intelligence is the next stage in the evolution of human beings</p>
             <span>Stephen Hawking</span>
           </div>
-      </div>
+      </header>
       
       <main>
         <ContentElements />
@@ -84,7 +84,7 @@ function App() {
               <span className='tag' style={{backgroundColor: showDivTag.color}}>{showDivTag.text}</span>
             </div>
             <div className='img-div'>
-                <img src={showDivLogoPath}/>
+                <img src={showDivLogoPath} alt={showDivName + " Logo"}/>
             </div>
             <div className='category-div'>
               {showDivCategory.map((category, index)=><span key={index}>{category}</span>)}
@@ -94,6 +94,21 @@ function App() {
           </div>
         </div>
       </main>
+
+      <footer>
+        <div className='opensource-div'>
+          <div>
+            <p>Open Source Code</p>
+            <a href='https://github.com/Vspoke91/AIWorld'><img src="/img/logos/GitHub.svg" alt="Github Logo"/></a>
+          </div>
+        </div>
+        <div className='velta-logo-div'>
+          <a href="https://www.veltaproject.com"><img src="https://veltaproject.com/VeltaLogo.png" alt="Velta Logo"/></a>
+        </div>
+        <div className='copyright-div'>
+          <p>© 2023 AI World, VeltaProject</p>
+        </div>
+      </footer>
     </>
   )
 }
