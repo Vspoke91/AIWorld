@@ -104,7 +104,7 @@ function App() {
         <div className='opensource-div'>
           <div>
             <p>Open Source Code</p>
-            <a href='https://github.com/Vspoke91/AIWorld'><img src="/img/logos/GitHub.svg" alt="Github Logo"/></a>
+            <a href='https://github.com/Vspoke91/AIWorld/blob/master/README.md'><img src="/img/logos/GitHub.svg" alt="Github Logo"/></a>
           </div>
         </div>
         <div className='velta-logo-div'>
