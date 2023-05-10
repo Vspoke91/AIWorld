@@ -106,7 +106,7 @@ function App() {
           <a href="https://www.veltaproject.com"><img src="https://veltaproject.com/VeltaLogo.png" alt="Velta Logo"/></a>
         </div>
         <div className='copyright-div'>
-          <p>© 2023 AI World, VeltaProjects.com</p>
+          <p>© 2023 AI World, VeltaProject</p>
         </div>
       </footer>
     </>
