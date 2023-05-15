@@ -46,7 +46,6 @@ function App() {
     return(contentArray);
   }
 
-
   let loadDisplayShowDiv = (index) =>{
     setShowDivState({
         display: true,
@@ -64,6 +63,7 @@ function App() {
       <div className='underDevelopmentDiv'>
         <p>🚧 Website under development, features are limited 🚧</p>
       </div>
+
       <header>
           <h1>AI World</h1>
           <div className='quote-div'>
@@ -71,6 +71,10 @@ function App() {
             <span>Stephen Hawking</span>
           </div>
       </header>
+
+      <nav>
+        
+      </nav>
       
       <main>
         <ContentElements />
