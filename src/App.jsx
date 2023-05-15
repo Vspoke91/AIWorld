@@ -74,6 +74,16 @@ function App() {
       </header>
 
       <nav>
+        <div>
+            filter
+            <FilterSVG/>
+              <div>   
+              {Object.keys(categories).map((index) => 
+                <label 
+                  key={index}
+                  >{categories[index].text}<input type="checkbox"/></label>)}
+              </div>
+          </div>
         {Object.keys(categories).map((index) => 
           <button 
             key={index} 
