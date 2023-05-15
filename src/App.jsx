@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css'
-import contentData from './sitesDataBase' 
+import {default as contentData, categories } from './sitesDataBase' 
+import { FilterSVG } from './assets/CustomIcons';
 
 function App() {
 
@@ -73,34 +74,45 @@ function App() {
       </header>
 
       <nav>
-        
+        {Object.keys(categories).map((index) => 
+          <button 
+            key={index} 
+            style={{
+                backgroundColor: categories[index].color
+              }}
+              >{categories[index].text}</button>)}
       </nav>
       
       <main>
         <ContentElements />
-        <div 
+
+        <div  id='backgroundBlur'
           className='background-blur'
           style={{display: showDivState.display ? "block" : "none"}} 
-          onClick={()=> setShowDivState({...showDivState, display: false}) }
-        ></div>
-        <div
-        className={`show-Div${showDivState.display ? " show-animate" : ""}`}
-        style={{display: showDivState.display ? "block" : "none"}}>
+          onClick={()=> setShowDivState({...showDivState, display: false}) }>
+        </div>
+
+        <div id='showElement'
+          className={`show-Div${showDivState.display ? " show-animate" : ""}`}
+          style={{display: showDivState.display ? "block" : "none"}}>
+
             <div className='show-title-div'>
-              <h2>
-                <a href={showDivState.webLink}>{showDivState.title}</a>
-              </h2>
-              <span className='tag' style={{backgroundColor: showDivState.tag.color}}>{showDivState.tag.text}</span>
+                <h2><a href={showDivState.webLink}>{showDivState.title}</a></h2>
+                <span className='tag' style={{backgroundColor: showDivState.tag.color}}>{showDivState.tag.text}</span>
             </div>
+
             <div className='img-div'>
                 <img src={showDivState.logoPath} alt={showDivState.title + " Logo"}/>
             </div>
+
             <div className='category-div'>
               {showDivState.category.map((category, index)=><span key={index}>{category}</span>)}
             </div>
+
             <div className='description'>
-            <p>{showDivState.description}</p>
-          </div>
+              <p>{showDivState.description}</p>
+            </div>
+
         </div>
       </main>
 
