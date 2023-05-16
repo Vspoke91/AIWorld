@@ -59,6 +59,33 @@ function App() {
       });
   }
 
+  //Checkbox Filter Options
+  let [filterButtons, setFilterButtons] = useState([]);
+
+  const handleChange = (event) => {
+    let checkBoxName = event.target.name
+
+    if(event.target.checked){
+      setFilterButtons([...filterButtons, checkBoxName]);
+    }
+    else{
+      setFilterButtons(filterButtons.filter((item) => item !== checkBoxName));
+    }
+  }
+
+  const handleButtonClick = (event) => {
+
+    const itemName = event.target.innerText;
+    setFilterButtons(filterButtons.filter((item) => item !== itemName));
+
+    // Find the corresponding checkbox and uncheck it
+    const checkbox = document.querySelector(`input[name="${itemName}"]`);
+    if (checkbox) {
+      checkbox.checked = false;
+    }
+
+  };
+
   return (
     <>
       <div className='underDevelopmentDiv'>
@@ -74,29 +101,23 @@ function App() {
       </header>
 
       <nav>
-        <div>
-            filter
+        <div id='Filtering'>
             <FilterSVG/>
-              <div>   
-              {Object.keys(categories).map((index) => 
-                <label 
-                  key={index}
-                  >{categories[index].text}<input type="checkbox"/></label>)}
-              </div>
-          </div>
-        {Object.keys(categories).map((index) => 
-          <button 
-            key={index} 
-            style={{
-                backgroundColor: categories[index].color
-              }}
-              >{categories[index].text}</button>)}
+            {Object.keys(categories).map((key) => 
+              <label key={key}>{categories[key].text}
+                <input type='checkbox' name={categories[key].text} onChange={handleChange}/>
+              </label>)}
+
+              {filterButtons.map((item) => (
+              <button key={item} type="button" onClick={handleButtonClick}>{item}</button>
+    ))}
+        </div>
       </nav>
       
       <main>
         <ContentElements />
 
-        <div  id='backgroundBlur'
+        <div id='backgroundBlur'
           className='background-blur'
           style={{display: showDivState.display ? "block" : "none"}} 
           onClick={()=> setShowDivState({...showDivState, display: false}) }>
