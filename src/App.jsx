@@ -59,33 +59,6 @@ function App() {
       });
   }
 
-  //Checkbox Filter Options
-  let [filterButtons, setFilterButtons] = useState([]);
-
-  const handleChange = (event) => {
-    let checkBoxName = event.target.name
-
-    if(event.target.checked){
-      setFilterButtons([...filterButtons, checkBoxName]);
-    }
-    else{
-      setFilterButtons(filterButtons.filter((item) => item !== checkBoxName));
-    }
-  }
-
-  const handleButtonClick = (event) => {
-
-    const itemName = event.target.innerText;
-    setFilterButtons(filterButtons.filter((item) => item !== itemName));
-
-    // Find the corresponding checkbox and uncheck it
-    const checkbox = document.querySelector(`input[name="${itemName}"]`);
-    if (checkbox) {
-      checkbox.checked = false;
-    }
-
-  };
-
   return (
     <>
       <div className='underDevelopmentDiv'>
@@ -101,17 +74,7 @@ function App() {
       </header>
 
       <nav>
-        <div id='Filtering'>
-            <FilterSVG/>
-            {Object.keys(categories).map((key) => 
-              <label key={key}>{categories[key].text}
-                <input type='checkbox' name={categories[key].text} onChange={handleChange}/>
-              </label>)}
-
-              {filterButtons.map((item) => (
-              <button key={item} type="button" onClick={handleButtonClick}>{item}</button>
-    ))}
-        </div>
+        <Sorting/>
       </nav>
       
       <main>
@@ -162,6 +125,77 @@ function App() {
         </div>
       </footer>
     </>
+  )
+}
+
+
+
+function Sorting(){
+
+  //useState for sorting names that will be use to create buttons
+  let [sortingButtonNames, setSortingButtonNames] = useState([]);
+
+  //created buttons from sortingButtonNames array and return them as elements array for DOM
+  const renderSortingButtons = () => {
+    return sortingButtonNames.map((buttonName) => 
+      <button 
+        key={buttonName}
+        onClick={buttonClickHandler}
+        >{buttonName}
+      </button>
+    );
+  }
+
+  //create checkbox from categories(sitesDataBase) and return them as elements array for DOM
+  const renderSortingCheckBoxes = () =>{
+    return Object.keys(categories).map((key) =>
+        <label 
+          key={key}>{categories[key].text}
+          <input 
+            className='item'
+            type='checkbox'
+            name={categories[key].text} //name attribute is used to name buttons and to find input checkbox 
+            onChange={checkboxChangeHandler}/>
+        </label>)
+  }
+
+  //if button is click it will filter out its name out of sortingButtonNames so it will unrender, plus uncheck checkbox with the same name
+  const buttonClickHandler = (event) => {
+    
+    const buttonName = event.target.innerText;
+    setSortingButtonNames(sortingButtonNames.filter((item) => item !== buttonName));
+
+    /*find checkbox with the same name as button and uncheck it*/
+
+    const checkbox = document.querySelector(`input[type="checkbox"][name="${buttonName}"]`);
+    if (checkbox) 
+      checkbox.checked = false;
+
+  };
+
+  //if checkbox is checked it will add a new String in sortingButtonNames, else if checkbox was uncheck it will filter out the button name from the sortingButtonNames.
+  const checkboxChangeHandler = (event) => {
+
+    //button name from checkbox name attribute
+    let newButtonName = event.target.name;
+
+    if(event.target.checked){
+      setSortingButtonNames([...sortingButtonNames, newButtonName]);
+    }
+    else{
+      //filter returns items that are not equal to newButtonName
+      setSortingButtonNames(sortingButtonNames.filter((item) => item !== newButtonName));
+    }
+  }
+
+  return (
+    <div id="sorting">
+      <div className='drop_down_div'>
+        <FilterSVG className="tittle"/>
+        {renderSortingCheckBoxes()}
+      </div>
+      {renderSortingButtons()}
+    </div>
   )
 }
 
