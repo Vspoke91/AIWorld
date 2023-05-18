@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import {default as contentData, categories } from '../../assets/sitesDataBase' 
+import { FilterSVG } from '../../assets/CustomIcons';
+
+//styles imports
 import './App.css'
-import {default as contentData, categories } from './sitesDataBase' 
-import { FilterSVG } from './assets/CustomIcons';
 
 function App() {
 
@@ -127,8 +129,6 @@ function App() {
     </>
   )
 }
-
-
 
 function Sorting(){
 
