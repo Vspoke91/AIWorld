@@ -1,65 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {default as contentData, categories } from '../../assets/sitesDataBase' 
 import { FilterSVG } from '../../assets/CustomIcons';
+import PropTypes from 'prop-types';
 
 //styles imports
 import './App.css'
 
 function App() {
 
-  //keeps all states in one object for showDivState
-  let [showDivState, setShowDivState] = useState(
-    {
-      display: false,
-      tittle: "*Name*",
-      logoPath: "*Path*",
-      description: "*Description*",
-      tag: {},
-      category: [],
-      webLink: ""
-    });
+  //useState for sorting names that will be use to create buttons and change main when filterting
+  let [sortingButtonNames, setSortingButtonNames] = useState([]);
 
-  let ContentElements = () => {
-
-    let contentArray = new Array();
-
-    for(let i = 0; i < contentData.length; i++){
-
-      let siteData = contentData[i];
-
-      contentArray.push(
-        <div key={i} className='content-div' onClick={() => {loadDisplayShowDiv(i)}}>
-          <span className='tag' style={{backgroundColor: siteData.tagType.color}}>{siteData.tagType.text}</span>
-          <h2>{siteData.title}</h2>
-          <div className='img-div'>
-            <img src={siteData.logo} alt={siteData.title + " Logo"}/>
-          </div>
-          <div className='category-div'>
-            {siteData.category.map((category, index) => 
-              <span key={index}>{category}</span>
-            )}
-          </div>
-          <div className='description'>
-            <p>{siteData.description}</p>
-          </div>
-        </div>
-        );
-    }
-  
-    return(contentArray);
-  }
-
-  let loadDisplayShowDiv = (index) =>{
-    setShowDivState({
-        display: true,
-        title: contentData[index].title, 
-        logoPath: contentData[index].logo, 
-        description: contentData[index].description, 
-        tag: contentData[index].tagType, 
-        category: contentData[index].category, 
-        webLink: contentData[index].webLink
-      });
-  }
 
   return (
     <>
@@ -76,40 +27,11 @@ function App() {
       </header>
 
       <nav>
-        <Sorting/>
+        <Sorting sortingButtonNames={sortingButtonNames} setSortingButtonNames={setSortingButtonNames}/>
       </nav>
       
       <main>
-        <ContentElements />
-
-        <div id='backgroundBlur'
-          className='background-blur'
-          style={{display: showDivState.display ? "block" : "none"}} 
-          onClick={()=> setShowDivState({...showDivState, display: false}) }>
-        </div>
-
-        <div id='showElement'
-          className={`show-Div${showDivState.display ? " show-animate" : ""}`}
-          style={{display: showDivState.display ? "block" : "none"}}>
-
-            <div className='show-title-div'>
-                <h2><a href={showDivState.webLink}>{showDivState.title}</a></h2>
-                <span className='tag' style={{backgroundColor: showDivState.tag.color}}>{showDivState.tag.text}</span>
-            </div>
-
-            <div className='img-div'>
-                <img src={showDivState.logoPath} alt={showDivState.title + " Logo"}/>
-            </div>
-
-            <div className='category-div'>
-              {showDivState.category.map((category, index)=><span key={index}>{category}</span>)}
-            </div>
-
-            <div className='description'>
-              <p>{showDivState.description}</p>
-            </div>
-
-        </div>
+        <MainCards sortingButtonNames={sortingButtonNames}/>
       </main>
 
       <footer>
@@ -130,10 +52,7 @@ function App() {
   )
 }
 
-function Sorting(){
-
-  //useState for sorting names that will be use to create buttons
-  let [sortingButtonNames, setSortingButtonNames] = useState([]);
+function Sorting({sortingButtonNames, setSortingButtonNames}){
 
   //created buttons from sortingButtonNames array and return them as elements array for DOM
   const renderSortingButtons = () => {
@@ -189,14 +108,139 @@ function Sorting(){
   }
 
   return (
-    <div id="sorting">
+    <>
       <div className='drop_down_div'>
         <FilterSVG className="tittle"/>
         {renderSortingCheckBoxes()}
       </div>
-      {renderSortingButtons()}
-    </div>
+      <div>
+        {renderSortingButtons()}
+      </div>
+    </>
   )
 }
+
+function MainCards({sortingButtonNames}){
+
+  //state used in showDiv to be able to update when a different card is pressed
+  let [showDivState, setShowDivState] = useState({
+      display: false,
+      title: "*Name*",
+      logoPath: "*Path*",
+      description: "*Description*",
+      tag: {},
+      category: [],
+      webLink: ""
+  });
+
+  //loads all new variables from index of card pressed 
+  let loadDisplayShowDiv = (index) =>{
+    setShowDivState({
+        display: true,
+        title: contentData[index].title, 
+        logoPath: contentData[index].logo, 
+        description: contentData[index].description, 
+        tag: contentData[index].tagType, 
+        category: contentData[index].category, 
+        webLink: contentData[index].webLink
+    });
+  }
+
+  //state used in useEffect to update the list of cards in main to match the filter (sortingbuttonNames)
+  let [sortedCards, setSortedCards] = useState();
+
+  useEffect(()=>{
+
+    //return card elements fill with data in contentData
+    let renderCards = () => {
+
+      let cardElements = contentData.map(({title, logo, tagType, category, description}, index) => {
+        
+        if(hasMatchingVariable(sortingButtonNames, category)){
+          return (getCardElement(index, title, logo,tagType, category, description))
+        }
+        else{
+          return null;
+        }
+      });
+
+      return(cardElements)
+    }
+
+    let getCardElement = (index, title, logoURL, tag, categories, description) =>{
+      return (
+        <div key={index} className='content-div' onClick={() => {loadDisplayShowDiv(index)}}>
+          <span className='tag' style={{backgroundColor: tag.color}}>{tag.text}</span>
+          <h2>{title}</h2>
+  
+          <div className='img-div'>
+            <img src={logoURL} alt={title + " Logo"}/>
+            </div>
+  
+          <div className='category-div'>
+            {categories.map((category, index) => 
+                <span key={index}>{category}</span>
+            )}
+          </div>
+  
+          <div className='description'>
+            <p>{description}</p>
+          </div>
+  
+        </div>
+      );
+    }
+
+    setSortedCards(renderCards())
+  
+  }, [sortingButtonNames])
+
+  function hasMatchingVariable(array1, array2) {
+    return array1.some(item => array2.includes(item));
+  }
+
+  return(
+  <>
+
+    {sortedCards}
+
+    <div id='backgroundBlur'
+      className='background-blur'
+      style={{display: showDivState.display ? "block" : "none"}} 
+      onClick={()=> setShowDivState({...showDivState, display: false}) }>
+    </div>
+
+    <div id='showElement'
+      className={`show-Div${showDivState.display ? " show-animate" : ""}`}
+      style={{display: showDivState.display ? "block" : "none"}}>
+
+        <div className='show-title-div'>
+            <h2><a href={showDivState.webLink}>{showDivState.title}</a></h2>
+            <span className='tag' style={{backgroundColor: showDivState.tag.color}}>{showDivState.tag.text}</span>
+        </div>
+
+        <div className='img-div'>
+            <img src={showDivState.logoPath} alt={showDivState.title + " Logo"}/>
+        </div>
+
+        <div className='category-div'>
+          {showDivState.category.map((category, index)=><span key={index}>{category}</span>)}
+        </div>
+
+        <div className='description'>
+          <p>{showDivState.description}</p>
+        </div>
+    </div>
+  </>);
+}
+
+Sorting.propTypes = {
+  sortingButtonNames: PropTypes.array.isRequired,
+  setSortingButtonNames: PropTypes.func.isRequired,
+};
+
+MainCards.propTypes = {
+  sortingButtonNames: PropTypes.array.isRequired,
+};
 
 export default App
