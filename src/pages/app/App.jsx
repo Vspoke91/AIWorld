@@ -11,7 +11,6 @@ function App() {
   //useState for sorting names that will be use to create buttons and change main when filterting
   let [sortingButtonNames, setSortingButtonNames] = useState([]);
 
-
   return (
     <>
       <div className='underDevelopmentDiv'>
@@ -149,24 +148,26 @@ function MainCards({sortingButtonNames}){
   //state used in useEffect to update the list of cards in main to match the filter (sortingbuttonNames)
   let [sortedCards, setSortedCards] = useState();
 
+  //useEffect used to update when sortingButtonsNames (sorted names) is change
   useEffect(()=>{
 
-    //return card elements fill with data in contentData
+    //return card element array fill with data in contentData
     let renderCards = () => {
 
       let cardElements = contentData.map(({title, logo, tagType, category, description}, index) => {
         
-        if(hasMatchingVariable(sortingButtonNames, category)){
+        if(hasMatchingItem(sortingButtonNames, category))
           return (getCardElement(index, title, logo,tagType, category, description))
-        }
-        else{
+
+        else
           return null;
-        }
+
       });
 
       return(cardElements)
     }
 
+    //return a element card
     let getCardElement = (index, title, logoURL, tag, categories, description) =>{
       return (
         <div key={index} className='content-div' onClick={() => {loadDisplayShowDiv(index)}}>
@@ -191,17 +192,25 @@ function MainCards({sortingButtonNames}){
       );
     }
 
+    //updates useState with new cards
     setSortedCards(renderCards())
   
+  //[sortingButtonNames] is the dependency, if variable changes it will return useEffect Function
   }, [sortingButtonNames])
 
-  function hasMatchingVariable(array1, array2) {
+  //function to check if arrayA has items that match in arrayB, returns a boolean
+  function hasMatchingItem(array1, array2) {
+    /* 
+    array.some loops all items in array1 with the name 'item'
+    array.includes checks if that 'item' is found in any of its container/items.
+    if any return true the array.some will return true, 
+    else it will keep looping and return false if none return true
+    */
     return array1.some(item => array2.includes(item));
   }
 
   return(
   <>
-
     {sortedCards}
 
     <div id='backgroundBlur'
