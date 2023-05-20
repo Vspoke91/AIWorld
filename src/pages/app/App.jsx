@@ -68,8 +68,6 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
   //create checkbox from categories(sitesDataBase) and return them as elements array for DOM
   const renderSortingCheckBoxes = () =>{
     return <>
-    
-    <button onClick={allClickHandler}>All</button>
     <button onClick={clearClickHandler}>Clear</button>
 
     {Object.keys(categories).map((key) =>
@@ -112,19 +110,7 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
       setSortingButtonNames(sortingButtonNames.filter((item) => item !== newButtonName));
 
   }
-
-  const allClickHandler = () => {
-    setSortingButtonNames(Object.keys(categories).map((key) => {
-
-      const checkbox = document.querySelector(`input[type="checkbox"][name="${categories[key].text}"]`)
-
-      if (checkbox) 
-        checkbox.checked = true;
-
-      return categories[key].text
-    }))
-  }
-
+  
   const clearClickHandler = () => {
 
     Object.keys(categories).map((key) => {
