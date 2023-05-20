@@ -188,7 +188,7 @@ function MainCards({sortingButtonNames}){
 
       let cardElements = contentData.map(({title, logo, tagType, category, description}, index) => {
         
-        if(hasMatchingItem(sortingButtonNames, category))
+        if(hasEveryMatchingItem(sortingButtonNames, category))
           return (getCardElement(index, title, logo,tagType, category, description))
 
         else
@@ -230,15 +230,9 @@ function MainCards({sortingButtonNames}){
   //[sortingButtonNames] is the dependency, if variable changes it will return useEffect Function
   }, [sortingButtonNames])
 
-  //function to check if arrayA has items that match in arrayB, returns a boolean
-  function hasMatchingItem(array1, array2) {
-    /* 
-    array.some loops all items in array1 with the name 'item'
-    array.includes checks if that 'item' is found in any of its container/items.
-    if any return true the array.some will return true, 
-    else it will keep looping and return false if none return true
-    */
-    return array1.some(item => array2.includes(item));
+  //hasEvery finds all cards that has only the selected filters
+  function hasEveryMatchingItem(array1, array2) {
+    return array1.every(item => array2.includes(item));
   }
 
   return(
