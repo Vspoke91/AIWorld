@@ -110,7 +110,7 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
       setSortingButtonNames(sortingButtonNames.filter((item) => item !== newButtonName));
 
   }
-  
+
   const clearClickHandler = () => {
 
     Object.keys(categories).map((key) => {
@@ -164,26 +164,10 @@ function MainCards({sortingButtonNames}){
   }
 
   //state used in useEffect to update the list of cards in main to match the filter (sortingbuttonNames)
-  let [sortedCards, setSortedCards] = useState();
+  let [sortedCards, setSortedCards] = useState([]);
 
   //useEffect used to update when sortingButtonsNames (sorted names) is change
   useEffect(()=>{
-
-    //return card element array fill with data in contentData
-    let renderCards = () => {
-
-      let cardElements = contentData.map(({title, logo, tagType, category, description}, index) => {
-        
-        if(hasEveryMatchingItem(sortingButtonNames, category))
-          return (getCardElement(index, title, logo,tagType, category, description))
-
-        else
-          return null;
-
-      });
-
-      return(cardElements)
-    }
 
     //return a element card
     let getCardElement = (index, title, logoURL, tag, categories, description) =>{
@@ -210,9 +194,24 @@ function MainCards({sortingButtonNames}){
       );
     }
 
+    //return card element array fill with data in contentData
+    let renderCards = () => {
+
+      let cardElements = contentData.map(({title, logo, tagType, category, description}, index) => {
+        
+        if(hasEveryMatchingItem(sortingButtonNames, category))
+          return (getCardElement(index, title, logo,tagType, category, description))
+        
+
+      //map returns items that were set to nothing as undefined, filter will return a new array with items != (not equals) undefined
+      }).filter((item) => item != undefined);
+
+      return(cardElements)
+    }
+
     //updates useState with new cards
     setSortedCards(renderCards())
-  
+
   //[sortingButtonNames] is the dependency, if variable changes it will return useEffect Function
   }, [sortingButtonNames])
 
@@ -223,7 +222,7 @@ function MainCards({sortingButtonNames}){
 
   return(
   <>
-    {sortedCards}
+    {sortedCards.length > 0 ? sortedCards :<p>Nothing was found! please change filter options</p>}
 
     <div id='backgroundBlur'
       className='background-blur'
