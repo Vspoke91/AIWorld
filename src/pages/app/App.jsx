@@ -11,6 +11,7 @@ function App() {
   //useState for sorting names that will be use to create buttons and change main when filterting
   let [sortingButtonNames, setSortingButtonNames] = useState([]);
 
+
   return (
     <>
       <div className='underDevelopmentDiv'>
@@ -66,15 +67,22 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
 
   //create checkbox from categories(sitesDataBase) and return them as elements array for DOM
   const renderSortingCheckBoxes = () =>{
-    return Object.keys(categories).map((key) =>
+    return <>
+    
+    <button onClick={allClickHandler}>All</button>
+    <button onClick={clearClickHandler}>Clear</button>
+
+    {Object.keys(categories).map((key) =>
         <label 
-          key={key}>{categories[key].text}
+          key={key}
+          >{categories[key].text}
           <input 
             className='item'
             type='checkbox'
             name={categories[key].text} //name attribute is used to name buttons and to find input checkbox 
             onChange={checkboxChangeHandler}/>
-        </label>)
+        </label>)}
+    </>
   }
 
   //if button is click it will filter out its name out of sortingButtonNames so it will unrender, plus uncheck checkbox with the same name
@@ -97,13 +105,37 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
     //button name from checkbox name attribute
     let newButtonName = event.target.name;
 
-    if(event.target.checked){
+    if(event.target.checked)
       setSortingButtonNames([...sortingButtonNames, newButtonName]);
-    }
-    else{
+    else
       //filter returns items that are not equal to newButtonName
       setSortingButtonNames(sortingButtonNames.filter((item) => item !== newButtonName));
-    }
+
+  }
+
+  const allClickHandler = () => {
+    setSortingButtonNames(Object.keys(categories).map((key) => {
+
+      const checkbox = document.querySelector(`input[type="checkbox"][name="${categories[key].text}"]`)
+
+      if (checkbox) 
+        checkbox.checked = true;
+
+      return categories[key].text
+    }))
+  }
+
+  const clearClickHandler = () => {
+
+    Object.keys(categories).map((key) => {
+        const checkbox = document.querySelector(`input[type="checkbox"][name="${categories[key].text}"]`)
+
+        if (checkbox) 
+          checkbox.checked = false
+      })
+
+
+    setSortingButtonNames([])
   }
 
   return (
