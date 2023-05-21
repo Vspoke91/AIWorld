@@ -68,17 +68,17 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
   //create checkbox from categories(sitesDataBase) and return them as elements array for DOM
   const renderSortingCheckBoxes = () =>{
     return <>
-    <button onClick={clearClickHandler}>Clear</button>
 
     {Object.keys(categories).map((key) =>
         <label 
-          key={key}
-          >{categories[key].text}
+          className='item'  
+          key={key}>
           <input 
-            className='item'
             type='checkbox'
             name={categories[key].text} //name attribute is used to name buttons and to find input checkbox 
             onChange={checkboxChangeHandler}/>
+
+          {categories[key].text}
         </label>)}
     </>
   }
@@ -127,10 +127,13 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
   return (
     <>
       <div className='drop_down_div'>
-        <FilterSVG className="tittle"/>
+        <span className='icon'><FilterSVG className="icon"/>Filter</span>
+        <div className='items-holder'>
         {renderSortingCheckBoxes()}
+        </div>
       </div>
-      <div>
+      <div className='sorting-buttons-holder'>
+        <button className='clear-button' onClick={clearClickHandler}>Clear</button>
         {renderSortingButtons()}
       </div>
     </>
