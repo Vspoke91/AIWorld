@@ -1,7 +1,7 @@
 ![Online Status Badge](https://img.shields.io/website?down_message=Offline&up_message=Online&url=https%3A%2F%2Faiworld.veltaproject.com%2F) ![Release Date Badge](https://img.shields.io/github/release-date/vspoke91/AIWorld) ![Last Commit Badge](https://img.shields.io/github/last-commit/vspoke91/AIWorld)
 
 # AIWorld
-![AI World Logo](https://aiworld.veltaproject.com/img/logos/AI-World-Large.jpg)
+![AI World Logo](https://aiworld.veltaproject.com/img/logos/AI-World-Large.png)
 
 ## Description
 [AIWorld](https://aiworld.veltaproject.com/) 🌎 is a website that connects you with 🤖 AI-powered websites to enhance your everyday life, 🎓 schoolwork, and 💼 work. 
