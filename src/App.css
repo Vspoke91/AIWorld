@@ -164,134 +164,6 @@ h2 a:hover {
   margin: 0;
 }
 
-/*--[NAV]--*/
-
-nav {
-  width: 60vw;
-  max-width: 1000px;
-  margin: 20px auto;
-  height: 50px;
-
-  display: flex;
-  z-index: 1;
-  position: sticky;
-  top: 5px
-}
-
-/*Filter Drop Down*/
-nav .drop_down_div {
-  width: fit-content;
-  height: inherit;
-
-  cursor: pointer;
-}
-
-nav .drop_down_div .icon {
-  height: inherit;
-
-  padding: 0 10px;
-  border-radius: 10px 0 0 10px;
-  background-color: rgba(40, 40, 40, 0.947);
-  font-size: 1.2rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-nav .drop_down_div .icon svg {
-  width: auto;
-  height: 35px;
-
-  margin-right: 5px;
-}
-
-nav .drop_down_div .items-holder {
-  display: flex;
-  clip-path: inset(0 0 100% 0);
-  width: max-content;
-
-  background-color: rgba(78, 78, 78, 0.947);
-  padding: 10px 5px 5px 5px;
-
-  flex-direction: column;
-  position: absolute;
-  bottom: -100px;
-  z-index: -1;
-  padding: 5px;
-  border-radius: 0 0 5px 5px;
-
-  transition: 0.2s ease-out;
-}
-
-nav .drop_down_div:hover .items-holder {
-  clip-path: inset(0 0 0 0);
-}
-
-nav .drop_down_div .item {
-  cursor: pointer;
-}
-
-nav .drop_down_div .item input {
-  margin-right: 0.5em;
-}
-
-nav .sorting-buttons-holder {
-  display: flex;
-  width: inherit;
-
-  border-radius: 0 10px 10px 0;
-  background-color: rgba(44, 44, 44, 0.865);
-
-  gap: 5px;
-}
-
-nav .sorting-buttons-holder .clear-button {
-  border: 0;
-  background-color: rgb(74, 47, 47);
-  border-radius: 0;
-  margin: 0;
-  font-weight: 100;
-
-  transition: ease-in-out 0.1s;
-}
-
-nav .sorting-buttons-holder .clear-button:hover {
-  background-color: rgb(148, 40, 40);
-}
-
-nav .sorting-buttons-holder button {
-  margin: 8px 0;
-
-  border: 1px rgb(103, 103, 103) solid;
-  border-radius: 10px;
-  background-color: rgb(78, 78, 78);
-  cursor: pointer;
-
-  font-weight: bold;
-  transition: ease-in-out 0.1s;
-}
-
-nav .sorting-buttons-holder button:hover {
-  background-color: rgb(138, 38, 38);
-}
-
-/*--[MAIN]--*/
-
-main .not-found {
-  display: grid;
-  width: 50vw;
-  height: 100vh;
-  margin: 0;
-
-  justify-self: center;
-  grid-column: 1/-1;
-  grid-row: 1/-1;
-
-  text-align: center;
-  font-size: 1.2rem;
-}
-
 /* SHOW DIV - div that will pop up */
 
 .show-Div {
@@ -355,15 +227,18 @@ main .not-found {
 
 @keyframes showpopup {
   0% {
-    transform: scale(0);
+    transform:
+      scale(0);
   }
 
   60% {
-    transform: scale(1, 0.01);
+    transform:
+      scale(1, 0.01);
   }
 
   100% {
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 }
 
