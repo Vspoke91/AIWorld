@@ -225,7 +225,7 @@ function MainCards({sortingButtonNames}){
 
   return(
   <>
-    {sortedCards.length > 0 ? sortedCards :<p>Nothing was found! please change filter options</p>}
+    {sortedCards.length > 0 ? sortedCards :<p className='not-found'>Nothing was found! please change filter options</p>}
 
     <div id='backgroundBlur'
       className='background-blur'

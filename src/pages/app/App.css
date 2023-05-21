@@ -276,6 +276,21 @@ nav .sorting-buttons-holder button:hover {
   background-color: rgb(138, 38, 38);
 }
 
+/*--[MAIN]--*/
+
+main .not-found {
+  display: grid;
+  width: 50vw;
+  height: 100vh;
+  margin: 0;
+
+  justify-self: center;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+
+  text-align: center;
+  font-size: 1.2rem;
+}
 
 /* SHOW DIV - div that will pop up */
 

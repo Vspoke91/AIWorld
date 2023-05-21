@@ -19,4 +19,4 @@ FilterSVG.propTypes = {
 
 FilterSVG.defaultProps = {
     fill: "white",
-  };
+};
