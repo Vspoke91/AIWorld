@@ -424,3 +424,9 @@ footer .velta-logo-div a img {
   height: 70px;
   width: auto;
 }
+
+/*++{[TABLET]}++*/
+@media screen and (min-width: 481px) and (max-width: 768px) {}
+
+/*++{[MOBILE DEVICES]}++*/
+@media screen and (max-width: 480px) {}
