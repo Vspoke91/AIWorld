@@ -38,6 +38,43 @@ main {
   margin: 30px auto;
 }
 
+main .content-div {
+  height: 450px;
+  width: 30vw;
+
+  border-radius: 5px;
+  background-color: rgb(31, 31, 31);
+  box-shadow: -2px 2px 5px black;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+
+  transition: ease-in 0.2s;
+}
+
+main .content-div:hover {
+  transform: scale(1.01);
+  box-shadow: -5px 5px 5px black;
+}
+
+main .content-div .tag {
+  position: absolute;
+  transform-origin: center;
+  transform: translate(50%, -50%) rotate(45deg);
+  top: 1.6vw;
+  right: 1.6vw;
+
+  width: 6.5vw;
+  padding: 0.5em;
+
+  font-size: 1.3vw;
+  font-weight: bold;
+}
+
 header {
   height: 100px;
   text-align: center;
@@ -68,43 +105,6 @@ header .quote-div span::before {
   content: " - ";
 }
 
-
-.content-div {
-  height: 70vh;
-  width: 30vw;
-
-  border-radius: 5px;
-  background-color: rgb(31, 31, 31);
-  box-shadow: -2px 2px 5px black;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  cursor: pointer;
-  text-align: center;
-  position: relative;
-
-  transition: ease-in 0.2s;
-}
-
-.content-div:hover {
-  transform: scale(1.01);
-  box-shadow: -5px 5px 5px black;
-}
-
-.content-div .tag {
-  position: absolute;
-  transform-origin: center;
-  transform: translate(50%, -50%) rotate(45deg);
-  top: 1.6vw;
-  right: 1.6vw;
-
-  width: 6.5vw;
-  padding: 0.5em;
-
-  font-size: 1.3vw;
-  font-weight: bold;
-}
 
 h2 {
   font-size: 2em;
@@ -426,7 +426,25 @@ footer .velta-logo-div a img {
 }
 
 /*++{[TABLET]}++*/
-@media screen and (min-width: 481px) and (max-width: 768px) {}
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  main {
+    grid: auto-flow / repeat(2, min-content);
+    gap: 3vw;
+  }
+
+  main .content-div {
+    width: 45vw;
+  }
+}
 
 /*++{[MOBILE DEVICES]}++*/
-@media screen and (max-width: 480px) {}
+@media screen and (max-width: 480px) {
+  main {
+    grid: auto-flow / min-content;
+    row-gap: 40px;
+  }
+
+  main .content-div {
+    width: 90vw;
+  }
+}
