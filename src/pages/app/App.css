@@ -32,15 +32,14 @@ body {
 
 main {
   display: grid;
-  grid: auto-flow / repeat(3, min-content);
-  gap: 1.2vw;
-  width: min-content;
-  margin: 30px auto;
+  grid-template-columns: repeat(auto-fit, minmax(90vw, 350px));
+  justify-content: center;
+  gap: 20px;
 }
 
 main .content-div {
   height: 450px;
-  width: 30vw;
+  width: inherit;
 
   border-radius: 5px;
   background-color: rgb(31, 31, 31);
@@ -426,25 +425,7 @@ footer .velta-logo-div a img {
 }
 
 /*++{[TABLET]}++*/
-@media screen and (min-width: 481px) and (max-width: 768px) {
-  main {
-    grid: auto-flow / repeat(2, min-content);
-    gap: 3vw;
-  }
-
-  main .content-div {
-    width: 45vw;
-  }
-}
+@media screen and (min-width: 481px) and (max-width: 768px) {}
 
 /*++{[MOBILE DEVICES]}++*/
-@media screen and (max-width: 480px) {
-  main {
-    grid: auto-flow / min-content;
-    row-gap: 40px;
-  }
-
-  main .content-div {
-    width: 90vw;
-  }
-}
+@media screen and (max-width: 480px) {}
