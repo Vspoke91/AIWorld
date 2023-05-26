@@ -32,7 +32,7 @@ body {
 
 main {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90vw, 350px));
+  grid-template-columns: repeat(auto-fit, min(90vw, 350px));
   justify-content: center;
   gap: 20px;
 }
