@@ -454,4 +454,26 @@ footer .velta-logo-div a img {
     border-radius: 0 10px 10px 0;
   }
 
+  footer {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  footer .velta-logo-div {
+    order: -1;
+  }
+
+  footer .velta-logo-div a img {
+    width: 30vw;
+    height: auto;
+  }
+
+  footer .opensource-div {
+    font-size: 1.3rem;
+  }
+
+  footer .opensource-div a img {
+    width: 20vw;
+    height: auto;
+  }
 }
