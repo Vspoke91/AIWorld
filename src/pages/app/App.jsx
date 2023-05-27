@@ -127,13 +127,13 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
   return (
     <>
       <div className='drop_down_div'>
-        <span className='icon'><FilterSVG className="icon"/>Filter</span>
+        <span className='icon'><FilterSVG className="icon"/><span>Filter</span></span>
         <div className='items-holder'>
         {renderSortingCheckBoxes()}
         </div>
       </div>
+      <button className='clear-button' onClick={clearClickHandler}>Clear</button>
       <div className='sorting-buttons-holder'>
-        <button className='clear-button' onClick={clearClickHandler}>Clear</button>
         {renderSortingButtons()}
       </div>
     </>
@@ -181,7 +181,7 @@ function MainCards({sortingButtonNames}){
   
           <div className='img-div'>
             <img src={logoURL} alt={title + " Logo"}/>
-            </div>
+          </div>
   
           <div className='category-div'>
             {categories.map((category, index) => 
