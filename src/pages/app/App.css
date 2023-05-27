@@ -32,6 +32,10 @@ body {
   flex-direction: column;
 }
 
+.expander-div {
+  flex: 1;
+}
+
 /*--[MAIN]--*/
 
 main {
@@ -39,8 +43,6 @@ main {
   grid-template-columns: repeat(auto-fit, min(90vw, 350px));
   justify-content: center;
   gap: 20px;
-
-  flex: 1;
 }
 
 main .content-div {

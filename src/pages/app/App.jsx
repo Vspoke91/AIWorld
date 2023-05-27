@@ -33,7 +33,7 @@ function App() {
       <main>
         <MainCards sortingButtonNames={sortingButtonNames}/>
       </main>
-
+      <div className='expander-div'></div>
       <footer>
         <div className='opensource-div'>
           <div>
