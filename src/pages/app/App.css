@@ -1,8 +1,4 @@
 .underDevelopmentDiv {
-  position: absolute;
-  top: 0;
-  left: 0;
-
   display: flex;
   justify-content: center;
   width: 100%;
@@ -21,13 +17,15 @@
   font-weight: bold;
 }
 
+body,
 #root {
-  margin: 0 auto;
-  padding: 0;
+  margin: 0;
+  height: 100vh;
 }
 
-body {
-  margin: 0;
+#root {
+  display: flex;
+  flex-direction: column;
 }
 
 /*--[MAIN]--*/
@@ -37,6 +35,8 @@ main {
   grid-template-columns: repeat(auto-fit, min(90vw, 350px));
   justify-content: center;
   gap: 20px;
+
+  flex: 1;
 }
 
 main .content-div {
@@ -179,15 +179,14 @@ main .not-found {
 /*--[HEADER]--*/
 
 header {
-  height: 100px;
   text-align: center;
+  margin: 0 10px;
 }
 
 header h1 {
   font-family: "Bruno Ace SC";
   font-size: 3rem;
-  margin-top: 40px;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 header .quote-div p {
@@ -283,9 +282,7 @@ nav {
 
 /*Filter Drop Down*/
 nav .drop_down_div {
-  width: fit-content;
   height: inherit;
-
   cursor: pointer;
 }
 
@@ -311,19 +308,18 @@ nav .drop_down_div .icon svg {
 
 nav .drop_down_div .items-holder {
   display: flex;
-  clip-path: inset(0 0 100% 0);
   width: max-content;
 
   background-color: rgba(78, 78, 78, 0.947);
-  padding: 10px 5px 5px 5px;
+  padding: 20px 5px 5px 5px;
 
   flex-direction: column;
   position: absolute;
-  bottom: -100px;
+  bottom: -110px;
   z-index: -1;
-  padding: 5px;
   border-radius: 0 0 5px 5px;
 
+  clip-path: inset(0 0 100% 0);
   transition: 0.2s ease-out;
 }
 
@@ -355,9 +351,7 @@ nav .clear-button {
   color: white;
   border: 0;
   background-color: rgb(74, 47, 47);
-  border-radius: 0;
-  margin: 0;
-  font-weight: 100;
+  font-weight: bold;
 
   transition: ease-in-out 0.1s;
 }
@@ -383,7 +377,7 @@ nav .sorting-buttons-holder button:hover {
   background-color: rgb(138, 38, 38);
 }
 
-/*--Footer--*/
+/*--[FOOTER]--*/
 
 footer {
   display: flex;
@@ -392,6 +386,8 @@ footer {
 
   background-color: rgb(31, 31, 31);
   padding: 10px 0;
+
+  margin-top: 20px;
 }
 
 footer p {
@@ -435,6 +431,7 @@ footer .velta-logo-div a img {
 
 /*++{[MOBILE DEVICES]}++*/
 @media screen and (max-width: 480px) {
+
   nav {
     justify-content: center;
   }
