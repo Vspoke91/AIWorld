@@ -79,7 +79,6 @@ main .content-div .tag {
 main .not-found {
   display: grid;
   width: 50vw;
-  height: 100vh;
   margin: 0;
 
   justify-self: center;
@@ -345,6 +344,16 @@ nav .sorting-buttons-holder {
 
   overflow-y: auto;
   gap: 5px;
+}
+
+nav .sorting-buttons-holder::-webkit-scrollbar {
+  width: inherit;
+  height: 1px;
+  background-color: transparent;
+}
+
+nav .sorting-buttons-holder::-webkit-scrollbar-thumb {
+  background-color: rgb(175, 175, 175);
 }
 
 nav .clear-button {
