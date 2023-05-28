@@ -17,14 +17,12 @@
   font-weight: bold;
 }
 
-body {
-  margin: 0;
-  height: 100vh;
-}
-
+body,
+html,
 #root {
+  height: 100vh;
+  overflow: auto;
   margin: 0;
-  height: 100%;
 }
 
 #root {
