@@ -46,6 +46,7 @@ main {
 main .content-div {
   height: 450px;
   width: inherit;
+  position: relative;
 
   border-radius: 5px;
   background-color: rgb(31, 31, 31);
@@ -56,13 +57,24 @@ main .content-div {
 
   cursor: pointer;
   text-align: center;
-  position: relative;
+  overflow: hidden;
 
   transition: ease-in 0.2s;
 }
 
+main .content-div::after {
+  content: "";
+  height: 25px;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%);
+}
+
 main .content-div:hover {
-  transform: scale(1.01);
+  transform: scale(1.03);
   box-shadow: -5px 5px 5px black;
 }
 
@@ -243,20 +255,32 @@ h2 a:hover {
 .category-div {
   box-sizing: border-box;
   width: 100%;
-  padding: 0.6em;
+  padding: 1em;
 
-  font-size: 0.9em;
+  font-size: 1em;
   font-weight: bold;
 
   background-color: rgb(38, 38, 38);
   overflow-x: auto;
 }
 
+.category-div::-webkit-scrollbar {
+  width: inherit;
+  height: 2px;
+  background-color: transparent;
+}
+
+.category-div::-webkit-scrollbar-thumb {
+  background-color: rgb(135, 135, 135);
+}
+
 .category-div span {
   background-color: rgb(76, 78, 84);
-  padding: 0.3em 0.8em;
+  padding: 0.6em 0.4em;
   margin: 0 0.1em;
   border-radius: 10px;
+
+  white-space: nowrap;
 }
 
 .description {
