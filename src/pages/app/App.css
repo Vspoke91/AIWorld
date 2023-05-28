@@ -70,13 +70,13 @@ main .content-div .tag {
   position: absolute;
   transform-origin: center;
   transform: translate(50%, -50%) rotate(45deg);
-  top: 1.6vw;
-  right: 1.6vw;
+  top: 23px;
+  right: 23px;
 
-  width: 6.5vw;
-  padding: 0.5em;
+  width: 100px;
+  padding: 10px;
 
-  font-size: 1.3vw;
+  font-size: 1rem;
   font-weight: bold;
 }
 
