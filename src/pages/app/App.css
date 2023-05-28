@@ -294,7 +294,7 @@ nav .drop_down_div .icon {
 
   padding: 0 10px;
   border-radius: 10px 0 0 10px;
-  background-color: rgba(40, 40, 40, 0.947);
+  background-color: #222222f1;
   font-size: 1.2rem;
 
   display: flex;
@@ -313,12 +313,12 @@ nav .drop_down_div .items-holder {
   display: flex;
   width: max-content;
 
-  background-color: rgba(78, 78, 78, 0.947);
-  padding: 20px 5px 5px 5px;
+  background: rgba(78, 78, 78, 0.947);
+  padding: 30px 0 5px 0;
 
   flex-direction: column;
   position: absolute;
-  bottom: -110px;
+  top: 50%;
   z-index: -1;
   border-radius: 0 0 5px 5px;
 
@@ -332,10 +332,17 @@ nav .drop_down_div:hover .items-holder {
 
 nav .drop_down_div .item {
   cursor: pointer;
+  padding: 0 4px;
+}
+
+nav .drop_down_div .item:hover {
+  cursor: pointer;
+  background: #222222f1;
 }
 
 nav .drop_down_div .item input {
-  margin-right: 0.5em;
+  margin: 4px;
+  margin-right: 6px;
 }
 
 nav .sorting-buttons-holder {
@@ -343,8 +350,10 @@ nav .sorting-buttons-holder {
   width: inherit;
 
   border-radius: 0 10px 10px 0;
-  background-color: rgba(44, 44, 44, 0.865);
+  background-color: #262626dd;
   padding-left: 5px;
+  border: solid #222222f1 2px;
+  border-left: 0;
 
   overflow-y: auto;
   gap: 5px;
@@ -361,9 +370,12 @@ nav .sorting-buttons-holder::-webkit-scrollbar-thumb {
 }
 
 nav .clear-button {
+  border: solid #222222f1 2px;
+  border-left: 0;
+  border-right: 0;
+  background-color: rgb(81, 44, 44);
+
   color: white;
-  border: 0;
-  background-color: rgb(74, 47, 47);
   font-weight: bold;
 
   transition: ease-in-out 0.1s;
@@ -374,7 +386,7 @@ nav .clear-button:hover {
 }
 
 nav .sorting-buttons-holder button {
-  margin: 8px 0;
+  margin: 5px 0;
 
   border: 1px rgb(103, 103, 103) solid;
   border-radius: 10px;
@@ -449,6 +461,11 @@ footer .velta-logo-div a img {
     justify-content: center;
   }
 
+  nav .drop_down_div .item {
+    padding-bottom: 3px;
+    padding-top: 3px;
+  }
+
   nav .sorting-buttons-holder {
     display: none;
   }
@@ -456,6 +473,7 @@ footer .velta-logo-div a img {
   nav .clear-button {
     padding: 1px 12px;
     border-radius: 0 10px 10px 0;
+    border-right: solid #222222f1 2px;
   }
 
   footer {
