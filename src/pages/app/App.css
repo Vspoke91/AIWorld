@@ -130,6 +130,55 @@ main .not-found {
   z-index: 3;
 }
 
+.show-Div .exit-button {
+  height: 45px;
+  width: auto;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.show-Div .exit-button svg {
+  height: inherit;
+  width: inherit;
+}
+
+.show-Div .exit-button:hover svg #circle {
+  fill: #bb2f2f;
+}
+
+.show-Div .exit-button.show-animate svg #lineA {
+  animation: exitSVG-rotation-A ease-out 0.3s 0.65s both;
+}
+
+.show-Div .exit-button.show-animate svg #lineB {
+  animation: exitSVG-rotation-B ease-out 0.3s 0.65s both;
+}
+
+@keyframes exitSVG-rotation-A {
+  0% {
+    d: path("M17.2425 49.708L82.7575 49.708");
+  }
+
+  100% {
+    d: path("M27 26.383L73 73.033");
+  }
+}
+
+@keyframes exitSVG-rotation-B {
+  0% {
+    d: path("M17.2426 49.325L82.7576 49.325");
+  }
+
+  100% {
+    d: path("M27 72.65L73 26")
+  }
+}
+
 .show-Div .show-title-div {
   position: relative;
   width: fit-content;
@@ -162,7 +211,7 @@ main .not-found {
   right: 0;
 }
 
-.show-animate {
+.show-Div.show-animate {
   animation: showpopup 0.6s;
 }
 

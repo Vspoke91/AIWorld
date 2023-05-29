@@ -13,10 +13,32 @@ export const FilterSVG = ({ fill }) =>{
     )
 }
 
+export const ExitSVG = ({ fill }) =>{
+
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <g>
+                <circle id='circle' cx="50" cy="50" r="47.5" fill={fill} stroke="#1f1f1f" strokeWidth="2"/>
+                <path id="lineA" d="M27 26.383L73 73.033" stroke="#1f1f1f" strokeWidth="13" strokeLinecap="round"/>
+                <path id="lineB" d="M27 72.65L73 26" stroke="#1f1f1f" strokeWidth="13" strokeLinecap="round"/>
+            </g>
+        </svg>
+    )
+}
+
+
 FilterSVG.propTypes = {
     fill: PropTypes.string,
 };
 
 FilterSVG.defaultProps = {
     fill: "white",
+};
+
+ExitSVG.propTypes = {
+    fill: PropTypes.string,
+};
+
+ExitSVG.defaultProps = {
+    fill: "#742626",
 };

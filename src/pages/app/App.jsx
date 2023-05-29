@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {default as contentData, categories } from '../../assets/sitesDataBase' 
-import { FilterSVG } from '../../assets/CustomIcons';
+import { FilterSVG, ExitSVG } from '../../assets/CustomIcons';
 import PropTypes from 'prop-types';
 
 //styles imports
@@ -10,7 +10,6 @@ function App() {
 
   //useState for sorting names that will be use to create buttons and change main when filterting
   let [sortingButtonNames, setSortingButtonNames] = useState([]);
-
 
   return (
     <>
@@ -230,12 +229,18 @@ function MainCards({sortingButtonNames}){
     <div id='backgroundBlur'
       className='background-blur'
       style={{display: showDivState.display ? "block" : "none"}} 
-      onClick={()=> setShowDivState({...showDivState, display: false}) }>
+      onClick={()=> setShowDivState({...showDivState, display: false})}>
     </div>
 
     <div id='showElement'
       className={`show-Div${showDivState.display ? " show-animate" : ""}`}
       style={{display: showDivState.display ? "block" : "none"}}>
+
+        
+        <button 
+        className={`exit-button${showDivState.display ? " show-animate" : ""}`} 
+        onClick={()=> setShowDivState({...showDivState, display: false}) }
+          ><ExitSVG /></button>
 
         <div className='show-title-div'>
             <h2><a href={showDivState.webLink}>{showDivState.title}</a></h2>
