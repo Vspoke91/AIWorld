@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {default as contentData, categories } from '../../assets/sitesDataBase' 
-import { FilterSVG } from '../../assets/CustomIcons';
+import { FilterSVG, ExitSVG } from '../../assets/CustomIcons';
 import PropTypes from 'prop-types';
 
 //styles imports
@@ -11,13 +11,8 @@ function App() {
   //useState for sorting names that will be use to create buttons and change main when filterting
   let [sortingButtonNames, setSortingButtonNames] = useState([]);
 
-
   return (
     <>
-      <div className='underDevelopmentDiv'>
-        <p>🚧 Website under development, features are limited 🚧</p>
-      </div>
-
       <header>
           <h1>AI World</h1>
           <div className='quote-div'>
@@ -33,7 +28,7 @@ function App() {
       <main>
         <MainCards sortingButtonNames={sortingButtonNames}/>
       </main>
-
+      <div className='expander-div'></div>
       <footer>
         <div className='opensource-div'>
           <div>
@@ -127,13 +122,13 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
   return (
     <>
       <div className='drop_down_div'>
-        <span className='icon'><FilterSVG className="icon"/>Filter</span>
+        <span className='icon'><FilterSVG className="icon"/><span>Filter</span></span>
         <div className='items-holder'>
         {renderSortingCheckBoxes()}
         </div>
       </div>
+      <button className='clear-button' onClick={clearClickHandler}>Clear</button>
       <div className='sorting-buttons-holder'>
-        <button className='clear-button' onClick={clearClickHandler}>Clear</button>
         {renderSortingButtons()}
       </div>
     </>
@@ -181,7 +176,7 @@ function MainCards({sortingButtonNames}){
   
           <div className='img-div'>
             <img src={logoURL} alt={title + " Logo"}/>
-            </div>
+          </div>
   
           <div className='category-div'>
             {categories.map((category, index) => 
@@ -230,12 +225,18 @@ function MainCards({sortingButtonNames}){
     <div id='backgroundBlur'
       className='background-blur'
       style={{display: showDivState.display ? "block" : "none"}} 
-      onClick={()=> setShowDivState({...showDivState, display: false}) }>
+      onClick={()=> setShowDivState({...showDivState, display: false})}>
     </div>
 
     <div id='showElement'
       className={`show-Div${showDivState.display ? " show-animate" : ""}`}
       style={{display: showDivState.display ? "block" : "none"}}>
+
+        
+        <button 
+        className={`exit-button${showDivState.display ? " show-animate" : ""}`} 
+        onClick={()=> setShowDivState({...showDivState, display: false}) }
+          ><ExitSVG /></button>
 
         <div className='show-title-div'>
             <h2><a href={showDivState.webLink}>{showDivState.title}</a></h2>

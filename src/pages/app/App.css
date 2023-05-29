@@ -1,77 +1,33 @@
-.underDevelopmentDiv {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  display: flex;
-  justify-content: center;
-  width: 100%;
-
-  background: rgb(0, 0, 0);
-  background: repeating-linear-gradient(140deg, rgba(0, 0, 0, 1) 0px, rgba(0, 0, 0, 1) 10px, rgb(190, 190, 0) 10px, rgba(190, 190, 0, 1) 20px);
-}
-
-.underDevelopmentDiv p {
-  color: white;
-  background-color: black;
-  width: fit-content;
-  padding: 0 10px;
-  margin: 2px 0;
-
-  font-weight: bold;
+body,
+html,
+#root {
+  height: 100vh;
+  overflow: auto;
+  margin: 0;
 }
 
 #root {
-  margin: 0 auto;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-body {
-  margin: 0;
+.expander-div {
+  flex: 1;
 }
+
+/*--[MAIN]--*/
 
 main {
   display: grid;
-  grid: auto-flow / repeat(3, min-content);
-  gap: 1.2vw;
-  width: min-content;
-  margin: 30px auto;
+  grid-template-columns: repeat(auto-fit, min(90vw, 350px));
+  justify-content: center;
+  gap: 20px;
 }
 
-header {
-  height: 100px;
-  text-align: center;
-}
-
-header h1 {
-  font-family: "Bruno Ace SC";
-  font-size: 3rem;
-  margin-top: 40px;
-  margin-bottom: 0;
-}
-
-header .quote-div p {
-  display: inline-block;
-  margin: 0;
-}
-
-header .quote-div p::before,
-header .quote-div p::after {
-  content: '"';
-}
-
-header .quote-div span {
-  font-style: italic;
-}
-
-header .quote-div span::before {
-  content: " - ";
-}
-
-
-.content-div {
-  height: 70vh;
-  width: 30vw;
+main .content-div {
+  height: 450px;
+  width: inherit;
+  position: relative;
 
   border-radius: 5px;
   background-color: rgb(31, 31, 31);
@@ -82,206 +38,44 @@ header .quote-div span::before {
 
   cursor: pointer;
   text-align: center;
-  position: relative;
+  overflow: hidden;
 
   transition: ease-in 0.2s;
 }
 
-.content-div:hover {
-  transform: scale(1.01);
+main .content-div::after {
+  content: "";
+  height: 25px;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%);
+}
+
+main .content-div:hover {
+  transform: scale(1.03);
   box-shadow: -5px 5px 5px black;
 }
 
-.content-div .tag {
+main .content-div .tag {
   position: absolute;
   transform-origin: center;
   transform: translate(50%, -50%) rotate(45deg);
-  top: 1.6vw;
-  right: 1.6vw;
+  top: 23px;
+  right: 23px;
 
-  width: 6.5vw;
-  padding: 0.5em;
+  width: 100px;
+  padding: 10px;
 
-  font-size: 1.3vw;
+  font-size: 1rem;
   font-weight: bold;
 }
-
-h2 {
-  font-size: 2em;
-  margin: 10px auto;
-  width: fit-content;
-  position: relative;
-}
-
-
-h2 a {
-  color: var(--font-color);
-}
-
-h2 a:hover {
-  color: rgb(181, 230, 255)
-}
-
-.img-div {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.237);
-  padding: 10px 0;
-}
-
-.img-div img {
-  height: 10em;
-  width: auto;
-}
-
-.category-div {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0.6em;
-
-  font-size: 0.9em;
-  font-weight: bold;
-
-  background-color: rgb(38, 38, 38);
-  overflow-x: auto;
-}
-
-.category-div span {
-  background-color: rgb(76, 78, 84);
-  padding: 0.3em 0.8em;
-  margin: 0 0.1em;
-  border-radius: 10px;
-}
-
-.description {
-  box-sizing: border-box;
-  padding: 0.7em;
-  overflow: hidden;
-}
-
-.description p {
-  margin: 0;
-}
-
-/*--[NAV]--*/
-
-nav {
-  width: 60vw;
-  max-width: 1000px;
-  margin: 20px auto;
-  height: 50px;
-
-  display: flex;
-  z-index: 1;
-  position: sticky;
-  top: 5px
-}
-
-/*Filter Drop Down*/
-nav .drop_down_div {
-  width: fit-content;
-  height: inherit;
-
-  cursor: pointer;
-}
-
-nav .drop_down_div .icon {
-  height: inherit;
-
-  padding: 0 10px;
-  border-radius: 10px 0 0 10px;
-  background-color: rgba(40, 40, 40, 0.947);
-  font-size: 1.2rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-nav .drop_down_div .icon svg {
-  width: auto;
-  height: 35px;
-
-  margin-right: 5px;
-}
-
-nav .drop_down_div .items-holder {
-  display: flex;
-  clip-path: inset(0 0 100% 0);
-  width: max-content;
-
-  background-color: rgba(78, 78, 78, 0.947);
-  padding: 10px 5px 5px 5px;
-
-  flex-direction: column;
-  position: absolute;
-  bottom: -100px;
-  z-index: -1;
-  padding: 5px;
-  border-radius: 0 0 5px 5px;
-
-  transition: 0.2s ease-out;
-}
-
-nav .drop_down_div:hover .items-holder {
-  clip-path: inset(0 0 0 0);
-}
-
-nav .drop_down_div .item {
-  cursor: pointer;
-}
-
-nav .drop_down_div .item input {
-  margin-right: 0.5em;
-}
-
-nav .sorting-buttons-holder {
-  display: flex;
-  width: inherit;
-
-  border-radius: 0 10px 10px 0;
-  background-color: rgba(44, 44, 44, 0.865);
-
-  gap: 5px;
-}
-
-nav .sorting-buttons-holder .clear-button {
-  border: 0;
-  background-color: rgb(74, 47, 47);
-  border-radius: 0;
-  margin: 0;
-  font-weight: 100;
-
-  transition: ease-in-out 0.1s;
-}
-
-nav .sorting-buttons-holder .clear-button:hover {
-  background-color: rgb(148, 40, 40);
-}
-
-nav .sorting-buttons-holder button {
-  margin: 8px 0;
-
-  border: 1px rgb(103, 103, 103) solid;
-  border-radius: 10px;
-  background-color: rgb(78, 78, 78);
-  cursor: pointer;
-
-  font-weight: bold;
-  transition: ease-in-out 0.1s;
-}
-
-nav .sorting-buttons-holder button:hover {
-  background-color: rgb(138, 38, 38);
-}
-
-/*--[MAIN]--*/
 
 main .not-found {
   display: grid;
   width: 50vw;
-  height: 100vh;
   margin: 0;
 
   justify-self: center;
@@ -317,6 +111,55 @@ main .not-found {
   z-index: 3;
 }
 
+.show-Div .exit-button {
+  height: 45px;
+  width: auto;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.show-Div .exit-button svg {
+  height: inherit;
+  width: inherit;
+}
+
+.show-Div .exit-button:hover svg #circle {
+  fill: #bb2f2f;
+}
+
+.show-Div .exit-button.show-animate svg #lineA {
+  animation: exitSVG-rotation-A ease-out 0.3s 0.65s both;
+}
+
+.show-Div .exit-button.show-animate svg #lineB {
+  animation: exitSVG-rotation-B ease-out 0.3s 0.65s both;
+}
+
+@keyframes exitSVG-rotation-A {
+  0% {
+    d: path("M17.2425 49.708L82.7575 49.708");
+  }
+
+  100% {
+    d: path("M27 26.383L73 73.033");
+  }
+}
+
+@keyframes exitSVG-rotation-B {
+  0% {
+    d: path("M17.2426 49.325L82.7576 49.325");
+  }
+
+  100% {
+    d: path("M27 72.65L73 26")
+  }
+}
+
 .show-Div .show-title-div {
   position: relative;
   width: fit-content;
@@ -349,7 +192,7 @@ main .not-found {
   right: 0;
 }
 
-.show-animate {
+.show-Div.show-animate {
   animation: showpopup 0.6s;
 }
 
@@ -378,7 +221,242 @@ main .not-found {
   z-index: 2;
 }
 
-/*--Footer--*/
+/*--[HEADER]--*/
+
+header {
+  text-align: center;
+  margin: 0 10px;
+}
+
+header h1 {
+  font-family: "Bruno Ace SC";
+  font-size: 3.5rem;
+  margin: 30px 0 0 0;
+}
+
+header .quote-div p {
+  display: inline-block;
+  margin: 0;
+}
+
+header .quote-div p::before,
+header .quote-div p::after {
+  content: '"';
+}
+
+header .quote-div span {
+  font-style: italic;
+}
+
+header .quote-div span::before {
+  content: " - ";
+}
+
+
+h2 {
+  font-size: 2em;
+  margin: 10px auto;
+  width: fit-content;
+  position: relative;
+}
+
+
+h2 a {
+  color: var(--font-color);
+}
+
+h2 a:hover {
+  color: rgb(181, 230, 255)
+}
+
+.img-div {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.237);
+  padding: 10px 0;
+}
+
+.img-div img {
+  height: 10em;
+  width: auto;
+}
+
+.category-div {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1em;
+
+  font-size: 1em;
+  font-weight: bold;
+
+  background-color: rgb(38, 38, 38);
+  overflow-x: auto;
+}
+
+.category-div::-webkit-scrollbar {
+  width: inherit;
+  height: 2px;
+  background-color: transparent;
+}
+
+.category-div::-webkit-scrollbar-thumb {
+  background-color: rgb(135, 135, 135);
+}
+
+.category-div span {
+  background-color: rgb(76, 78, 84);
+  padding: 0.6em 0.4em;
+  margin: 0 0.1em;
+  border-radius: 10px;
+
+  white-space: nowrap;
+}
+
+.description {
+  box-sizing: border-box;
+  padding: 0.7em;
+  overflow: hidden;
+}
+
+.description p {
+  margin: 0;
+}
+
+/*--[NAV]--*/
+
+nav {
+  width: 95vw;
+  max-width: 900px;
+  margin: 20px auto;
+  height: 50px;
+
+  display: flex;
+  z-index: 1;
+  position: sticky;
+  top: 5px;
+}
+
+/*Filter Drop Down*/
+nav .drop_down_div {
+  height: inherit;
+  cursor: pointer;
+}
+
+nav .drop_down_div .icon {
+  height: inherit;
+
+  padding: 0 10px;
+  border-radius: 10px 0 0 10px;
+  background-color: #222222f1;
+  font-size: 1.2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav .drop_down_div .icon svg {
+  width: auto;
+  height: 35px;
+
+  margin-right: 5px;
+}
+
+nav .drop_down_div .items-holder {
+  display: flex;
+  width: max-content;
+
+  background: rgba(78, 78, 78, 0.947);
+  padding: 30px 0 5px 0;
+
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  z-index: -1;
+  border-radius: 0 0 5px 5px;
+
+  clip-path: inset(0 0 100% 0);
+  transition: 0.2s ease-out;
+}
+
+nav .drop_down_div:hover .items-holder {
+  clip-path: inset(0 0 0 0);
+}
+
+nav .drop_down_div .item {
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+nav .drop_down_div .item:hover {
+  cursor: pointer;
+  background: #222222f1;
+}
+
+nav .drop_down_div .item input {
+  margin: 4px;
+  margin-right: 6px;
+}
+
+nav .sorting-buttons-holder {
+  display: flex;
+  width: inherit;
+
+  border-radius: 0 10px 10px 0;
+  background-color: #262626dd;
+  padding-left: 5px;
+  border: solid #222222f1 2px;
+  border-left: 0;
+
+  overflow-y: auto;
+  gap: 5px;
+}
+
+nav .sorting-buttons-holder::-webkit-scrollbar {
+  width: inherit;
+  height: 1px;
+  background-color: transparent;
+}
+
+nav .sorting-buttons-holder::-webkit-scrollbar-thumb {
+  background-color: rgb(175, 175, 175);
+}
+
+nav .clear-button {
+  border: solid #222222f1 2px;
+  border-left: 0;
+  border-right: 0;
+  background-color: rgb(81, 44, 44);
+
+  color: white;
+  font-weight: bold;
+
+  transition: ease-in-out 0.1s;
+}
+
+nav .clear-button:hover {
+  background-color: rgb(148, 40, 40);
+}
+
+nav .sorting-buttons-holder button {
+  margin: 5px 0;
+
+  border: 1px rgb(103, 103, 103) solid;
+  border-radius: 10px;
+  background-color: rgb(78, 78, 78);
+  cursor: pointer;
+
+  white-space: nowrap;
+  font-weight: bold;
+  transition: ease-in-out 0.1s;
+}
+
+nav .sorting-buttons-holder button:hover {
+  background-color: rgb(138, 38, 38);
+}
+
+/*--[FOOTER]--*/
 
 footer {
   display: flex;
@@ -387,6 +465,8 @@ footer {
 
   background-color: rgb(31, 31, 31);
   padding: 10px 0;
+
+  margin-top: 20px;
 }
 
 footer p {
@@ -423,4 +503,53 @@ footer .opensource-div a img {
 footer .velta-logo-div a img {
   height: 70px;
   width: auto;
+}
+
+/*++{[TABLET]}++*/
+@media screen and (min-width: 481px) and (max-width: 768px) {}
+
+/*++{[MOBILE DEVICES]}++*/
+@media screen and (max-width: 480px) {
+
+  nav {
+    justify-content: center;
+  }
+
+  nav .drop_down_div .item {
+    padding-bottom: 3px;
+    padding-top: 3px;
+  }
+
+  nav .sorting-buttons-holder {
+    display: none;
+  }
+
+  nav .clear-button {
+    padding: 1px 12px;
+    border-radius: 0 10px 10px 0;
+    border-right: solid #222222f1 2px;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  footer .velta-logo-div {
+    order: -1;
+  }
+
+  footer .velta-logo-div a img {
+    width: 30vw;
+    height: auto;
+  }
+
+  footer .opensource-div {
+    font-size: 1.3rem;
+  }
+
+  footer .opensource-div a img {
+    width: 20vw;
+    height: auto;
+  }
 }
