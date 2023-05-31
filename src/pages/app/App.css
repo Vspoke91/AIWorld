@@ -553,3 +553,13 @@ footer .velta-logo-div a img {
     height: auto;
   }
 }
+
+/*--[QUICKSTYLE]--*/
+.qs__flex_row {
+  display: flex;
+}
+
+.qs__flex_column {
+  display: flex;
+  flex-direction: column;
+}

@@ -13,36 +13,40 @@ function App() {
 
   return (
     <>
-      <header>
+    <div className='qs__flex_row'>
+        <header>
           <h1>AI World</h1>
           <div className='quote-div'>
             <p>Artificial intelligence is the next stage in the evolution of human beings</p>
             <span>Stephen Hawking</span>
           </div>
-      </header>
+        </header>
 
-      <nav>
-        <Sorting sortingButtonNames={sortingButtonNames} setSortingButtonNames={setSortingButtonNames}/>
-      </nav>
-      
-      <main>
-        <MainCards sortingButtonNames={sortingButtonNames}/>
-      </main>
-      <div className='expander-div'></div>
-      <footer>
-        <div className='opensource-div'>
-          <div>
-            <p>Open Source Code</p>
-            <a href='https://github.com/Vspoke91/AIWorld/blob/master/README.md'><img src="/img/logos/GitHub.svg" alt="Github Logo"/></a>
-          </div>
+        <div className='qs__flex_column'>
+          <nav>
+            <Sorting sortingButtonNames={sortingButtonNames} setSortingButtonNames={setSortingButtonNames}/>
+          </nav>
+          
+          <main>
+            <MainCards sortingButtonNames={sortingButtonNames}/>
+          </main>
+          <div className='expander-div'></div>
+          <footer>
+            <div className='opensource-div'>
+              <div>
+                <p>Open Source Code</p>
+                <a href='https://github.com/Vspoke91/AIWorld/blob/master/README.md'><img src="/img/logos/GitHub.svg" alt="Github Logo"/></a>
+              </div>
+            </div>
+            <div className='velta-logo-div'>
+              <a href="https://www.veltaproject.com"><img src="https://veltaproject.com/VeltaLogo.png" alt="Velta Logo"/></a>
+            </div>
+            <div className='copyright-div'>
+              <p>© 2023 AI World, VeltaProject</p>
+            </div>
+          </footer>
         </div>
-        <div className='velta-logo-div'>
-          <a href="https://www.veltaproject.com"><img src="https://veltaproject.com/VeltaLogo.png" alt="Velta Logo"/></a>
-        </div>
-        <div className='copyright-div'>
-          <p>© 2023 AI World, VeltaProject</p>
-        </div>
-      </footer>
+      </div>
     </>
   )
 }
