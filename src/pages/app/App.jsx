@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-    <div className='qs__flex_row'>
+      <div className='qs__flex_row'>
         <header>
           <h1>AI World</h1>
           <div className='quote-div'>
@@ -22,7 +22,7 @@ function App() {
           </div>
         </header>
 
-        <div className='qs__flex_column'>
+        <div className='qs__flex_column __flex_extend qs__sidebar_spacing'>
           <nav>
             <Sorting sortingButtonNames={sortingButtonNames} setSortingButtonNames={setSortingButtonNames}/>
           </nav>

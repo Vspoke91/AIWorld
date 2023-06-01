@@ -1,3 +1,7 @@
+:root {
+  --sidebar-width: 188px;
+}
+
 body,
 html,
 #root {
@@ -225,7 +229,11 @@ main .not-found {
 
 header {
   text-align: center;
-  margin: 0 10px;
+
+  position: fixed;
+  height: 100vh;
+  width: var(--sidebar-width);
+  background-color: rgb(38, 38, 38);
 }
 
 header h1 {
@@ -559,7 +567,15 @@ footer .velta-logo-div a img {
   display: flex;
 }
 
+.qs__flex_row .__flex_extend {
+  flex: 1;
+}
+
 .qs__flex_column {
   display: flex;
   flex-direction: column;
+}
+
+.qs__sidebar_spacing {
+  padding-left: var(--sidebar-width);
 }
