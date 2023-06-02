@@ -236,10 +236,26 @@ header {
   background-color: rgb(38, 38, 38);
 }
 
-header h1 {
+header .logo {
+  width: inherit;
+  padding-top: 10px;
+}
+
+header .logo img {
+  box-sizing: border-box;
+  width: calc(var(--sidebar-width)*0.4);
+  height: auto;
+
+  margin: 0;
+}
+
+header .logo span {
   font-family: "Bruno Ace SC";
-  font-size: 3.5rem;
-  margin: 30px 0 0 0;
+  font-size: 1.4rem;
+}
+
+header .quote-div {
+  padding: 10px;
 }
 
 header .quote-div p {
@@ -567,13 +583,18 @@ footer .velta-logo-div a img {
   display: flex;
 }
 
-.qs__flex_row .__flex_extend {
-  flex: 1;
-}
-
 .qs__flex_column {
   display: flex;
   flex-direction: column;
+}
+
+:has(.qs__flex_row, .qs__flex_column) .__flex_extend {
+  flex: 1;
+}
+
+:has(.qs__flex_row, .qs__flex_column) .__flex_center {
+  justify-content: center;
+  align-items: center;
 }
 
 .qs__sidebar_spacing {

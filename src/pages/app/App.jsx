@@ -14,8 +14,18 @@ function App() {
   return (
     <>
       <div className='qs__flex_row'>
-        <header>
-          <h1>AI World</h1>
+        <header className='qs__flex_column'>
+          <div className='logo qs__flex_column __flex_center'>
+            <img src='/img/logos/AI-World-Small.png'/>
+            <span>AI World</span>
+          </div>
+
+          <div className='qs__flex_column __flex_center'>
+            <a>Search</a>
+            <a>Blog</a>
+            <a>About</a>
+          </div>
+
           <div className='quote-div'>
             <p>Artificial intelligence is the next stage in the evolution of human beings</p>
             <span>Stephen Hawking</span>
