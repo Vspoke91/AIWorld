@@ -1,5 +1,6 @@
 :root {
   --sidebar-width: 188px;
+  --background-color: #313131;
 }
 
 body,
@@ -229,15 +230,19 @@ main .not-found {
 
 header {
   text-align: center;
-
   position: fixed;
   height: 100vh;
   width: var(--sidebar-width);
-  background-color: rgb(38, 38, 38);
+
+  background: rgb(38, 38, 38);
+  box-shadow: 2px 0px 5px 0px rgb(0, 0, 0);
 }
 
 header .logo {
   width: inherit;
+
+  color: var(--font-color);
+  text-decoration: none;
   padding-top: 10px;
 }
 
@@ -256,6 +261,7 @@ header .logo span {
 
 header .quote-div {
   padding: 10px;
+  margin-block-start: auto;
 }
 
 header .quote-div p {
@@ -347,9 +353,41 @@ h2 a:hover {
   margin: 0;
 }
 
-/*--[NAV]--*/
+/*--[nav]--*/
 
 nav {
+  margin-top: 20px;
+}
+
+nav a {
+  box-sizing: border-box;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+
+  padding-left: 1.5rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--font-color);
+
+  transition: ease-in-out 0.2s;
+}
+
+nav a:hover {
+  background: var(--background-color);
+}
+
+header .logo {
+  cursor: pointer;
+}
+
+/*--[filter]--*/
+
+#filter {
   width: 95vw;
   max-width: 900px;
   margin: 20px auto;
@@ -362,12 +400,12 @@ nav {
 }
 
 /*Filter Drop Down*/
-nav .drop_down_div {
+#filter .drop_down_div {
   height: inherit;
   cursor: pointer;
 }
 
-nav .drop_down_div .icon {
+#filter .drop_down_div .icon {
   height: inherit;
 
   padding: 0 10px;
@@ -380,14 +418,14 @@ nav .drop_down_div .icon {
   align-items: center;
 }
 
-nav .drop_down_div .icon svg {
+#filter .drop_down_div .icon svg {
   width: auto;
   height: 35px;
 
   margin-right: 5px;
 }
 
-nav .drop_down_div .items-holder {
+#filter .drop_down_div .items-holder {
   display: flex;
   width: max-content;
 
@@ -404,26 +442,26 @@ nav .drop_down_div .items-holder {
   transition: 0.2s ease-out;
 }
 
-nav .drop_down_div:hover .items-holder {
+#filter .drop_down_div:hover .items-holder {
   clip-path: inset(0 0 0 0);
 }
 
-nav .drop_down_div .item {
+#filter .drop_down_div .item {
   cursor: pointer;
   padding: 0 4px;
 }
 
-nav .drop_down_div .item:hover {
+#filter .drop_down_div .item:hover {
   cursor: pointer;
   background: #222222f1;
 }
 
-nav .drop_down_div .item input {
+#filter .drop_down_div .item input {
   margin: 4px;
   margin-right: 6px;
 }
 
-nav .sorting-buttons-holder {
+#filter .sorting-buttons-holder {
   display: flex;
   width: inherit;
 
@@ -437,17 +475,17 @@ nav .sorting-buttons-holder {
   gap: 5px;
 }
 
-nav .sorting-buttons-holder::-webkit-scrollbar {
+#filter .sorting-buttons-holder::-webkit-scrollbar {
   width: inherit;
   height: 1px;
   background-color: transparent;
 }
 
-nav .sorting-buttons-holder::-webkit-scrollbar-thumb {
+#filter .sorting-buttons-holder::-webkit-scrollbar-thumb {
   background-color: rgb(175, 175, 175);
 }
 
-nav .clear-button {
+#filter .clear-button {
   border: solid #222222f1 2px;
   border-left: 0;
   border-right: 0;
@@ -459,11 +497,11 @@ nav .clear-button {
   transition: ease-in-out 0.1s;
 }
 
-nav .clear-button:hover {
+#filter .clear-button:hover {
   background-color: rgb(148, 40, 40);
 }
 
-nav .sorting-buttons-holder button {
+#filter .sorting-buttons-holder button {
   margin: 5px 0;
 
   border: 1px rgb(103, 103, 103) solid;
@@ -476,7 +514,7 @@ nav .sorting-buttons-holder button {
   transition: ease-in-out 0.1s;
 }
 
-nav .sorting-buttons-holder button:hover {
+#filter .sorting-buttons-holder button:hover {
   background-color: rgb(138, 38, 38);
 }
 
@@ -535,20 +573,20 @@ footer .velta-logo-div a img {
 /*++{[MOBILE DEVICES]}++*/
 @media screen and (max-width: 480px) {
 
-  nav {
+  #filter {
     justify-content: center;
   }
 
-  nav .drop_down_div .item {
+  #filter .drop_down_div .item {
     padding-bottom: 3px;
     padding-top: 3px;
   }
 
-  nav .sorting-buttons-holder {
+  #filter .sorting-buttons-holder {
     display: none;
   }
 
-  nav .clear-button {
+  #filter .clear-button {
     padding: 1px 12px;
     border-radius: 0 10px 10px 0;
     border-right: solid #222222f1 2px;

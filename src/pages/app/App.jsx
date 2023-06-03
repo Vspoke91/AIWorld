@@ -15,16 +15,17 @@ function App() {
     <>
       <div className='qs__flex_row'>
         <header className='qs__flex_column'>
-          <div className='logo qs__flex_column __flex_center'>
+          <a className='logo qs__flex_column __flex_center'
+           href='/'>
             <img src='/img/logos/AI-World-Small.png'/>
             <span>AI World</span>
-          </div>
+          </a>
 
-          <div className='qs__flex_column __flex_center'>
-            <a>Search</a>
-            <a>Blog</a>
-            <a>About</a>
-          </div>
+          <nav className='qs__flex_column __flex_center'>
+            <a href='/'>Search Links</a>
+            <a href='/feedback'>Feedback</a>
+            <a href='/about'>About</a>
+          </nav>
 
           <div className='quote-div'>
             <p>Artificial intelligence is the next stage in the evolution of human beings</p>
@@ -33,9 +34,9 @@ function App() {
         </header>
 
         <div className='qs__flex_column __flex_extend qs__sidebar_spacing'>
-          <nav>
+          <div id='filter'>
             <Sorting sortingButtonNames={sortingButtonNames} setSortingButtonNames={setSortingButtonNames}/>
-          </nav>
+          </div>
           
           <main>
             <MainCards sortingButtonNames={sortingButtonNames}/>
