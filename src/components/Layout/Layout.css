@@ -1,0 +1,168 @@
+/*--[MAIN]--*/
+
+main {
+    flex: 1 0 auto;
+}
+
+/*--[HEADER]--*/
+
+header {
+    text-align: center;
+    position: fixed;
+    height: 100vh;
+    width: var(--sidebar-width);
+
+    background: rgb(38, 38, 38);
+    box-shadow: 2px 0px 5px 0px rgb(0, 0, 0);
+}
+
+header .logo {
+    width: inherit;
+    cursor: pointer;
+
+    color: var(--font-color);
+    text-decoration: none;
+    padding-top: 10px;
+}
+
+header .logo img {
+    box-sizing: border-box;
+    width: calc(var(--sidebar-width)*0.4);
+    height: auto;
+
+    margin: 0;
+}
+
+header .logo span {
+    font-family: "Bruno Ace SC";
+    font-size: 1.4rem;
+}
+
+header .quote-div {
+    padding: 10px;
+    margin-block-start: auto;
+}
+
+header .quote-div p {
+    display: inline-block;
+    margin: 0;
+}
+
+header .quote-div p::before,
+header .quote-div p::after {
+    content: '"';
+}
+
+header .quote-div span {
+    font-style: italic;
+}
+
+header .quote-div span::before {
+    content: " - ";
+}
+
+/*--[NAV]--*/
+
+nav {
+    margin-top: 20px;
+}
+
+nav a {
+    box-sizing: border-box;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+
+    padding-left: 1.5rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--font-color);
+
+    transition: ease-in-out 0.2s;
+}
+
+nav a:hover {
+    background: var(--background-color);
+}
+
+
+/*--[FOOTER]--*/
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgb(31, 31, 31);
+    padding: 10px 0;
+
+    flex-shrink: 0;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer .opensource-div {
+    flex: 1;
+    text-align: left;
+    padding-left: 1vw;
+}
+
+footer .opensource-div>div {
+    text-align: center;
+    width: fit-content;
+}
+
+footer .opensource-div footer .velta-logo-div {
+    flex: 1;
+    text-align: center;
+}
+
+footer .copyright-div {
+    flex: 1;
+    text-align: right;
+    padding-right: 1vw;
+}
+
+footer .opensource-div a img {
+    height: 50px;
+    width: auto;
+}
+
+footer .velta-logo-div a img {
+    height: 70px;
+    width: auto;
+}
+
+
+@media screen and (max-width: 480px) {
+
+    footer {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    footer .velta-logo-div {
+        order: -1;
+    }
+
+    footer .velta-logo-div a img {
+        width: 30vw;
+        height: auto;
+    }
+
+    footer .opensource-div {
+        font-size: 1.3rem;
+    }
+
+    footer .opensource-div a img {
+        width: 20vw;
+        height: auto;
+    }
+}

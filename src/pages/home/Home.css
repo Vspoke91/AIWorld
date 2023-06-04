@@ -1,35 +1,13 @@
-:root {
-  --sidebar-width: 188px;
-  --background-color: #313131;
-}
+/*--[cards]--*/
 
-body,
-html,
-#root {
-  height: 100vh;
-  overflow: auto;
-  margin: 0;
-}
-
-#root {
-  display: flex;
-  flex-direction: column;
-}
-
-.expander-div {
-  flex: 1;
-}
-
-/*--[MAIN]--*/
-
-main {
+#cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, min(90vw, 350px));
   justify-content: center;
   gap: 20px;
 }
 
-main .content-div {
+#cards .content-div {
   height: 450px;
   width: inherit;
   position: relative;
@@ -48,7 +26,7 @@ main .content-div {
   transition: ease-in 0.2s;
 }
 
-main .content-div::after {
+#cards .content-div::after {
   content: "";
   height: 25px;
   position: absolute;
@@ -59,12 +37,12 @@ main .content-div::after {
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%);
 }
 
-main .content-div:hover {
+#cards .content-div:hover {
   transform: scale(1.03);
   box-shadow: -5px 5px 5px black;
 }
 
-main .content-div .tag {
+#cards .content-div .tag {
   position: absolute;
   transform-origin: center;
   transform: translate(50%, -50%) rotate(45deg);
@@ -78,7 +56,7 @@ main .content-div .tag {
   font-weight: bold;
 }
 
-main .not-found {
+#cards .not-found {
   display: grid;
   width: 50vw;
   margin: 0;
@@ -353,38 +331,6 @@ h2 a:hover {
   margin: 0;
 }
 
-/*--[nav]--*/
-
-nav {
-  margin-top: 20px;
-}
-
-nav a {
-  box-sizing: border-box;
-  text-align: left;
-  width: 100%;
-  cursor: pointer;
-
-  padding-left: 1.5rem;
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
-
-  font-size: 1.1rem;
-  font-weight: 500;
-  text-decoration: none;
-  color: var(--font-color);
-
-  transition: ease-in-out 0.2s;
-}
-
-nav a:hover {
-  background: var(--background-color);
-}
-
-header .logo {
-  cursor: pointer;
-}
-
 /*--[filter]--*/
 
 #filter {
@@ -518,55 +464,6 @@ header .logo {
   background-color: rgb(138, 38, 38);
 }
 
-/*--[FOOTER]--*/
-
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: rgb(31, 31, 31);
-  padding: 10px 0;
-
-  margin-top: 20px;
-}
-
-footer p {
-  margin: 0;
-}
-
-footer .opensource-div {
-  flex: 1;
-  text-align: left;
-  padding-left: 1vw;
-}
-
-footer .opensource-div>div {
-  text-align: center;
-  width: fit-content;
-}
-
-footer .opensource-div footer .velta-logo-div {
-  flex: 1;
-  text-align: center;
-}
-
-footer .copyright-div {
-  flex: 1;
-  text-align: right;
-  padding-right: 1vw;
-}
-
-footer .opensource-div a img {
-  height: 50px;
-  width: auto;
-}
-
-footer .velta-logo-div a img {
-  height: 70px;
-  width: auto;
-}
-
 /*++{[TABLET]}++*/
 @media screen and (min-width: 481px) and (max-width: 768px) {}
 
@@ -591,50 +488,4 @@ footer .velta-logo-div a img {
     border-radius: 0 10px 10px 0;
     border-right: solid #222222f1 2px;
   }
-
-  footer {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  footer .velta-logo-div {
-    order: -1;
-  }
-
-  footer .velta-logo-div a img {
-    width: 30vw;
-    height: auto;
-  }
-
-  footer .opensource-div {
-    font-size: 1.3rem;
-  }
-
-  footer .opensource-div a img {
-    width: 20vw;
-    height: auto;
-  }
-}
-
-/*--[QUICKSTYLE]--*/
-.qs__flex_row {
-  display: flex;
-}
-
-.qs__flex_column {
-  display: flex;
-  flex-direction: column;
-}
-
-:has(.qs__flex_row, .qs__flex_column) .__flex_extend {
-  flex: 1;
-}
-
-:has(.qs__flex_row, .qs__flex_column) .__flex_center {
-  justify-content: center;
-  align-items: center;
-}
-
-.qs__sidebar_spacing {
-  padding-left: var(--sidebar-width);
 }
