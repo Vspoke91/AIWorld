@@ -2,6 +2,7 @@
   --background-color: #313131;
   --font-color: rgba(255, 255, 255, 0.87);
   --sidebar-width: 188px;
+  --header-background-color: rgb(38, 38, 38);
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
