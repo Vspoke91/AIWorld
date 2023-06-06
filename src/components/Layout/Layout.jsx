@@ -1,16 +1,46 @@
 import { Outlet, Link } from "react-router-dom";
 import './Layout.css'
 import { ArrowSVG } from '../../assets/CustomIcons';
+import { useState } from "react";
 
 const Layout = () => {
+  const title = Array.from("AI World");
+  let alphabetArray = Array.from("abcdefghijklmnopqrstuvwxyz");
+
+  //START OF TODO: this need better performance. crashes if do too fast
+  let interval = null;
+  let [titleChanger, setTitleChanger] = useState(title);
+
+  let tittleAnimation = () =>{
+
+    let interations = 0;
+    clearInterval(interval);
+
+    interval = setInterval(() => {
+      setTitleChanger(title.map((letter, index) => {
+
+        if(index < interations){
+          return title[index];
+        }
+
+        return alphabetArray[Math.floor(Math.random()*26)]
+      }))
+
+      if(interations >= title.length)
+        clearInterval(interval);
+
+      interations += 1/4;
+    }, 30)
+  }
+  //END OF TODO
 
   return (
     <>
       <div id="header-holder">
         <header className='qs__flex_column'>
-            <Link to='/' className='logo qs__flex_column __flex_center'>
+            <Link to='/' className='logo qs__flex_column __flex_center' onMouseEnter={tittleAnimation}>
                 <img src='/img/logos/AI-World-Small.png'/>
-                <span>AI World</span>
+                <span>{titleChanger}</span>
             </Link>
 
             <nav className='qs__flex_column __flex_center'>
