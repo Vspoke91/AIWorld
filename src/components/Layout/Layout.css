@@ -18,12 +18,12 @@ main {
     padding: 5px;
 
     border-radius: 0 5px 5px 0;
-    background-color: #525252;
+    background-color: var(--tooling-background-color);
     cursor: pointer;
 
     position: absolute;
     right: 0;
-    top: 40px;
+    top: 80px;
 
     z-index: 1;
     transition: ease-in-out 0.3s;
