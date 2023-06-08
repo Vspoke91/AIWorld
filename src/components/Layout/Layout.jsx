@@ -2,6 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import './Layout.css'
 import { ArrowSVG } from '../../assets/CustomIcons';
 import { useState } from "react";
+import { useRef } from "react";
 
 const Layout = () => {
   const title = Array.from("AI World");
@@ -12,7 +13,6 @@ const Layout = () => {
   let [titleChanger, setTitleChanger] = useState(title);
 
   let tittleAnimation = () =>{
-
     let interations = 0;
     clearInterval(interval);
 
@@ -34,9 +34,10 @@ const Layout = () => {
   }
   //END OF TODO
 
+  const headerRef = useRef(null)
   return (
     <>
-      <div id="header-holder">
+      <div ref={headerRef} aria-expanded={true} id="header-holder">
         <header className='qs__flex_column'>
             <Link to='/' className='logo qs__flex_column __flex_center' onMouseEnter={tittleAnimation}>
                 <img src='/img/logos/AI-World-Small.png'/>
@@ -54,7 +55,7 @@ const Layout = () => {
                 <span>Stephen Hawking</span>
             </div>
         </header>
-        <div className="slider-control"><ArrowSVG /></div>
+        <div className="slider-control" onClick={() =>{headerRef.current.setAttribute('aria-expanded', headerRef.current.getAttribute('aria-expanded') !== 'true')}}><ArrowSVG /></div>
       </div>
 
       <div className="qs__sidebar_spacing qs__flex_column qs__height_full_percent qs_scroll_y">

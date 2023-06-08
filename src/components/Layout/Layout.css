@@ -10,6 +10,20 @@ main {
     position: fixed;
     height: 100vh;
     width: var(--sidebar-width);
+    transition: ease-out 0.3s;
+}
+
+#header-holder[aria-expanded='false'] {
+    transform: translateX(-100%);
+    box-shadow: 10px 0px 5px 0px rgb(0, 0, 0);
+}
+
+#header-holder[aria-expanded='false'] .slider-control {
+    transform: translateX(100%);
+}
+
+#header-holder[aria-expanded='false'] .slider-control svg {
+    transform: rotateY(180deg);
 }
 
 #header-holder .slider-control {
@@ -40,6 +54,7 @@ main {
 #header-holder .slider-control svg {
     height: inherit;
     width: inherit;
+    transition: ease-in-out 0.8s;
 }
 
 header {
