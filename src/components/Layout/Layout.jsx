@@ -58,7 +58,7 @@ const Layout = () => {
         <div className="slider-control" onClick={() =>{headerRef.current.setAttribute('aria-expanded', headerRef.current.getAttribute('aria-expanded') !== 'true')}}><ArrowSVG /></div>
       </div>
 
-      <div className="qs__sidebar_spacing qs__flex_column qs__height_full_percent qs_scroll_y">
+      <div className="qs__sidebar_spacing qs__flex_column qs__height_full_percent qs_scroll_y qs_animation">
         <main>
           <Outlet/>
         </main>

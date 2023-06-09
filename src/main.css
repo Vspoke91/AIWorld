@@ -59,3 +59,7 @@ html,
 .qs_scroll_y {
   overflow-y: auto;
 }
+
+.qs_animation {
+  transition: ease-out 0.3s;
+}

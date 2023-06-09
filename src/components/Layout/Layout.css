@@ -26,6 +26,10 @@ main {
     transform: rotateY(180deg);
 }
 
+#header-holder[aria-expanded='false']+.qs__sidebar_spacing {
+    padding: 0;
+}
+
 #header-holder .slider-control {
     height: 20px;
     width: 20px;
