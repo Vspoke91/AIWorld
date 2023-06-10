@@ -45,7 +45,7 @@ const Layout = () => {
             </Link>
 
             <nav className='qs__flex_column __flex_center'>
-                <Link to='/search'>Search Links</Link>
+                <Link to='/search'>Search</Link>
                 <Link to='/feedback'>Feedback</Link>
                 <Link to='/about'>About</Link>
             </nav>
