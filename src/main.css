@@ -1,6 +1,9 @@
 :root {
-
+  --background-color: #313131;
   --font-color: rgba(255, 255, 255, 0.87);
+  --sidebar-width: 188px;
+  --header-background-color: rgb(38, 38, 38);
+  --tooling-background-color: rgb(78, 78, 78);
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -15,4 +18,48 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+body,
+html,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/*--[QUICKSTYLE]--*/
+
+.qs__flex_row {
+  display: flex;
+}
+
+.qs__flex_column {
+  display: flex;
+  flex-direction: column;
+}
+
+:has(.qs__flex_row, .qs__flex_column) .__flex_extend {
+  flex: 1;
+}
+
+:has(.qs__flex_row, .qs__flex_column) .__flex_center {
+  justify-content: center;
+  align-items: center;
+}
+
+.qs__sidebar_spacing {
+  padding-left: var(--sidebar-width);
+}
+
+.qs__height_full_percent {
+  height: 100%;
+}
+
+.qs_scroll_y {
+  overflow-y: auto;
+}
+
+.qs_animation {
+  transition: ease-out 0.3s;
 }

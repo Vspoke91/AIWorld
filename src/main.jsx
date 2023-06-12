@@ -1,10 +1,30 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './pages/app/App.jsx'
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
 import './main.css'
+import LayoutComponent from './components/Layout/Layout'
+import HomePage from './pages/home/Home'
+import SearchPage from './pages/search/Search'
+import FeedbackPage from './pages/feedback/Feedback'
+import AboutPage from './pages/about/About'
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path='/' element={<LayoutComponent/>} >
+        <Route index element={<HomePage />} />
+        <Route path='/search' element={<SearchPage />} />
+        <Route path='/feedback' element={<FeedbackPage />} />
+        <Route path='/about' element={<AboutPage />} />
+      </Route>
+
+      <Route path='*' element={<>404 Page</>} />
+    </>
+  )
+);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </React.StrictMode>,
 )
