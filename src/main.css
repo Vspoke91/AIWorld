@@ -60,6 +60,16 @@ html,
   overflow-y: auto;
 }
 
+.qs_scroll_x {
+  overflow-x: auto;
+}
+
 .qs_animation {
   transition: ease-out 0.3s;
+}
+
+.qs__grid_row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fill, minmax(300px, max-content));
 }
