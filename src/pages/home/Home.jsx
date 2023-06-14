@@ -1,4 +1,5 @@
 //styles imports
+import { useEffect, useState } from 'react';
 import './Home.css'
 
 function Home() {
@@ -43,31 +44,27 @@ function Home() {
 
 function Development() {
     const RELEASE_GITHUB_API = 'https://api.github.com/repos/vspoke91/aiworld/releases';
+    const [githubVersionState, setGithubVersionState] = useState([]);
+    //TODO: find a way to fetch data from url
+
+    useEffect(() =>{
+        fetch(`${RELEASE_GITHUB_API}`)
+        .then((res) => res.json())
+        .then((array) => setGithubVersionState(array))
+    }, [])
 
     return(
         <>
             <h2>Development</h2>
             <div>
-                <div>
-                    <h3>VErion</h3>
-                    <p>Description</p>
-                </div>
-                <div>
-                    <h3>VErion</h3>
-                    <p>Description</p>
-                </div><div>
-                    <h3>VErion</h3>
-                    <p>Description</p>
-                </div><div>
-                    <h3>VErion</h3>
-                    <p>Description</p>
-                </div><div>
-                    <h3>VErion</h3>
-                    <p>Description</p>
-                </div><div>
-                    <h3>VErion</h3>
-                    <p>Description</p>
-                </div>
+                {githubVersionState.length ? (
+                    <div>
+                        <h3>Version: {githubVersionState[0].name}</h3>
+                        <p>Description: {githubVersionState[0].body}</p>
+                    </div>
+                ) : (
+                    <p>Loading...</p>
+                )}
             </div>
         </>
     );
