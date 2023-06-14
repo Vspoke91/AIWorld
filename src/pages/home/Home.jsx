@@ -35,28 +35,38 @@ function Home() {
                 <p>Explore a variety of tools that use AI to generate amazing graphics, write engaging texts, and chat with you on any topic</p>
             </div>
             <div>
-                <h2>Development</h2>
+                <Development/>
+            </div>
+        </>
+    );
+}
+
+function Development() {
+    const RELEASE_GITHUB_API = 'https://api.github.com/repos/vspoke91/aiworld/releases';
+
+    return(
+        <>
+            <h2>Development</h2>
+            <div>
                 <div>
-                    <div>
-                        <h3>VErion</h3>
-                        <p>Description</p>
-                    </div>
-                    <div>
-                        <h3>VErion</h3>
-                        <p>Description</p>
-                    </div><div>
-                        <h3>VErion</h3>
-                        <p>Description</p>
-                    </div><div>
-                        <h3>VErion</h3>
-                        <p>Description</p>
-                    </div><div>
-                        <h3>VErion</h3>
-                        <p>Description</p>
-                    </div><div>
-                        <h3>VErion</h3>
-                        <p>Description</p>
-                    </div>
+                    <h3>VErion</h3>
+                    <p>Description</p>
+                </div>
+                <div>
+                    <h3>VErion</h3>
+                    <p>Description</p>
+                </div><div>
+                    <h3>VErion</h3>
+                    <p>Description</p>
+                </div><div>
+                    <h3>VErion</h3>
+                    <p>Description</p>
+                </div><div>
+                    <h3>VErion</h3>
+                    <p>Description</p>
+                </div><div>
+                    <h3>VErion</h3>
+                    <p>Description</p>
                 </div>
             </div>
         </>
