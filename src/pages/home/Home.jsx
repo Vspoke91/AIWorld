@@ -53,18 +53,31 @@ function Development() {
         .then((array) => setGithubVersionState(array))
     }, [])
 
+    const renderVersionSections = () => {
+
+        return (
+            githubVersionState.length ? 
+                githubVersionState.map((value) => 
+                <>
+                    <div>
+                        <a href={value.html_url}><h3>{value.name}</h3></a>
+                        <span>Version: {value.tag_name}</span>
+                        <span>{value.published_at}</span>
+                        <p>{value.body}</p>
+                    </div>
+                </>)
+                : 
+                <>
+                    <p>Loading...</p>
+                </>
+        )
+    }
+
     return(
         <>
             <h2>Development</h2>
             <div>
-                {githubVersionState.length ? (
-                    <div>
-                        <h3>Version: {githubVersionState[0].name}</h3>
-                        <p>Description: {githubVersionState[0].body}</p>
-                    </div>
-                ) : (
-                    <p>Loading...</p>
-                )}
+                {renderVersionSections()}
             </div>
         </>
     );
