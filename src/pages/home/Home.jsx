@@ -55,6 +55,31 @@ function Development() {
 
     const renderVersionSections = () => {
 
+        const descriptionElementFormatter = (descriptionLine) => {
+            const splitLine = descriptionLine.split("\r\n");
+            return  <>
+                {splitLine.map((line, index) => {
+
+                    const titleRegex = /^##.*/
+                    const boldRegex = /^\*\*.*\*\*.*/
+                    const tableRegex = /^\*.|\+*/
+
+                    if(line.match(titleRegex)){
+                        line = line.slice(2);
+                        return <span key={index} className='description-header2'>{line}</span>
+                    } else if(line.match(boldRegex)){
+                        line = line.replace(/\*\*/g, '');
+                        return <span key={index} className='description-bold'>{line}</span>
+                    } else if(line.match(tableRegex)){
+                        line = line.slice(2);
+                        return <span key={index} className='description-table'>{line}</span>
+                    } 
+                    
+                    return <span key={index}>{line}</span>
+                })}
+            </>;
+        }
+
         return (
             githubVersionState.length ? 
                 githubVersionState.map((value, index) => 
@@ -62,7 +87,9 @@ function Development() {
                         <a href={value.html_url}><h3>{value.name}</h3></a>
                         <span>{new Date(value.published_at).toLocaleDateString('en-US')}</span>
                         <p>Version: {value.tag_name}</p>
-                        <p>{value.body}</p>
+                        <div>
+                            {descriptionElementFormatter(value.body)}
+                        </div>
                     </div>
                 )
                 : 
