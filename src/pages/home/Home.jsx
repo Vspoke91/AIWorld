@@ -57,22 +57,20 @@ function Development() {
 
         return (
             githubVersionState.length ? 
-                githubVersionState.map((value) => 
-                <>
-                    <div>
+                githubVersionState.map((value, index) => 
+                    <div key={index}>
                         <a href={value.html_url}><h3>{value.name}</h3></a>
-                        <span>Version: {value.tag_name}</span>
-                        <span>{value.published_at}</span>
+                        <span>{new Date(value.published_at).toLocaleDateString('en-US')}</span>
+                        <p>Version: {value.tag_name}</p>
                         <p>{value.body}</p>
                     </div>
-                </>)
+                )
                 : 
                 <>
                     <p>Loading...</p>
                 </>
         )
     }
-
     return(
         <>
             <h2>Development</h2>
