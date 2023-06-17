@@ -66,13 +66,13 @@ function Development() {
 
                     if(line.match(titleRegex)){
                         line = line.slice(2);
-                        return <span key={index} className='description-header2'>{line}</span>
+                        return <span key={index} className='description-header2'>{line+"\n"}</span>
                     } else if(line.match(boldRegex)){
                         line = line.replace(/\*\*/g, '');
-                        return <span key={index} className='description-bold'>{line}</span>
+                        return <span key={index} className='description-bold'>{line+"\n"}</span>
                     } else if(line.match(tableRegex)){
                         line = line.slice(2);
-                        return <span key={index} className='description-table'>{line}</span>
+                        return <span key={index} className='description-table'>{line+"\n"}</span>
                     } 
                     
                     return <span key={index}>{line}</span>
@@ -87,7 +87,7 @@ function Development() {
                         <a href={value.html_url}><h3>{value.name}</h3></a>
                         <span>{new Date(value.published_at).toLocaleDateString('en-US')}</span>
                         <p>Version: {value.tag_name}</p>
-                        <div>
+                        <div className='description-holder'>
                             {descriptionElementFormatter(value.body)}
                         </div>
                     </div>
