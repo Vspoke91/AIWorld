@@ -1,3 +1,19 @@
-.description-holder {
+#DevelopmentSection {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#DevelopmentSection h2 {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0
+}
+
+#DevelopmentSection .description-holder {
+    white-space: pre-line;
+}
+
+#DevelopmentSection .description-holder {
     white-space: pre-line;
 }

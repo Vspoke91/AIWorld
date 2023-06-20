@@ -35,7 +35,7 @@ function Home() {
                 <h1>AI World</h1>
                 <p>Explore a variety of tools that use AI to generate amazing graphics, write engaging texts, and chat with you on any topic</p>
             </div>
-            <div>
+            <div id='DevelopmentSection'>
                 <Development/>
             </div>
         </>
@@ -98,6 +98,7 @@ function Development() {
                 </>
         )
     }
+    
     return(
         <>
             <h2>Development</h2>
