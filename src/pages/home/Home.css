@@ -1,7 +1,14 @@
 #DevelopmentSection {
-    width: 90%;
+    width: 95%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#DevelopmentSection>div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 30px;
 }
 
 #DevelopmentSection h2 {
@@ -14,6 +21,11 @@
     white-space: pre-line;
 }
 
-#DevelopmentSection .description-holder {
-    white-space: pre-line;
+#DevelopmentSection .item-holder {
+    display: flex;
+    flex-direction: column;
+
+    background: rgb(36, 36, 36);
+    border: black 2px solid;
+    border-radius: 3px;
 }
