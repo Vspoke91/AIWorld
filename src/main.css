@@ -48,8 +48,17 @@ html,
   align-items: center;
 }
 
+:has(.qs__flex_row, .qs__flex_column) .__flex_center_Low {
+  justify-content: center;
+  align-items: flex-end;
+}
+
 .qs__sidebar_spacing {
   padding-left: var(--sidebar-width);
+}
+
+.qs__height_fit_content {
+  height: fit-content;
 }
 
 .qs__height_full_percent {

@@ -84,10 +84,12 @@ function Development() {
             githubVersionState.length ? 
                 githubVersionState.map((value, index) => 
                     <div key={index} className='item-holder'>
-                        <a href={value.html_url}><h3>{value.name}</h3></a>
-                        <span>{new Date(value.published_at).toLocaleDateString('en-US')}</span>
-                        <p>Version: {value.tag_name}</p>
-                        <div className='description-holder'>
+                        <div className='qs__flex_row __flex_center qs__height_fit_content'>
+                            <a className='title-part' href={value.html_url}><h3>{value.name}</h3></a>
+                            <p className='version-part'>{value.tag_name}</p>
+                        </div>
+                        <p>{new Date(value.published_at).toLocaleDateString('en-US')}</p>
+                        <div className='description-part'>
                             {descriptionElementFormatter(value.body)}
                         </div>
                     </div>
@@ -101,7 +103,7 @@ function Development() {
 
     return(
         <>
-            <h2>Development</h2>
+            <h2>Development & Updates</h2>
             <div>
                 {renderVersionSections()}
             </div>

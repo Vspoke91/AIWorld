@@ -1,5 +1,5 @@
 #DevelopmentSection {
-    width: 95%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -7,17 +7,15 @@
 #DevelopmentSection>div {
     display: flex;
     flex-direction: column;
-
     gap: 30px;
 }
 
 #DevelopmentSection h2 {
-    text-align: left;
-    margin-left: 0;
-    margin-right: 0
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#DevelopmentSection .description-holder {
+#DevelopmentSection .description-part {
     white-space: pre-line;
 }
 
@@ -28,4 +26,37 @@
     background: rgb(36, 36, 36);
     border: black 2px solid;
     border-radius: 3px;
+}
+
+#DevelopmentSection .title-part>h3 {
+    margin: 0;
+}
+
+#DevelopmentSection .title-part {
+    margin: 20px 0 20px 0;
+    color: #b9b9b9;
+    font-size: 1.4rem;
+    height: fit-content;
+
+    transition: ease-in-out 0.1s;
+}
+
+#DevelopmentSection .title-part:hover {
+    color: #892828;
+}
+
+#DevelopmentSection .title-part:hover+.version-part {
+    color: white;
+}
+
+#DevelopmentSection .version-part {
+    color: #7e7e7e;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-left: 10px;
+    margin-bottom: 0;
+    margin-top: 10px;
+
+    cursor: default;
+    transition: ease-in-out 0.1s;
 }
