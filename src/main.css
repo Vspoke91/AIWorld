@@ -53,6 +53,12 @@ html,
   align-items: flex-end;
 }
 
+:has(.qs__flex_row, .qs__flex_column) .__flex_left_Low {
+  justify-content: left;
+  align-items: flex-end;
+}
+
+
 .qs__sidebar_spacing {
   padding-left: var(--sidebar-width);
 }
