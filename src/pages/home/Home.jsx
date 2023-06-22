@@ -1,5 +1,6 @@
 //styles imports
 import { useEffect, useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
 import './Home.css'
 
 function Home() {
@@ -62,7 +63,7 @@ function Development() {
 
                     const titleRegex = /^##.*/
                     const boldRegex = /^\*\*.*\*\*.*/
-                    const tableRegex = /^\*.|\+*/
+                    const tableRegex = /^\*. |\+* /
 
                     if(line.match(titleRegex)){
                         line = line.slice(2);
@@ -72,10 +73,10 @@ function Development() {
                         return <span key={index} className='description-bold'>{line+"\n"}</span>
                     } else if(line.match(tableRegex)){
                         line = line.slice(2);
-                        return <span key={index} className='description-table'>{line+"\n"}</span>
+                        return <li key={index} className='description-table'>{line+"\n"}</li>
                     } 
                     
-                    return <span key={index}>{line}</span>
+                    return <span key={index}>{line+"\n"}</span>
                 })}
             </>;
         }
@@ -88,7 +89,12 @@ function Development() {
                             <a className='title-part' href={value.html_url}><h3>{value.name}</h3></a>
                             <p className='version-part'>{value.tag_name}</p>
                         </div>
-                        <p>{new Date(value.published_at).toLocaleDateString('en-US')}</p>
+                        <br/>
+                        <div className='qs__flex_row __flex_left_Low'>
+                            <p className='dateA-part'>Released: {new Date(value.published_at).toLocaleDateString('en-US')}</p>
+                            <p className='dateB-part'>{formatDistanceToNow(new Date(value.published_at), { addSuffix: true })}</p>
+                        </div>
+                        <hr/>
                         <div className='description-part'>
                             {descriptionElementFormatter(value.body)}
                         </div>
