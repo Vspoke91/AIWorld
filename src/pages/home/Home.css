@@ -23,9 +23,16 @@
     display: flex;
     flex-direction: column;
 
+    padding: 20px 10px;
+
     background: rgb(36, 36, 36);
     border: black 2px solid;
     border-radius: 3px;
+}
+
+#DevelopmentSection .item-holder hr {
+    width: 100%;
+    border: 1px solid rgb(44, 44, 44);
 }
 
 #DevelopmentSection .title-part>h3 {
@@ -33,7 +40,7 @@
 }
 
 #DevelopmentSection .title-part {
-    margin: 20px 0 20px 0;
+    margin: 0;
     color: #b9b9b9;
     font-size: 1.4rem;
     height: fit-content;
@@ -59,4 +66,15 @@
 
     cursor: default;
     transition: ease-in-out 0.1s;
+}
+
+#DevelopmentSection .dateB-part {
+    font-size: 0.8rem;
+    padding-left: 10px;
+    color: #7e7e7e;
+}
+
+
+#DevelopmentSection :is(.dateA-part, .dateB-part) {
+    margin: 0;
 }
