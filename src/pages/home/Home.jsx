@@ -33,22 +33,32 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className='qs__flex_row'>
-                <div>
-                    <h1>AI World</h1>
-                    <p>Explore a variety of tools that use AI to generate amazing graphics, write engaging texts, and chat with you on any topic</p>
-                    <Link to="/search"><button>Search Websites</button></Link>
-                </div>
-                <div>
-                    <div>Paid</div>
-                    <div>Free</div>
-                </div>
+            <div id='IntroductionSection'>
+                <Introduction/>
             </div>
             <div id='DevelopmentSection'>
                 <Development/>
             </div>
         </>
     );
+}
+
+function Introduction(){
+    return(
+        <>
+            <div className='description-holder'>
+                    <h1>The best place to find AI tools to create graphics, code, and chat.</h1>
+                    <p>AI-World is a <strong>AI tools hub</strong> to facilitate the search of tools in the web. Explore a variety of tools that use AI to generate amazing graphics, write engaging texts, and chat with you on any topic.</p>
+                    <Link to="/search"><button>Search Websites</button></Link>
+            </div>
+
+            <div className='items-holder'>
+                <div className='item item-Paid'>Paid</div>
+                <div className='item item-Free'>Free</div>
+            </div>    
+        
+        </>
+    )
 }
 
 function Development() {
