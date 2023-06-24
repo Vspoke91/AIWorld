@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import './Home.css'
+import { Link } from 'react-router-dom';
 
 function Home() {
     return (
@@ -32,9 +33,16 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div>
-                <h1>AI World</h1>
-                <p>Explore a variety of tools that use AI to generate amazing graphics, write engaging texts, and chat with you on any topic</p>
+            <div className='qs__flex_row'>
+                <div>
+                    <h1>AI World</h1>
+                    <p>Explore a variety of tools that use AI to generate amazing graphics, write engaging texts, and chat with you on any topic</p>
+                    <Link to="/search"><button>Search Websites</button></Link>
+                </div>
+                <div>
+                    <div>Paid</div>
+                    <div>Free</div>
+                </div>
             </div>
             <div id='DevelopmentSection'>
                 <Development/>
