@@ -30,6 +30,10 @@ html,
 
 /*--[QUICKSTYLE]--*/
 
+.qs__bold {
+  font-weight: bold;
+}
+
 .qs__flex_row {
   display: flex;
 }

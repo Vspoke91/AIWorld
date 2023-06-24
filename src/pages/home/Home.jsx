@@ -62,21 +62,47 @@ function Development() {
                 {splitLine.map((line, index) => {
 
                     const titleRegex = /^##.*/
-                    const boldRegex = /^\*\*.*\*\*.*/
-                    const tableRegex = /^\*. |\+* /
+                    const boldRegex = /\*\*.*?\*\*/g
+                    const tableRegex = /^\* |\+ /
+
+                    let checkBold = (line) =>{
+
+                        let boldedWordsArray = line.match(boldRegex)
+
+                        if(boldedWordsArray != null){
+                            boldedWordsArray = boldedWordsArray.map((str) => str.slice(2, -2))
+
+                            let newLineArray = []
+                            let splitLineArray = line.split("**").filter((str) => str.trim() !== '')
+
+                            for (let i = 0; i < splitLineArray.length; i++) {
+
+                                let pushedString = splitLineArray[i]
+                                for(let j = 0; j < boldedWordsArray.length; j++){
+
+                                    if(splitLineArray[i] === boldedWordsArray[j]){
+                                        pushedString = <strong key={"bold-"+j}>{splitLineArray[i]}</strong>
+                                        break;
+                                    }
+                                }
+                                newLineArray.push(pushedString);
+                            }
+                            return newLineArray
+
+                        }else{
+                            return line;
+                        }
+                    }
 
                     if(line.match(titleRegex)){
                         line = line.slice(2);
-                        return <span key={index} className='description-header2'>{line+"\n"}</span>
-                    } else if(line.match(boldRegex)){
-                        line = line.replace(/\*\*/g, '');
-                        return <span key={index} className='description-bold'>{line+"\n"}</span>
+                        return <span key={"header2-"+index} className='description-header2'>{checkBold(line)}<br/></span>
                     } else if(line.match(tableRegex)){
                         line = line.slice(2);
-                        return <li key={index} className='description-table'>{line+"\n"}</li>
+                        return <li key={"table-"+index} className='description-table'>{checkBold(line)}<br/></li>
                     } 
                     
-                    return <span key={index}>{line+"\n"}</span>
+                    return <span key={"line-"+index}>{checkBold(line)}<br/></span>
                 })}
             </>;
         }
