@@ -53,8 +53,27 @@ function Introduction(){
             </div>
 
             <div className='items-holder'>
-                <div className='item item-Paid'>Paid</div>
-                <div className='item item-Free'>Free</div>
+                <div className='item item-graphic'>
+                    <img src='/img/logos/BlueWillow.png'/>
+                    <div>
+                        <span>BlueWillow</span>
+                        <p>description</p>
+                    </div>
+                </div>
+                <div className='item item-chat'>
+                <img src='/img/logos/ChatGPT.svg'/>
+                    <div>
+                        <span>ChatGPT</span>
+                        <p>description</p>
+                    </div>
+                </div>
+                <div className='item item-code'>
+                    <img src='/img/logos/BlueWillow.png'/>
+                    <div>
+                        <span>Phind</span>
+                        <p>description</p>
+                    </div>
+                </div>
             </div>    
         
         </>
