@@ -1,11 +1,13 @@
 #IntroductionSection {
     display: flex;
+    align-items: center;
+
     margin-left: auto;
     margin-right: auto;
     max-width: 900px;
 
     justify-content: center;
-    gap: 35vw;
+    gap: 100px;
 }
 
 #IntroductionSection .description-holder {
@@ -48,20 +50,61 @@
 }
 
 #IntroductionSection .item {
-    height: 100px;
-    width: 100px;
+    line-height: 0;
+
+    height: 150px;
+    width: 150px;
+
+    padding: 4px;
+    margin: 10px;
+    border-radius: 5px;
+
+    background-color: rgb(78, 78, 78);
 }
 
 #IntroductionSection .item img {
     height: inherit;
     width: inherit;
     background-color: rgb(22, 22, 22);
+
+    box-sizing: border-box;
+    padding: 5px;
 }
 
 #IntroductionSection .item>div {
+    line-height: normal;
     display: none;
 }
 
+#IntroductionSection .item>div span {
+    margin: 10px 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#IntroductionSection .item>div p {
+    margin: 0;
+}
+
+#IntroductionSection .item:hover>div {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+
+    position: relative;
+    top: -100%;
+
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.792);
+}
+
+#IntroductionSection .item-graphic {
+    transform: translateX(-100px);
+}
+
+#IntroductionSection .item-code {
+    transform: translateX(-50px) translateY(10px);
+}
 
 
 /*---- Development Section ----*/
