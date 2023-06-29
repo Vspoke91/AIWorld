@@ -57,21 +57,21 @@ function Introduction(){
                     <img src='/img/logos/BlueWillow.png'/>
                     <div>
                         <span>BlueWillow</span>
-                        <p>description</p>
+                        <p>State-of-the-art artificial intelligence <strong>image generator</strong>.</p>
                     </div>
                 </div>
                 <div className='item item-chat'>
                 <img src='/img/logos/ChatGPT.svg'/>
                     <div>
                         <span>ChatGPT</span>
-                        <p>description</p>
+                        <p>Natural language AI <strong>chatbot</strong> based on OpenAI's GPT-3.5.</p>
                     </div>
                 </div>
                 <div className='item item-code'>
                     <img src='/img/logos/Phind.png'/>
                     <div>
                         <span>Phind</span>
-                        <p>description</p>
+                        <p>Generative AI search engine for <strong>developers</strong>.</p>
                     </div>
                 </div>
             </div>    
