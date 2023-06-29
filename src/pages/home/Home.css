@@ -83,7 +83,7 @@
 }
 
 #IntroductionSection .item>div p {
-    margin: 0;
+    margin: 0 3px;
 }
 
 #IntroductionSection .item:hover>div {
