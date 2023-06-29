@@ -28,6 +28,10 @@ export const categories = {
         text: 'Images & Graphics',
         color: 'rgb(141, 3, 3)'
     },
+    coder: {
+        text: 'Coder',
+        color: 'rgb(141, 3, 3)'
+    },
 }
 
 const items = [
@@ -69,6 +73,14 @@ const items = [
         logo: LOGOS_PATH+"Hotpot.png",
         description: "Hotpot helps you create amazing graphics, pictures, and writing.",
         category: [categories.graphics.text],
+        tagType: tags.free
+    },
+    {
+        title: "Phind",
+        webLink: "https://www.phind.com/",
+        logo: LOGOS_PATH+"Phind.png",
+        description: "Phind.com is an AI search engine for developers. It is driven by cutting-edge, proprietary AI language models, making it the smartest and most efficient way to find information.",
+        category: [categories.coder.text, categories.chat.text],
         tagType: tags.free
     },
 ]
