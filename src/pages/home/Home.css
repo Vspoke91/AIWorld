@@ -71,22 +71,25 @@
     padding: 5px;
 }
 
-#IntroductionSection .item>div {
+#IntroductionSection .item>a {
     line-height: normal;
     display: none;
+
+    color: var(--font-color);
+    text-decoration: none;
 }
 
-#IntroductionSection .item>div span {
+#IntroductionSection .item>a span {
     margin: 10px 0;
     font-size: 1.3rem;
     font-weight: bold;
 }
 
-#IntroductionSection .item>div p {
+#IntroductionSection .item>a p {
     margin: 0 3px;
 }
 
-#IntroductionSection .item:hover>div {
+#IntroductionSection .item:hover>a {
     display: flex;
     flex-direction: column;
     height: inherit;

@@ -55,24 +55,24 @@ function Introduction(){
             <div className='items-holder'>
                 <div className='item item-graphic'>
                     <img src='/img/logos/BlueWillow.png'/>
-                    <div>
+                    <a href='https://www.bluewillow.ai/' target='_black' rel='noreferrer'>
                         <span>BlueWillow</span>
                         <p>State-of-the-art artificial intelligence <strong>image generator</strong>.</p>
-                    </div>
+                    </a>
                 </div>
                 <div className='item item-chat'>
-                <img src='/img/logos/ChatGPT.svg'/>
-                    <div>
+                    <img src='/img/logos/ChatGPT.svg'/>
+                    <a href='https://chat.openai.com/' target='_blank' rel="noreferrer">
                         <span>ChatGPT</span>
                         <p>Natural language AI <strong>chatbot</strong> based on OpenAI's GPT-3.5.</p>
-                    </div>
+                    </a>
                 </div>
                 <div className='item item-code'>
                     <img src='/img/logos/Phind.png'/>
-                    <div>
+                    <a href='https://www.phind.com/' target='_blank' rel="noreferrer">
                         <span>Phind</span>
                         <p>Generative AI search engine for <strong>developers</strong>.</p>
-                    </div>
+                    </a>
                 </div>
             </div>    
         
