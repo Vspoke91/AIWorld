@@ -7,37 +7,46 @@ import { Link } from 'react-router-dom';
 function Home() {
     return (
         <>
-            <div>
-                <h2>Feature Websites</h2>
-                <div className='qs__grid_row qs_scroll_y'>
-                    
-                    <div>
-                        <img/>
-                        <h3>AI</h3>
-                    </div>
-                    <div>
-                        <img/>
-                        <h3>AI</h3>
-                    </div>
-                    <div>
-                        <img/>
-                        <h3>AI</h3>
-                    </div>
-                    <div>
-                        <img/>
-                        <h3>AI</h3>
-                    </div>
-                    <div>
-                        <img/>
-                        <h3>AI</h3>
-                    </div>
-                </div>
+            <div id="FeaturedSection">
+                <Featured/>
             </div>
             <div id='IntroductionSection'>
                 <Introduction/>
             </div>
             <div id='DevelopmentSection'>
                 <Development/>
+            </div>
+        </>
+    );
+}
+
+function Featured(){
+
+    return(
+        <>
+            <h2>Featured</h2>
+
+            <div className='qs__grid_row qs_scroll_y'>
+                <div className='item'>
+                    <img/>
+                    <h3>AI</h3>
+                </div>
+                <div className='item'>
+                    <img/>
+                    <h3>AI</h3>
+                </div>
+                <div className='item'>
+                    <img/>
+                    <h3>AI</h3>
+                </div>
+                <div className='item'>
+                    <img/>
+                    <h3>AI</h3>
+                </div>
+                <div className='item'>
+                    <img/>
+                    <h3>AI</h3>
+                </div>
             </div>
         </>
     );
