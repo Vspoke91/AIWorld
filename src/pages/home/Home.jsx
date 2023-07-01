@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import './Home.css'
 import { Link } from 'react-router-dom';
+import {default as contentData, categories } from '../../assets/sitesDataBase' 
 
 function Home() {
     return (
@@ -26,7 +27,7 @@ function Featured(){
         <>
             <h2>Featured</h2>
 
-            <div className='qs__grid_row qs_scroll_y'>
+            <div>
                 <div className='item'>
                     <img/>
                     <h3>AI</h3>
