@@ -23,31 +23,23 @@ function Home() {
 
 function Featured(){
 
+    const getWebsiteItemElement = (item, index) =>{
+        console.log(item);
+        return (
+            <div key={index} className='item'>
+                <a href={item.webLink}>
+                    <img src={item.logo}/>
+                    <h3>{item.title}</h3>
+                </a>
+            </div>
+        )
+    }
+
     return(
         <>
             <h2>Featured</h2>
-
             <div>
-                <div className='item'>
-                    <img/>
-                    <h3>AI</h3>
-                </div>
-                <div className='item'>
-                    <img/>
-                    <h3>AI</h3>
-                </div>
-                <div className='item'>
-                    <img/>
-                    <h3>AI</h3>
-                </div>
-                <div className='item'>
-                    <img/>
-                    <h3>AI</h3>
-                </div>
-                <div className='item'>
-                    <img/>
-                    <h3>AI</h3>
-                </div>
+                {contentData.map((item, index) => getWebsiteItemElement(item, index))}
             </div>
         </>
     );
