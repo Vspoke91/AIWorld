@@ -24,12 +24,11 @@ function Home() {
 function Featured(){
 
     const getWebsiteItemElement = (item, index) =>{
-        console.log(item);
         return (
             <div key={index} className='item'>
-                <a href={item.webLink}>
+                <a href={item.webLink} target='_black'>
                     <img src={item.logo}/>
-                    <h3>{item.title}</h3>
+                    <h3 className='title-part'>{item.title}</h3>
                 </a>
             </div>
         )
