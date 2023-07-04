@@ -1,10 +1,68 @@
+#FeaturedSection {
+    margin: 0 auto;
+}
+
+#FeaturedSection>div {
+    display: flex;
+    padding: 0 20px;
+    gap: 20px;
+    overflow-x: auto;
+    background-color: #252525;
+    box-shadow: 0px 0px 4px 5px rgb(0, 0, 0);
+}
+
+#FeaturedSection>div::-webkit-scrollbar {
+    width: inherit;
+    height: 3px;
+    background-color: transparent;
+}
+
+#FeaturedSection>div::-webkit-scrollbar-thumb {
+    background-color: rgb(83, 83, 83);
+}
+
+#FeaturedSection h2 {
+    font-size: 2rem;
+    margin-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#FeaturedSection .item {
+    background-color: #151515;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+}
+
+#FeaturedSection .item img {
+    height: 120px;
+    width: 120px;
+}
+
+#FeaturedSection .item .title-part {
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.557);
+    width: 100%;
+    font-size: 1.4rem;
+    color: var(--font-color);
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#FeaturedSection .item:hover .title-part {
+    color: #a1692a;
+}
+
 /*---- Introduction Section ----*/
 #IntroductionSection {
     display: flex;
     align-items: center;
 
 
-    margin: 80px auto;
+    margin: 30px auto;
     max-width: 900px;
 
     justify-content: center;

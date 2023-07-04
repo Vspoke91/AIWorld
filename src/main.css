@@ -90,5 +90,4 @@ html,
 .qs__grid_row {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fill, minmax(300px, max-content));
 }
