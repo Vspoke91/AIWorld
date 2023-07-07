@@ -30,6 +30,10 @@ html,
 
 /*--[QUICKSTYLE]--*/
 
+.qs__bold {
+  font-weight: bold;
+}
+
 .qs__flex_row {
   display: flex;
 }
@@ -48,8 +52,23 @@ html,
   align-items: center;
 }
 
+:has(.qs__flex_row, .qs__flex_column) .__flex_center_Low {
+  justify-content: center;
+  align-items: flex-end;
+}
+
+:has(.qs__flex_row, .qs__flex_column) .__flex_left_Low {
+  justify-content: left;
+  align-items: flex-end;
+}
+
+
 .qs__sidebar_spacing {
   padding-left: var(--sidebar-width);
+}
+
+.qs__height_fit_content {
+  height: fit-content;
 }
 
 .qs__height_full_percent {
@@ -60,6 +79,15 @@ html,
   overflow-y: auto;
 }
 
+.qs_scroll_x {
+  overflow-x: auto;
+}
+
 .qs_animation {
   transition: ease-out 0.3s;
+}
+
+.qs__grid_row {
+  display: grid;
+  grid-auto-flow: column;
 }

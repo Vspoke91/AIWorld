@@ -11,6 +11,7 @@ main {
     height: 100vh;
     width: var(--sidebar-width);
     transition: ease-out 0.3s;
+    z-index: 200;
 }
 
 #header-holder[aria-expanded='false'] {
@@ -43,7 +44,7 @@ main {
     right: 0;
     top: 80px;
 
-    z-index: 1;
+    z-index: 99;
     transition: ease-in-out 0.3s;
 }
 
@@ -66,7 +67,7 @@ header {
     height: inherit;
     width: inherit;
 
-    z-index: 2;
+    z-index: 100;
     background: var(--header-background-color);
     box-shadow: 2px 0px 5px 0px rgb(0, 0, 0);
 }
