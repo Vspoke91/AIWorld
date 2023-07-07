@@ -1,3 +1,5 @@
+/*---- Featured Section ----*/
+
 #FeaturedSection {
     margin: 0 auto;
 }
@@ -8,7 +10,7 @@
     gap: 20px;
     overflow-x: auto;
     background-color: #252525;
-    box-shadow: 0px 0px 4px 5px #3f3f3f;
+    box-shadow: 0px 0px 4px 5px rgb(63, 63, 63);
     border-top: black solid 2px;
     border-bottom: black solid 2px;
 
@@ -263,4 +265,9 @@
 
 #DevelopmentSection :is(.dateA-part, .dateB-part) {
     margin: 0;
+}
+
+#DevelopmentSection .loading-text {
+    margin: 0 auto;
+    font-size: 1.5rem;
 }

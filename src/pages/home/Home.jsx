@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import './Home.css'
 import { Link } from 'react-router-dom';
-import {default as contentData, categories } from '../../assets/sitesDataBase' 
+import {default as contentData } from '../../assets/sitesDataBase' 
 
 function Home() {
     return (
@@ -150,7 +150,7 @@ function Development() {
                 githubVersionState.map((value, index) => 
                     <div key={index} className='item-holder'>
                         <div className='qs__flex_row __flex_center qs__height_fit_content'>
-                            <a className='title-part' href={value.html_url}><h3>{value.name}</h3></a>
+                            <a className='title-part' href={value.html_url} target='_blank' rel="noreferrer"><h3>{value.name}</h3></a>
                             <p className='version-part'>{value.tag_name}</p>
                         </div>
                         <br/>
@@ -166,7 +166,7 @@ function Development() {
                 )
                 : 
                 <>
-                    <p>Loading...</p>
+                    <p className='loading-text'>Loading Updates...</p>
                 </>
         )
     }
