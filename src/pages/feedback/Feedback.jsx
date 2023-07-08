@@ -55,9 +55,9 @@ function Feedback() {
             <label>I have feedback about
                 <select name="about" onChange={(event) => setFeedbackTypeElement(feedbackTypeChangeHandler(event))} required>
                     <option value="" disabled selected>Select an option</option>
-                    <option value='adding-a-website'>Adding a website</option>
-                    <option value='editing-a-website'>Editing a website</option>
-                    <option value='website-issues'>Website issues</option>
+                    <option value='Adding a website'>Adding a website</option>
+                    <option value='Editing a website'>Editing a website</option>
+                    <option value='Website issues'>Website issues</option>
                     <option value='other'>Other</option>
                 </select>
             </label>
