@@ -49,16 +49,16 @@ function Feedback() {
     <>
         <h1>Send us your feedback!</h1>
         <p>Feedback is important to us because it provides our developers with valuable information to improve the experiences of other users, including yourself.</p>
-        <form>
-            <label>Name or Nickname:<input required type='text' placeholder='Type Here...'/></label>
-            <label>E-Mail:<input required type='Email' placeholder='Type Here...'/></label>
-            <label>I have a feedback about
-                <select required onChange={(event) => setFeedbackTypeElement(feedbackTypeChangeHandler(event))}>
+        <form name="Feedback" method="POST" data-netlify="true">
+            <label>Name: <input name='name' type='text' placeholder='Type Here...' required/></label>
+            <label>E-Mail:<input name='email' type='email' placeholder='Type Here...' required/></label>
+            <label>I have feedback about
+                <select name="about" onChange={(event) => setFeedbackTypeElement(feedbackTypeChangeHandler(event))} required>
                     <option value="" disabled selected>Select an option</option>
-                    <option>Adding a website</option>
-                    <option>Editing a website</option>
-                    <option>Website issues</option>
-                    <option>Other</option>
+                    <option value='adding-a-website'>Adding a website</option>
+                    <option value='editing-a-website'>Editing a website</option>
+                    <option value='website-issues'>Website issues</option>
+                    <option value='other'>Other</option>
                 </select>
             </label>
 
