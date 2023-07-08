@@ -1,5 +1,5 @@
 //styles imports
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Feedback.css'
 
 function Feedback() {
@@ -45,11 +45,19 @@ function Feedback() {
         }
     }
 
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        if ( window.location.search.includes('success=true') ) {
+        setSuccess(true);
+        }
+    }, []);
     return (
     <>
         <h1>Send us your feedback!</h1>
         <p>Feedback is important to us because it provides our developers with valuable information to improve the experiences of other users, including yourself.</p>
-        <form name="Feedback" method="POST" data-netlify="true">
+        <form name="feedback" method="POST" data-netlify="true" action='/feedback/?success=true'>
+            <input type="hidden" name="form-name" value="contact" required/>
             <label>Name: <input name='name' type='text' placeholder='Type Here...' required/></label>
             <label>E-Mail:<input name='email' type='email' placeholder='Type Here...' required/></label>
             <label>I have feedback about
@@ -62,9 +70,13 @@ function Feedback() {
                 </select>
             </label>
 
+            {success && (
+                <p style={{ color: "green" }}>Thanks for your message! </p>
+            )}
+
             {feedbackTypeElement}
 
-            <input type="submit" value="Send"/>
+            <button type="submit">Send</button>
         </form>
     </>);
 }
