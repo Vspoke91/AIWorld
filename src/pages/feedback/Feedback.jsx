@@ -185,7 +185,7 @@ function Feedback() {
             (
                 <>
                     <p style={{ color: "green" }}>Feedback Succefully Submited!</p>
-                    <button onClick={setFormSubmited(false)}>Send New Feedback!</button>
+                    <button onClick={() => setFormSubmited(false)}>Send New Feedback!</button>
                 </>
             ) 
             :
