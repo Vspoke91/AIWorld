@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import './Feedback.css'
 
+import { default as contentData } from '../../assets/sitesDataBase' 
+
 function Feedback() {
 
     let [feedbackRenderElement, setFeedbackRenderElement] = useState(<p>Select An Option Above.</p>);
@@ -26,12 +28,11 @@ function Feedback() {
                     return(
                         <>
                             <label>Website Name:
-                                <select required>
-                                    <option value="" disabled selected>Select an option</option>
-                                    <option>Phind</option>
-                                    <option>daw</option>
-                                    <option>Website issues</option>
-                                    <option>Other</option>
+                                <select required defaultValue="">
+                                    <option value="" disabled>Select an option</option>
+                                    {Object.keys(contentData).map( (value, key) => 
+                                        <option key={key}>{contentData[value].title}</option>
+                                    )}
                                 </select>
                             </label>
                             <label>Edit:<textarea required placeholder='Change description to...'/></label>
@@ -74,8 +75,8 @@ function Feedback() {
             <label>Name: <input name='name' type='text' placeholder='Type Here...'/></label>
             <label>E-Mail:<input name='email' type='email' placeholder='Type Here...'/></label>
             <label>I have feedback about
-                <select name="about" onChange={feedbackChangeHandler} >
-                    <option value="" disabled selected>Select an option</option>
+                <select name="about" onChange={feedbackChangeHandler} defaultValue="">
+                    <option value="" disabled>Select an option</option>
                     <option value='Adding a website'>Adding a website</option>
                     <option value='Editing a website'>Editing a website</option>
                     <option value='Website issues'>Website issues</option>
