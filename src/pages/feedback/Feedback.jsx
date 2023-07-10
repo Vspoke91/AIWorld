@@ -83,11 +83,11 @@ function Feedback() {
                 </select>
             </label>
 
+            {feedbackRenderElement}
+
             {formSubmited && (
                 <p style={{ color: "green" }}>Thanks for your message! </p>
             )}
-
-            {feedbackRenderElement}
 
             <button type="submit">Send</button>
         </form>
