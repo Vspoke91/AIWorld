@@ -154,8 +154,7 @@ function Feedback() {
     const formSubmitHandler = (event) => {
     
         const formData = new FormData(event.target);
-        console.log(event)
-        
+
         fetch('/', { // '/' will change to endpoint by netlify
           method: 'POST',
           body: formData
@@ -165,7 +164,7 @@ function Feedback() {
                 setFormSubmited(true);
                 event.target.reset(); // reset form
             } else {
-                alert('Feedback Fail to Submit!',);
+                alert('Feedback Fail to Submit!');
             }
           })
           .catch(error => {
@@ -184,8 +183,8 @@ function Feedback() {
         {formSubmited ? 
             (
                 <>
-                    <p style={{ color: "green" }}>Feedback Succefully Submited!</p>
-                    <button onClick={() => setFormSubmited(false)}>Send New Feedback!</button>
+                    <p>Succefully Submited! Thank You!</p>
+                    <button onClick={() => setFormSubmited(false)}>Back</button>
                 </>
             ) 
             :
@@ -208,7 +207,6 @@ function Feedback() {
                                 <option value='Other'>Other</option>
                             </select>
                         </label>
-                        <p>{`message that will send "${submitedMessage}"`}</p>
 
                         {feedbackRenderElement}
 
