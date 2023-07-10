@@ -166,7 +166,7 @@ function Feedback() {
             :
             (
                 <>
-                    <form name="feedback" data-netlify="true" method="post" onSubmit={()=>{setFormSubmited(true)}}>
+                    <form name="feedback" data-netlify="true" method="post">
 
                         <input type="hidden" name="form-name" value="feedback" />
                         <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
