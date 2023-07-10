@@ -48,7 +48,7 @@ function Feedback() {
     const [formSubmited, setFormSubmited] = useState(false);
 
     useEffect(() => {
-        if ( window.location.search.includes('submited') ) {
+        if ( window.location.search.includes('success') ) {
             setFormSubmited(true);
         }
     }, []);
@@ -57,7 +57,7 @@ function Feedback() {
     <>
         <h1>Send us your feedback!</h1>
         <p>Feedback is important to us because it provides our developers with valuable information to improve the experiences of other users, including yourself.</p>
-        <form name="feedback" method="post" target='/'>
+        <form name="feedback" data-netlify="true" method="post" action='/feedback/?success'>
             <input type="hidden" name="form-name" value="feedback" />
             <label>Name: <input name='name' type='text' placeholder='Type Here...'/></label>
             <label>E-Mail:<input name='email' type='email' placeholder='Type Here...'/></label>
