@@ -151,6 +151,34 @@ function Feedback() {
         setFeedbackType(feedbackTypeString);
     }
 
+    const handleSubmit = (event) => {
+    
+        // Prepare the form data to be sent
+        const formData = new FormData(event.target);
+        console.log(event)
+    
+        // Make an API call to submit the form data
+        fetch('/api/submit-feedback', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            if (response.ok) {
+                setFormSubmited(true); // Form submission successful
+            } else {
+              // Handle the error case
+              console.error('Form submission failed');
+            }
+          })
+          .catch(error => {
+            // Handle the error case
+            console.error('Error submitting form:', error);
+          });
+        
+          event.preventDefault();
+    };
+
+
     return (
     <>
         <h1>Send us your feedback!</h1>
@@ -166,7 +194,7 @@ function Feedback() {
             :
             (
                 <>
-                    <form name="feedback" data-netlify="true" method="post">
+                    <form name="feedback" data-netlify="true" method="post" onSubmit={handleSubmit}>
 
                         <input type="hidden" name="form-name" value="feedback" />
                         <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
@@ -175,7 +203,7 @@ function Feedback() {
                         <label>Name: <input required name='name' type='text' placeholder='Type Here...'/></label>
                         <label>E-Mail:<input required name='email' type='email' placeholder='Type Here...'/></label>
                         <label>I have feedback about
-                            <select name="about" onChange={feedbackChangeHandler} defaultValue="">
+                            <select required name="about" onChange={feedbackChangeHandler} defaultValue="">
                                 <option value="" disabled>Select an option</option>
                                 <option value='Adding a website'>Adding a website</option>
                                 <option value='Editing a website'>Editing a website</option>
