@@ -12,10 +12,11 @@
 
   <body>
     <!-- A little help for the Netlify post-processing bots -->
-    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <form name="feedback" netlify netlify-honeypot="bot-field" action="/" hidden>
       <input type="text" name="name" />
       <input type="email" name="email" />
-      <textarea name="message"></textarea>
+      <select name="about"></select>
+      <input type="text" name="message" />
     </form>
 
     <div id="root"></div>

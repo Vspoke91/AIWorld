@@ -45,23 +45,24 @@ function Feedback() {
         }
     }
 
-    const [success, setSuccess] = useState(false);
+    const [formSubmited, setFormSubmited] = useState(false);
 
     useEffect(() => {
-        if ( window.location.search.includes('success=true') ) {
-        setSuccess(true);
+        if ( window.location.search.includes('success') ) {
+            setFormSubmited(true);
         }
     }, []);
+
     return (
     <>
         <h1>Send us your feedback!</h1>
         <p>Feedback is important to us because it provides our developers with valuable information to improve the experiences of other users, including yourself.</p>
-        <form name="feedback" method="POST" data-netlify="true" action='/feedback/?success=true'>
-            <input type="hidden" name="form-name" value="contact" required/>
-            <label>Name: <input name='name' type='text' placeholder='Type Here...' required/></label>
-            <label>E-Mail:<input name='email' type='email' placeholder='Type Here...' required/></label>
+        <form name="feedback" data-netlify="true" method="post" action='/feedback/?success'>
+            <input type="hidden" name="form-name" value="feedback" />
+            <label>Name: <input name='name' type='text' placeholder='Type Here...'/></label>
+            <label>E-Mail:<input name='email' type='email' placeholder='Type Here...'/></label>
             <label>I have feedback about
-                <select name="about" onChange={(event) => setFeedbackTypeElement(feedbackTypeChangeHandler(event))} required>
+                <select name="about" onChange={(event) => setFeedbackTypeElement(feedbackTypeChangeHandler(event))} >
                     <option value="" disabled selected>Select an option</option>
                     <option value='Adding a website'>Adding a website</option>
                     <option value='Editing a website'>Editing a website</option>
@@ -70,7 +71,7 @@ function Feedback() {
                 </select>
             </label>
 
-            {success && (
+            {formSubmited && (
                 <p style={{ color: "green" }}>Thanks for your message! </p>
             )}
 
