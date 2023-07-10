@@ -19,13 +19,50 @@ function Feedback() {
 
         const getDisplayFormElement = (feedbackType) =>{
             switch(feedbackType){
-                case "Adding a website":
+                case "Adding a website":{
+
+                    let nameText = ""
+                    let urlText = ""
+                    let commentText = ""
+
+                    let getMessage = () => `Website: ${nameText} URL: ${urlText} Comment: ${commentText}`
+
                     return(
                         <>
-                            <label>Website Name:<input required type='text' placeholder='Velta-Project'/></label>
-                            <label>Website URL:<input required type='text' placeholder='www.veltaproject.com'/></label>
+                            <label>Website Name:
+                                <input 
+                                    required 
+                                    type='text' 
+                                    placeholder='Velta-Project'
+                                    onChange={(event) => {
+                                        nameText = event.target.value
+                                        setSubmitedMessage(getMessage())
+                                    }}
+                                />
+                            </label>
+                            <label>Website URL:
+                                <input 
+                                    required 
+                                    type='text' 
+                                    placeholder='www.veltaproject.com'
+                                    onChange={(event) => {
+                                        urlText = event.target.value
+                                        setSubmitedMessage(getMessage())
+                                    }}
+                                />
+                            </label>
+                            <label>Comment:
+                                <textarea   
+                                    placeholder='Website is for...'
+                                    onChange={(event) => {
+                                        urlText = event.target.value
+                                        setSubmitedMessage(getMessage())
+                                    }}
+                                />
+                            </label>
                         </>
                     )
+                }
                 case "Editing a website": {
 
                     let nameText = ""
