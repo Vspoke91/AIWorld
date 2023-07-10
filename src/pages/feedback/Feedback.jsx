@@ -165,7 +165,7 @@ function Feedback() {
                 setFormSubmited(true);
                 event.target.reset(); // reset form
             } else {
-                console.error('Form submission failed');
+                alert('Feedback Fail to Submit!',);
             }
           })
           .catch(error => {
@@ -185,7 +185,7 @@ function Feedback() {
             (
                 <>
                     <p style={{ color: "green" }}>Feedback Succefully Submited!</p>
-                    <a href="/feedback"><button>Send New Feedback!</button></a>
+                    <button onClick={setFormSubmited(false)}>Send New Feedback!</button>
                 </>
             ) 
             :
