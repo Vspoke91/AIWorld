@@ -177,44 +177,47 @@ function Feedback() {
 
     return (
     <>
-        <h1>Send us your feedback!</h1>
-        <p>Feedback is important to us because it provides our developers with valuable information to improve the experiences of other users, including yourself.</p>
-        
-        {formSubmited ? 
-            (
-                <>
-                    <p>Succefully Submited! Thank You!</p>
-                    <button onClick={() => setFormSubmited(false)}>Back</button>
-                </>
-            ) 
-            :
-            (
-                <>
-                    <form name="feedback" data-netlify="true" onSubmit={formSubmitHandler}>
+        <div id='IntroductionSection_Feedback'>
+            <h1>Send us your feedback!</h1>
+            <p>Feedback is important to us because it provides our developers with valuable information to improve the experiences of our users, including yourself.</p>
+        </div>
+        <div id='FormSection_Feedback'>
+            {formSubmited ? 
+                (
+                    <div className='successful_part'>
+                        <p><span>Your feedback was succefully send!</span> Thank you for your support.</p>
+                        <button onClick={() => setFormSubmited(false)}>Back</button>
+                    </div>
+                ) 
+                :
+                (
+                    <>
+                        <form name="feedback" data-netlify="true" onSubmit={formSubmitHandler}>
 
-                        <input type="hidden" name="form-name" value="feedback" />
-                        <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
-                        <input type="hidden" name="message" value={submitedMessage} />
+                            <input type="hidden" name="form-name" value="feedback" />
+                            <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
+                            <input type="hidden" name="message" value={submitedMessage} />
 
-                        <label>Name: <input required name='name' type='text' placeholder='Type Here...'/></label>
-                        <label>E-Mail:<input required name='email' type='email' placeholder='Type Here...'/></label>
-                        <label>I have feedback about
-                            <select required name="about" onChange={feedbackChangeHandler} defaultValue="">
-                                <option value="" disabled>Select an option</option>
-                                <option value='Adding a website'>Adding a website</option>
-                                <option value='Editing a website'>Editing a website</option>
-                                <option value='Website issues'>Website issues</option>
-                                <option value='Other'>Other</option>
-                            </select>
-                        </label>
+                            <label>Name: <input required name='name' type='text' placeholder='Type Here...'/></label>
+                            <label>E-Mail:<input required name='email' type='email' placeholder='Type Here...'/></label>
+                            <label>I have feedback about
+                                <select required name="about" onChange={feedbackChangeHandler} defaultValue="">
+                                    <option value="" disabled>Select an option</option>
+                                    <option value='Adding a website'>Adding a website</option>
+                                    <option value='Editing a website'>Editing a website</option>
+                                    <option value='Website issues'>Website issues</option>
+                                    <option value='Other'>Other</option>
+                                </select>
+                            </label>
 
-                        {feedbackRenderElement}
+                            {feedbackRenderElement}
 
-                        <button type="submit">Send</button>
-                    </form>
-                </>
-            )
-        }
+                            <button type="submit">Send</button>
+                        </form>
+                    </>
+                )
+            }
+        </div>
     </>);
 }
 

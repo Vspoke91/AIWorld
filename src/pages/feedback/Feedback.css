@@ -1,0 +1,44 @@
+#IntroductionSection_Feedback {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+#IntroductionSection_Feedback>h1 {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+#IntroductionSection_Feedback>p {
+    width: 80%;
+    margin: 20px auto;
+}
+
+#FormSection_Feedback .successful_part {
+    width: 80%;
+    height: 400px;
+    background-color: rgb(37, 37, 37);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    border: black solid 4px;
+
+    margin: auto;
+}
+
+#FormSection_Feedback .successful_part p {
+    font-size: 1.8rem;
+}
+
+#FormSection_Feedback .successful_part p span {
+    display: block;
+    font-weight: bold;
+    color: rgb(143, 189, 133);
+}
