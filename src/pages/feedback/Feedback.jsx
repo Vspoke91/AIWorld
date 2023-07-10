@@ -68,7 +68,7 @@ function Feedback() {
                     return(
                         <>
                             <label>Tell us about the issue:<textarea required placeholder='In home page the button...' 
-                            onChange={()}/></label>
+                            /></label>
                         </>
                     )
                 default: 
