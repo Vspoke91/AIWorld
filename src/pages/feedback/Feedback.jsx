@@ -151,27 +151,22 @@ function Feedback() {
         setFeedbackType(feedbackTypeString);
     }
 
-    const handleSubmit = (event) => {
+    const formSubmitHandler = (event) => {
     
-        // Prepare the form data to be sent
         const formData = new FormData(event.target);
-        console.log(event)
-    
-        // Make an API call to submit the form data
-        fetch('/api/submit-feedback', {
+        
+        fetch('/', {
           method: 'POST',
           body: formData
         })
           .then(response => {
             if (response.ok) {
-                setFormSubmited(true); // Form submission successful
+                setFormSubmited(true);
             } else {
-              // Handle the error case
-              console.error('Form submission failed');
+                console.error('Form submission failed');
             }
           })
           .catch(error => {
-            // Handle the error case
             console.error('Error submitting form:', error);
           });
         
@@ -194,7 +189,7 @@ function Feedback() {
             :
             (
                 <>
-                    <form name="feedback" data-netlify="true" method="post" onSubmit={handleSubmit}>
+                    <form name="feedback" data-netlify="true" onSubmit={formSubmitHandler}>
 
                         <input type="hidden" name="form-name" value="feedback" />
                         <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
