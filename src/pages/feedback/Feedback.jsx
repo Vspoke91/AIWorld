@@ -6,14 +6,16 @@ import { default as contentData } from '../../assets/sitesDataBase'
 
 function Feedback() {
 
-    let [feedbackRenderElement, setFeedbackRenderElement] = useState(<p>Select An Option Above.</p>);
-    let [feedbackType, setFeedbackType] = useState(null);
+    const [feedbackRenderElement, setFeedbackRenderElement] = useState(<p>Select An Option Above.</p>);
+    const [feedbackType, setFeedbackType] = useState(null);
     const [formSubmited, setFormSubmited] = useState(false);
-
+    const [submitedMessage, setSubmitedMessage] = useState("");
 
     const feedbackChangeHandler = (event) =>{
 
         let feedbackTypeString = event.target.value;
+
+        setSubmitedMessage("");
 
         const getDisplayFormElement = (feedbackType) =>{
             switch(feedbackType){
@@ -24,24 +26,49 @@ function Feedback() {
                             <label>Website URL:<input required type='text' placeholder='www.veltaproject.com'/></label>
                         </>
                     )
-                case "Editing a website":
+                case "Editing a website": {
+
+                    let websiteName = ""
+                    let websiteEdit = ""
+
                     return(
                         <>
                             <label>Website Name:
-                                <select required defaultValue="">
+                                <select 
+                                    required 
+                                    defaultValue="" 
+                                    onChange={(event) => {
+                                        websiteName = event.target.value; 
+                                        setSubmitedMessage(`For ${websiteName}: ${websiteEdit}`)
+                                    }}
+                                >
                                     <option value="" disabled>Select an option</option>
+
                                     {Object.keys(contentData).map( (value, key) => 
                                         <option key={key}>{contentData[value].title}</option>
                                     )}
+
                                 </select>
                             </label>
-                            <label>Edit:<textarea required placeholder='Change description to...'/></label>
+
+                            <label>Edit:
+                                <textarea 
+                                    required 
+                                    placeholder='Change description to...' 
+                                    onChange={(event) => {
+                                        websiteEdit = event.target.value; 
+                                        setSubmitedMessage(`For ${websiteName}: ${websiteEdit}`)
+                                    }}
+                                />
+                            </label>
                         </>
                     )
+                }
                 case "Website issues":
                     return(
                         <>
-                            <label>Tell us about the issue:<textarea required placeholder='In home page the button...'/></label>
+                            <label>Tell us about the issue:<textarea required placeholder='In home page the button...' 
+                            onChange={()}/></label>
                         </>
                     )
                 default: 
@@ -71,6 +98,7 @@ function Feedback() {
 
             <input type="hidden" name="form-name" value="feedback" />
             <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
+            <input type="hidden" name="message" value={submitedMessage} />
 
             <label>Name: <input name='name' type='text' placeholder='Type Here...'/></label>
             <label>E-Mail:<input name='email' type='email' placeholder='Type Here...'/></label>
@@ -83,6 +111,7 @@ function Feedback() {
                     <option value='other'>Other</option>
                 </select>
             </label>
+            <p>{`message that will send "${submitedMessage}"`}</p>
 
             {feedbackRenderElement}
 
