@@ -64,13 +64,19 @@ function Feedback() {
                         </>
                     )
                 }
-                case "Website issues":
+                case "Website issues":{
                     return(
                         <>
-                            <label>Tell us about the issue:<textarea required placeholder='In home page the button...' 
-                            /></label>
+                            <label>Tell us about the issue:
+                                <textarea 
+                                    required 
+                                    placeholder='In home page the button...' 
+                                    onChange={(event) => setSubmitedMessage(event.target.value)}
+                                />
+                            </label>
                         </>
                     )
+                }
                 default: 
                     return(
                         <>
