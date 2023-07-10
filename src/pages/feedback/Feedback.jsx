@@ -1,7 +1,6 @@
 //styles imports
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './Feedback.css'
-
 import { default as contentData } from '../../assets/sitesDataBase' 
 
 function Feedback() {
@@ -152,43 +151,47 @@ function Feedback() {
         setFeedbackType(feedbackTypeString);
     }
 
-    useEffect(() => {
-        if ( window.location.search.includes('success') ) {
-            setFormSubmited(true);
-        }
-    }, []);
-
     return (
     <>
         <h1>Send us your feedback!</h1>
         <p>Feedback is important to us because it provides our developers with valuable information to improve the experiences of other users, including yourself.</p>
-        <form name="feedback" data-netlify="true" method="post" action='/feedback/?success'>
+        
+        {formSubmited ? 
+            (
+                <>
+                    <p style={{ color: "green" }}>Feedback Succefully Submited!</p>
+                    <a href="/feedback"><button>Send New Feedback!</button></a>
+                </>
+            ) 
+            :
+            (
+                <>
+                    <form name="feedback" data-netlify="true" method="post" onSubmit={() => setFormSubmited(true)}>
 
-            <input type="hidden" name="form-name" value="feedback" />
-            <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
-            <input type="hidden" name="message" value={submitedMessage} />
+                        <input type="hidden" name="form-name" value="feedback" />
+                        <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
+                        <input type="hidden" name="message" value={submitedMessage} />
 
-            <label>Name: <input name='name' type='text' placeholder='Type Here...'/></label>
-            <label>E-Mail:<input name='email' type='email' placeholder='Type Here...'/></label>
-            <label>I have feedback about
-                <select name="about" onChange={feedbackChangeHandler} defaultValue="">
-                    <option value="" disabled>Select an option</option>
-                    <option value='Adding a website'>Adding a website</option>
-                    <option value='Editing a website'>Editing a website</option>
-                    <option value='Website issues'>Website issues</option>
-                    <option value='Other'>Other</option>
-                </select>
-            </label>
-            <p>{`message that will send "${submitedMessage}"`}</p>
+                        <label>Name: <input required name='name' type='text' placeholder='Type Here...'/></label>
+                        <label>E-Mail:<input required name='email' type='email' placeholder='Type Here...'/></label>
+                        <label>I have feedback about
+                            <select name="about" onChange={feedbackChangeHandler} defaultValue="">
+                                <option value="" disabled>Select an option</option>
+                                <option value='Adding a website'>Adding a website</option>
+                                <option value='Editing a website'>Editing a website</option>
+                                <option value='Website issues'>Website issues</option>
+                                <option value='Other'>Other</option>
+                            </select>
+                        </label>
+                        <p>{`message that will send "${submitedMessage}"`}</p>
 
-            {feedbackRenderElement}
+                        {feedbackRenderElement}
 
-            {formSubmited && (
-                <p style={{ color: "green" }}>Thanks for your message! </p>
-            )}
-
-            <button type="submit">Send</button>
-        </form>
+                        <button type="submit">Send</button>
+                    </form>
+                </>
+            )
+        }
     </>);
 }
 
