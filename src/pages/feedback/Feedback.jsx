@@ -69,7 +69,7 @@ function Feedback() {
         <form name="feedback" data-netlify="true" method="post" action='/feedback/?success'>
 
             <input type="hidden" name="form-name" value="feedback" />
-            <input type="hidden" name="subject" value={`Feedback (AI World) - ${feedbackType}`} />
+            <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} (%{submissionId})`} />
 
             <label>Name: <input name='name' type='text' placeholder='Type Here...'/></label>
             <label>E-Mail:<input name='email' type='email' placeholder='Type Here...'/></label>
