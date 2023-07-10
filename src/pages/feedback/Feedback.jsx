@@ -154,14 +154,16 @@ function Feedback() {
     const formSubmitHandler = (event) => {
     
         const formData = new FormData(event.target);
+        console.log(event)
         
-        fetch('/', {
+        fetch('/', { // '/' will change to endpoint by netlify
           method: 'POST',
           body: formData
         })
           .then(response => {
             if (response.ok) {
                 setFormSubmited(true);
+                event.target.reset(); // reset form
             } else {
                 console.error('Form submission failed');
             }
