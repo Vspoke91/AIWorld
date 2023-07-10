@@ -28,8 +28,8 @@ function Feedback() {
                     )
                 case "Editing a website": {
 
-                    let websiteName = ""
-                    let websiteEdit = ""
+                    let nameText = ""
+                    let editText = ""
 
                     return(
                         <>
@@ -38,8 +38,8 @@ function Feedback() {
                                     required 
                                     defaultValue="" 
                                     onChange={(event) => {
-                                        websiteName = event.target.value; 
-                                        setSubmitedMessage(`For ${websiteName}: ${websiteEdit}`)
+                                        nameText = event.target.value; 
+                                        setSubmitedMessage(`For ${nameText}: ${editText}`)
                                     }}
                                 >
                                     <option value="" disabled>Select an option</option>
@@ -56,8 +56,8 @@ function Feedback() {
                                     required 
                                     placeholder='Change description to...' 
                                     onChange={(event) => {
-                                        websiteEdit = event.target.value; 
-                                        setSubmitedMessage(`For ${websiteName}: ${websiteEdit}`)
+                                        editText = event.target.value; 
+                                        setSubmitedMessage(`For ${nameText}: ${editText}`)
                                     }}
                                 />
                             </label>
@@ -77,12 +77,37 @@ function Feedback() {
                         </>
                     )
                 }
-                default: 
+                case "Other": {
+                    let subjectText = ""
+                    let commentText = ""
+
                     return(
                         <>
-                            <label>Comments:<textarea required placeholder='Type here...'/></label>
+                            <label>Subject: 
+                                <input
+                                    required
+                                    type='text'
+                                    placeholder='Type here...'
+                                    onChange={(event) =>{
+                                        subjectText = event.target.value
+                                        setSubmitedMessage(`${subjectText}: ${commentText}`)
+                                    }}
+                                />
+                            </label>
+
+                            <label>Comments:
+                                <textarea 
+                                    required
+                                    placeholder='Type here...'
+                                    onChange={(event) => {
+                                        commentText = event.target.value
+                                        setSubmitedMessage(`${subjectText}: ${commentText}`)
+                                    }}
+                                />
+                            </label>
                         </>
                     )
+                }
             }
         }
         setFeedbackRenderElement(getDisplayFormElement(feedbackTypeString))
@@ -114,7 +139,7 @@ function Feedback() {
                     <option value='Adding a website'>Adding a website</option>
                     <option value='Editing a website'>Editing a website</option>
                     <option value='Website issues'>Website issues</option>
-                    <option value='other'>Other</option>
+                    <option value='Other'>Other</option>
                 </select>
             </label>
             <p>{`message that will send "${submitedMessage}"`}</p>
