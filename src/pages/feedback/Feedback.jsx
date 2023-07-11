@@ -186,12 +186,12 @@ function Feedback() {
                 (
                     <div className='successful_part'>
                         <p><span>Your feedback was succefully send!</span> Thank you for your support.</p>
-                        <button onClick={() => setFormSubmited(false)}>Back</button>
+                        <button onClick={() => setFormSubmited(false)}><div className='arrow'></div>Back</button>
                     </div>
                 ) 
                 :
                 (
-                    <>
+                    <div className='form_part'>
                         <form name="feedback" data-netlify="true" onSubmit={formSubmitHandler}>
 
                             <input type="hidden" name="form-name" value="feedback" />
@@ -214,7 +214,7 @@ function Feedback() {
 
                             <button type="submit">Send</button>
                         </form>
-                    </>
+                    </div>
                 )
             }
         </div>

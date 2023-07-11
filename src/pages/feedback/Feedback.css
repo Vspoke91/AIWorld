@@ -29,6 +29,7 @@
     text-align: center;
 
     border: black solid 4px;
+    border-radius: 10px;
 
     margin: auto;
 }
@@ -40,5 +41,38 @@
 #FormSection_Feedback .successful_part p span {
     display: block;
     font-weight: bold;
-    color: rgb(143, 189, 133);
+    color: #8fbd85
+}
+
+#FormSection_Feedback .successful_part button {
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #204218;
+    padding: 0.7em 0.5em;
+
+    overflow: hidden;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#FormSection_Feedback .successful_part .arrow {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+
+    display: inline-block;
+    transform: rotate(135deg);
+    transition: ease-in-out 0.3s;
+}
+
+#FormSection_Feedback .successful_part button:hover .arrow {
+    border-color: #204218;
+}
+
+#FormSection_Feedback .successful_part button:hover {
+    background-color: #ffffff;
+    color: #204218;
 }
