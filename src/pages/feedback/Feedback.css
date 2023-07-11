@@ -154,11 +154,16 @@
     resize: vertical;
     width: 80%;
     min-height: 80px;
+    border: 1px solid black;
 }
 
 #FormSection_Feedback .form_part form textarea:focus-visible {
     border-color: #595959;
     outline: none;
+}
+
+#FormSection_Feedback .form_part form textarea:hover {
+    border-color: none;
 }
 
 #FormSection_Feedback .form_part form button {
