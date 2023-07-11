@@ -1,0 +1,196 @@
+#IntroductionSection_Feedback {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+#IntroductionSection_Feedback>h1 {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+#IntroductionSection_Feedback>p {
+    width: 80%;
+    margin: 20px auto;
+}
+
+#FormSection_Feedback .successful_part {
+    width: 80%;
+    height: 400px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background-color: rgb(37, 37, 37);
+    border: black solid 2px;
+    border-radius: 10px;
+
+    margin: auto;
+}
+
+#FormSection_Feedback .successful_part p {
+    font-size: 1.8rem;
+}
+
+#FormSection_Feedback .successful_part p span {
+    display: block;
+    font-weight: bold;
+    color: #8fbd85
+}
+
+#FormSection_Feedback .successful_part button {
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #204218;
+    padding: 0.7em 0.5em;
+
+    overflow: hidden;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#FormSection_Feedback .successful_part .arrow {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+
+    display: inline-block;
+    transform: rotate(135deg);
+    transition: ease-in-out 0.3s;
+}
+
+#FormSection_Feedback .successful_part button:hover .arrow {
+    border-color: #204218;
+}
+
+#FormSection_Feedback .successful_part button:hover {
+    background-color: #ffffff;
+    color: #204218;
+}
+
+#FormSection_Feedback .form_part {
+    width: fit-content;
+    margin: auto;
+
+    font-size: 1.2rem;
+
+    background-color: rgb(37, 37, 37);
+    border: black solid 2px;
+    border-radius: 10px;
+}
+
+#FormSection_Feedback .form_part form>* {
+    display: block;
+    margin: 20px 40px;
+}
+
+#FormSection_Feedback .form_part form>*>* {
+    display: block;
+}
+
+#FormSection_Feedback .form_part form .singleLine {
+    display: inline;
+    margin-left: 10px;
+}
+
+#FormSection_Feedback .form_part form .inline>* {
+    display: inline-block;
+    width: 230px;
+}
+
+#FormSection_Feedback .form_part form .inline>*>* {
+    display: block;
+}
+
+#FormSection_Feedback .form_part form select {
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 0 5px;
+
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+}
+
+#FormSection_Feedback .form_part form select:focus-visible {
+    border-color: #595959;
+    outline: none;
+}
+
+#FormSection_Feedback .form_part form select:hover {
+    cursor: pointer;
+}
+
+#FormSection_Feedback .form_part form input {
+    height: 30px;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+}
+
+#FormSection_Feedback .form_part form input:focus-visible {
+    border-color: #595959;
+    outline: none;
+}
+
+#FormSection_Feedback .form_part form textarea {
+    resize: vertical;
+    width: 80%;
+    min-height: 80px;
+    border: 1px solid black;
+}
+
+#FormSection_Feedback .form_part form textarea:focus-visible {
+    border-color: #595959;
+    outline: none;
+}
+
+#FormSection_Feedback .form_part form textarea:hover {
+    border-color: none;
+}
+
+#FormSection_Feedback .form_part form button {
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #204218;
+    padding: 0.8em 2em;
+
+    margin: 20px auto;
+
+    overflow: hidden;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    transition: ease-in-out 0.1s;
+}
+
+#FormSection_Feedback .form_part form button:hover {
+    background-color: #ffffff;
+    color: #204218;
+}
+
+#FormSection_Feedback .form_part form .required {
+    display: inline;
+    font-size: 1.4rem;
+    color: #b60000;
+}
+
+#FormSection_Feedback .form_part form .required::before {
+    content: ' *';
+}
