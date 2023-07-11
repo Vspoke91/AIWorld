@@ -1,14 +1,16 @@
 //styles imports
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './Feedback.css'
 import { default as contentData } from '../../assets/sitesDataBase' 
 
 function Feedback() {
 
-    const [feedbackRenderElement, setFeedbackRenderElement] = useState(<p>Select An Option Above.</p>);
+    const [feedbackRenderElement, setFeedbackRenderElement] = useState(<></>);
     const [feedbackType, setFeedbackType] = useState(null);
     const [formSubmited, setFormSubmited] = useState(false);
     const [submitedMessage, setSubmitedMessage] = useState("");
+
+    const formRef = useRef();
 
     const feedbackChangeHandler = (event) =>{
 
@@ -16,7 +18,12 @@ function Feedback() {
 
         setSubmitedMessage("");
 
+        formRef.current.reset()
+
+        event.target.value = feedbackTypeString;
+
         const getDisplayFormElement = (feedbackType) =>{
+
             switch(feedbackType){
                 case "Adding a website":{
 
@@ -28,28 +35,32 @@ function Feedback() {
 
                     return(
                         <>
-                            <label>Website Name:
-                                <input 
-                                    required 
-                                    type='text' 
-                                    placeholder='Velta-Project'
-                                    onChange={(event) => {
-                                        nameText = event.target.value
-                                        setSubmitedMessage(getMessage())
-                                    }}
-                                />
-                            </label>
-                            <label>Website URL:
-                                <input 
-                                    required 
-                                    type='text' 
-                                    placeholder='www.veltaproject.com'
-                                    onChange={(event) => {
-                                        urlText = event.target.value
-                                        setSubmitedMessage(getMessage())
-                                    }}
-                                />
-                            </label>
+                            <div className='inline'>
+                                <label>Website Name:
+                                    <div className='required'/>
+                                    <input 
+                                        required 
+                                        type='text' 
+                                        placeholder='Velta-Project'
+                                        onChange={(event) => {
+                                            nameText = event.target.value
+                                            setSubmitedMessage(getMessage())
+                                        }}
+                                    />
+                                </label>
+                                <label>Website URL:
+                                    <div className='required'/>
+                                    <input 
+                                        required 
+                                        type='text' 
+                                        placeholder='www.veltaproject.com'
+                                        onChange={(event) => {
+                                            urlText = event.target.value
+                                            setSubmitedMessage(getMessage())
+                                        }}
+                                    />
+                                </label>
+                            </div>
                             <label>Comment:
                                 <textarea   
                                     placeholder='Website is for...'
@@ -71,6 +82,7 @@ function Feedback() {
                         <>
                             <label>Website Name:
                                 <select 
+                                    className='singleLine'
                                     required 
                                     defaultValue="" 
                                     onChange={(event) => {
@@ -83,11 +95,13 @@ function Feedback() {
                                     {Object.keys(contentData).map( (value, key) => 
                                         <option key={key}>{contentData[value].title}</option>
                                     )}
-
                                 </select>
+
+                                <div className='required'/>
                             </label>
 
                             <label>Edit:
+                                <div className='required'/>
                                 <textarea 
                                     required 
                                     placeholder='Change description to...' 
@@ -104,6 +118,7 @@ function Feedback() {
                     return(
                         <>
                             <label>Tell us about the issue:
+                                <div className='required'/>
                                 <textarea 
                                     required 
                                     placeholder='In home page the button...' 
@@ -120,6 +135,7 @@ function Feedback() {
                     return(
                         <>
                             <label>Subject: 
+                                <div className='required'/>
                                 <input
                                     required
                                     type='text'
@@ -132,6 +148,7 @@ function Feedback() {
                             </label>
 
                             <label>Comments:
+                                <div className='required'/>
                                 <textarea 
                                     required
                                     placeholder='Type here...'
@@ -148,7 +165,7 @@ function Feedback() {
         }
         setFeedbackRenderElement(getDisplayFormElement(feedbackTypeString))
 
-        setFeedbackType(feedbackTypeString);
+        setFeedbackType(feedbackTypeString)
     }
 
     const formSubmitHandler = (event) => {
@@ -192,23 +209,26 @@ function Feedback() {
                 :
                 (
                     <div className='form_part'>
-                        <form name="feedback" data-netlify="true" onSubmit={formSubmitHandler}>
+                        <form ref={formRef} name="feedback" data-netlify="true" onSubmit={formSubmitHandler}>
 
                             <input type="hidden" name="form-name" value="feedback" />
                             <input type="hidden" name="subject" value={`Feedback (%{siteName}) - ${feedbackType} [ID: %{submissionId}]`} />
                             <input type="hidden" name="message" value={submitedMessage} />
 
-                            <label>Name: <input required name='name' type='text' placeholder='Type Here...'/></label>
-                            <label>E-Mail:<input required name='email' type='email' placeholder='Type Here...'/></label>
                             <label>I have feedback about
-                                <select required name="about" onChange={feedbackChangeHandler} defaultValue="">
+                                <select className='singleLine' required name="about" onChange={feedbackChangeHandler} defaultValue="">
                                     <option value="" disabled>Select an option</option>
                                     <option value='Adding a website'>Adding a website</option>
                                     <option value='Editing a website'>Editing a website</option>
                                     <option value='Website issues'>Website issues</option>
                                     <option value='Other'>Other</option>
                                 </select>
+                                <div className='required'/>
                             </label>
+                            <div className='inline'>
+                                <label>Name:<div className='required'/><input required name='name' type='text' placeholder='Type Here...'/></label>
+                                <label>E-Mail:<div className='required'/><input required name='email' type='email' placeholder='Type Here...'/></label>
+                            </div>
 
                             {feedbackRenderElement}
 
