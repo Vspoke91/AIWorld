@@ -12,16 +12,19 @@ function About() {
 
             <div>
                 <h2>Media</h2>
+                <p>check our latest news!</p>
                 <div><span>instagram</span><span>Github</span><span>VeltaProject</span></div>
             </div>
 
             <div>
-                <h2>Contact</h2>
+                <h2>Contact Us</h2>
+                <p>any questions? ask us!</p>
                 <div><a>aiworld@veltaproject.com</a><span></span></div>
             </div>
 
             <div>
                 <h2>Creator</h2>
+                <p>get to know me!</p>
                 <p>Victor Romero</p>
             </div>
         </>
