@@ -1,0 +1,39 @@
+#MissionSection_About .img-part img {
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    background-color: rgb(17, 17, 17);
+    box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+}
+
+#MissionSection_About .img-part {
+    width: fit-content;
+    position: relative;
+    margin: 50px auto;
+}
+
+#MissionSection_About .img-part :is(.backSide, .frontSide) {
+    transition: linear 0.5s;
+}
+
+#MissionSection_About .img-part:hover .frontSide {
+    transition-delay: 0s;
+    transform: rotateY(90deg);
+}
+
+#MissionSection_About .img-part .frontSide {
+    transition-delay: 0.5s;
+    transform: rotateY(0);
+}
+
+#MissionSection_About .img-part:hover .backSide {
+    transform: rotateY(0);
+    transition-delay: 0.5s;
+}
+
+#MissionSection_About .img-part .backSide {
+    transform: rotateY(90deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
