@@ -11,20 +11,20 @@ function About() {
             </div>
 
             <div id='MediaSection_About'>
-                <h2>Media</h2>
-                <p>check our latest news!</p>
-                <div><span>instagram</span><span>Github</span><span>VeltaProject</span></div>
+                <h2>Social Media</h2>
+                <span>check our latest news!</span>
+                <div><p>instagram</p><p>Github</p><p>VeltaProject</p></div>
             </div>
 
             <div id='ContactSection_About'>
                 <h2>Contact Us</h2>
-                <p>any questions? ask us!</p>
+                <span>any questions? ask us!</span>
                 <div><a>aiworld@veltaproject.com</a><span></span></div>
             </div>
 
             <div id='CreatorSection_About'>
                 <h2>Creator</h2>
-                <p>get to know me!</p>
+                <span>get to know the founder!</span>
                 <p>Victor Romero</p>
             </div>
         </>
