@@ -1,4 +1,7 @@
-#MissionSection_About {
+#MissionSection_About,
+#MediaSection_About,
+#ContactSection_About,
+#CreatorSection_About {
     width: 90%;
     max-width: 1300px;
     margin: auto;
@@ -6,7 +9,8 @@
 
 #MissionSection_About h1 {
     padding-left: 15px;
-    border-left: solid rgb(132, 81, 6) 20px;
+    border-left: solid rgb(132, 81, 6) 30px;
+    font-size: 2rem;
 }
 
 #MissionSection_About .img-part img {
@@ -47,4 +51,39 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+
+#MediaSection_About h2 {
+    border-left: solid rgb(110, 21, 5) 20px;
+}
+
+#ContactSection_About h2 {
+    border-left: solid rgb(110, 106, 5) 20px;
+}
+
+#CreatorSection_About h2 {
+    border-left: solid rgb(59, 110, 5) 20px;
+}
+
+#MediaSection_About,
+#ContactSection_About,
+#CreatorSection_About {
+    margin: 50px auto;
+}
+
+:is(#MediaSection_About,
+    #ContactSection_About,
+    #CreatorSection_About) h2 {
+    display: inline;
+    font-size: 1.7rem;
+    padding-left: 15px;
+    margin: 0;
+}
+
+:is(#MediaSection_About,
+    #ContactSection_About,
+    #CreatorSection_About) span {
+    font-size: 1.3rem;
+    color: rgb(207, 207, 207);
+    padding-left: 20px;
 }
