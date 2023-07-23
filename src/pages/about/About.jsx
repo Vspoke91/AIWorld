@@ -1,7 +1,22 @@
 //styles imports
 import './About.css'
+import { CopySVG } from '../../assets/CustomIcons';
+import { useRef } from 'react';
 
 function About() {
+
+    const companyEmail = "aiworld@veltaproject.com"
+
+    const copyButtonRef = useRef(0)
+
+    const CopyEmailClickHandler = () => {
+        navigator.clipboard.writeText(companyEmail)
+        copyButtonRef.innerText = "Copied!"
+        copyButtonRef.className = "copied"
+
+        console.log(copyButtonRef)
+    }
+
     return (
         <>
             <div id='MissionSection_About'>
@@ -19,7 +34,13 @@ function About() {
             <div id='ContactSection_About'>
                 <h2>Contact Us</h2>
                 <span>any questions? ask us!</span>
-                <div><a>aiworld@veltaproject.com</a><span></span></div>
+                <div>
+                    <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
+                    <button className='copyIcon' onClick={CopyEmailClickHandler}>
+                        <button ref={copyButtonRef}>Copy</button>
+                        <CopySVG/>
+                    </button>
+                </div>
             </div>
 
             <div id='CreatorSection_About'>
