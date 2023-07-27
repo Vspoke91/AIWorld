@@ -6,15 +6,11 @@ import { useRef } from 'react';
 function About() {
 
     const companyEmail = "aiworld@veltaproject.com"
-
-    const copyButtonRef = useRef(0)
+    const copyTextRef = useRef(0);
 
     const CopyEmailClickHandler = () => {
         navigator.clipboard.writeText(companyEmail)
-        copyButtonRef.innerText = "Copied!"
-        copyButtonRef.className = "copied"
-
-        console.log(copyButtonRef)
+        copyTextRef.current.className = "copied";
     }
 
     return (
@@ -36,9 +32,9 @@ function About() {
                 <span>any questions? ask us!</span>
                 <div>
                     <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
-                    <button className='copyIcon' onClick={CopyEmailClickHandler}>
-                        <button ref={copyButtonRef}>Copy</button>
-                        <CopySVG/>
+                    <button className='copyButton' onClick={CopyEmailClickHandler}>
+                        <span  ref={copyTextRef} id='copyTextButton'>Copy</span>
+                        <CopySVG fill='#e3e3e3' />
                     </button>
                 </div>
             </div>

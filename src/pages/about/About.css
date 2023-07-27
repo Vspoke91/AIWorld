@@ -88,6 +88,51 @@
     padding-left: 20px;
 }
 
-#ContactSection_About button.copied {
-    color: green;
+#ContactSection_About .copyButton {
+    display: inline-flex;
+    height: 35px;
+    border: none;
+    cursor: pointer;
+    background-color: #a1692a;
+    border-radius: 5px;
+
+    padding: 0;
+    overflow: hidden;
+    font-size: 1rem;
+}
+
+#ContactSection_About .copyButton:hover * {
+    transition: ease-in-out 0.2s;
+}
+
+#ContactSection_About .copyButton:hover {
+    background-color: rgb(207, 207, 207);
+}
+
+#ContactSection_About .copyButton:hover span {
+    color: #a1692a;
+}
+
+#ContactSection_About .copyButton span {
+    margin: auto;
+    width: auto;
+    padding: 0 0.2em;
+    font-size: 100%;
+}
+
+#ContactSection_About .copyButton svg {
+    height: inherit;
+    width: auto;
+    padding: 2px 5px;
+    box-sizing: border-box;
+
+    background-color: #6a4215;
+}
+
+#ContactSection_About .copyButton span.copied {
+    color: #a1a1a1;
+}
+
+#ContactSection_About .copyButton span.copied+svg path {
+    fill: #a1a1a1;
 }
