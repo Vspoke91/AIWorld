@@ -35,6 +35,7 @@ function About() {
                     <button className='copyButton' onClick={CopyEmailClickHandler}>
                         <span  ref={copyTextRef} id='copyTextButton'>Copy</span>
                         <CopySVG fill='#e3e3e3' />
+                        <div className='popupDiv'>Copied!</div>
                     </button>
                 </div>
             </div>
