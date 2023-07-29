@@ -136,15 +136,10 @@
     background-color: blue;
 }
 
-#ContactSection_About .copyButton span.copied~.popupDiv {
-    background-color: red;
-    top: 100;
+#ContactSection_About .copyButton.copied {
+    background-color: #008000;
 }
 
-#ContactSection_About .copyButton span.copied {
-    color: #a1a1a1;
-}
-
-#ContactSection_About .copyButton span.copied+svg path {
-    fill: #a1a1a1;
+#ContactSection_About .copyButton.copied span {
+    color: white;
 }
