@@ -49,18 +49,12 @@ function About() {
                 <h2>Contact Us</h2>
                 <span>any questions? ask us!</span>
                 <div>
-                    <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
+                    <a className='email' href={`mailto:${companyEmail}`}>E-mail: <span>{companyEmail}</span></a>
                     <button ref={copyButtonRef} className='copyButton' onClick={CopyEmailClickHandler}>
                         <span ref={copyTextRef} id='copyTextButton'>Copy</span>
                         <CopySVG fill='#e3e3e3' />
                     </button>
                 </div>
-            </div>
-
-            <div id='CreatorSection_About'>
-                <h2>Creator</h2>
-                <span>get to know the founder!</span>
-                <p>Victor Romero</p>
             </div>
         </>
     );
