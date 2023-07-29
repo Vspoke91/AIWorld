@@ -35,14 +35,7 @@ function About() {
             <div id='MediaSection_About'>
                 <h2>Social Media</h2>
                 <span>check our latest news!</span>
-                <div>
-                    <a href='https://instagram.com/veltaproject?utm_source=qr&igshid=ZDc4ODBmNjlmNQ%3D%3D' target='_blank' rel="noreferrer">
-                        <img src='/img/media/Instagram.svg'/>
-                    </a>
-                    <a href='https://github.com/Vspoke91/AIWorld#readme' target='_blank' rel="noreferrer">
-                        <img src='/img/media/Github.svg'/>
-                    </a>
-                </div>
+                <div><p>instagram</p><p>Github</p><p>VeltaProject</p></div>
             </div>
 
             <div id='ContactSection_About'>
