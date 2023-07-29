@@ -19,6 +19,7 @@ FilterSVG.defaultProps = {
     fill: "white"
 };
 
+
 export const ExitSVG = ({ fill }) =>{
 
     return(
