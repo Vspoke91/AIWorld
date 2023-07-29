@@ -96,6 +96,8 @@
     background-color: #a1692a;
     border-radius: 5px;
 
+    position: relative;
+
     padding: 0;
     overflow: hidden;
     font-size: 1rem;
@@ -127,6 +129,16 @@
     box-sizing: border-box;
 
     background-color: #6a4215;
+}
+
+#ContactSection_About .copyButton .popupDiv {
+    position: absolute;
+    background-color: blue;
+}
+
+#ContactSection_About .copyButton span.copied~.popupDiv {
+    background-color: red;
+    top: 100;
 }
 
 #ContactSection_About .copyButton span.copied {
