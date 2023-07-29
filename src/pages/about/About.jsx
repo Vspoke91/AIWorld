@@ -47,7 +47,6 @@ function About() {
                         <span ref={copyTextRef} id='copyTextButton'>Copy</span>
                         <CopySVG fill='#e3e3e3' />
                     </button>
-                    <div className='popupDiv'>Copied!</div>
                 </div>
             </div>
 
