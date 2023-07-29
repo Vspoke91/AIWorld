@@ -6,11 +6,22 @@ import { useRef } from 'react';
 function About() {
 
     const companyEmail = "aiworld@veltaproject.com"
+    const copyButtonRef = useRef(0);
     const copyTextRef = useRef(0);
 
     const CopyEmailClickHandler = () => {
         navigator.clipboard.writeText(companyEmail)
-        copyTextRef.current.className = "copied";
+
+        const classNameHolder = copyButtonRef.current.className;
+        const textHolder = copyTextRef.current.innerText;
+
+        copyButtonRef.current.className += " copied";
+        copyTextRef.current.innerText = "Copied!"
+
+        setTimeout(() => {
+            copyButtonRef.current.className = classNameHolder;
+            copyTextRef.current.innerText = textHolder;
+        }, 2000);
     }
 
     return (
@@ -32,11 +43,11 @@ function About() {
                 <span>any questions? ask us!</span>
                 <div>
                     <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
-                    <button className='copyButton' onClick={CopyEmailClickHandler}>
-                        <span  ref={copyTextRef} id='copyTextButton'>Copy</span>
+                    <button ref={copyButtonRef} className='copyButton' onClick={CopyEmailClickHandler}>
+                        <span ref={copyTextRef} id='copyTextButton'>Copy</span>
                         <CopySVG fill='#e3e3e3' />
-                        <div className='popupDiv'>Copied!</div>
                     </button>
+                    <div className='popupDiv'>Copied!</div>
                 </div>
             </div>
 
