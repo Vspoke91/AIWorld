@@ -82,10 +82,30 @@
 
 :is(#MediaSection_About,
     #ContactSection_About,
-    #CreatorSection_About) span {
+    #CreatorSection_About)>span {
     font-size: 1.3rem;
     color: rgb(207, 207, 207);
     padding-left: 20px;
+}
+
+#ContactSection_About>div {
+    margin: 10px;
+}
+
+#ContactSection_About>div .email {
+    text-decoration: none;
+    color: var(--font-color);
+    font-size: 1.2rem;
+
+    margin-right: 10px;
+}
+
+#ContactSection_About>div .email>span {
+    color: rgb(13, 141, 253);
+    font-size: 1.2rem;
+    padding: 0;
+    margin-right: 10px;
+    margin: 0;
 }
 
 #ContactSection_About .copyButton {
@@ -101,8 +121,6 @@
     padding: 0;
     overflow: hidden;
     font-size: 1rem;
-
-    transition: ease-in-out 0.2s;
 }
 
 #ContactSection_About .copyButton:hover * {
@@ -110,7 +128,6 @@
 }
 
 #ContactSection_About .copyButton:hover {
-    transform: scale(1.06);
     background-color: rgb(207, 207, 207);
 }
 
@@ -140,12 +157,14 @@
 }
 
 #ContactSection_About .copyButton.copied {
-    background-color: #008000;
+    background-color: #076107;
 }
 
 #ContactSection_About .copyButton.copied span {
     color: white;
 }
+
+
 
 #MediaSection_About>div {
     margin: 20px
