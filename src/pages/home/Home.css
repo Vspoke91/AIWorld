@@ -360,4 +360,16 @@
         position: relative;
         left: -50px;
     }
+
+    #DevelopmentSection {
+        width: 90%;
+    }
+
+    #DevelopmentSection .title-part {
+        text-align: center;
+    }
+
+    #DevelopmentSection .description-part {
+        overflow: auto;
+    }
 }
