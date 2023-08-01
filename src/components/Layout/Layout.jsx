@@ -34,10 +34,18 @@ const Layout = () => {
   }
   //END OF TODO
 
+  const ariaHandler = () =>{
+
+    if(window.innerWidth > 1000){
+      return true
+    }
+    return false
+  }
+
   const headerRef = useRef(null)
   return (
     <>
-      <div ref={headerRef} aria-expanded={true} id="header-holder">
+      <div ref={headerRef} aria-expanded={ariaHandler()} id="header-holder">
         <header className='qs__flex_column'>
             <Link to='/' className='logo qs__flex_column __flex_center' onMouseEnter={tittleAnimation}>
                 <img src='/img/logos/AI-World-Small.png'/>

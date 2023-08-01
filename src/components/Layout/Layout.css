@@ -196,6 +196,12 @@ footer .velta-logo-div a img {
     width: auto;
 }
 
+@media screen and (max-width: 1000px) {
+    #header-holder[aria-expanded='true']+.qs__sidebar_spacing {
+        padding: 0;
+    }
+}
+
 
 @media screen and (max-width: 480px) {
 
