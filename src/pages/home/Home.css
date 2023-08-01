@@ -87,7 +87,7 @@
 #IntroductionSection .description-holder h1 {
     padding-left: 20px;
     font-size: 2.5rem;
-    width: min(23ch, 100vw);
+    width: min(23ch, 90vw);
 }
 
 #IntroductionSection .description-holder p {
@@ -329,7 +329,7 @@
 }
 
 /* Styles for devices with a maximum width of 480px (e.g., smartphones) */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 580px) {
     #IntroductionSection .items-holder {
         flex-direction: column;
     }
