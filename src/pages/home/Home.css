@@ -82,6 +82,7 @@
     flex: 0.7;
     display: flex;
     flex-direction: column;
+    padding-left: 10px;
 }
 
 #IntroductionSection .description-holder h1 {
