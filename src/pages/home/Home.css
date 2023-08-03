@@ -288,6 +288,7 @@
     font-size: 1.5rem;
 }
 
+
 @media screen and (max-width: 1000px) {
 
     #IntroductionSection {
@@ -329,7 +330,6 @@
     }
 }
 
-/* Styles for devices with a maximum width of 480px (e.g., smartphones) */
 @media screen and (max-width: 580px) {
     #IntroductionSection .items-holder {
         flex-direction: column;
