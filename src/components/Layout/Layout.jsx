@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import './Layout.css'
 import { ArrowSVG, BurgerLineSVG} from '../../assets/CustomIcons';
 import { useState } from "react";
@@ -45,6 +45,17 @@ const Layout = () => {
   const headerRef = useRef(null)
   const headerMobileRef = useRef(null)
 
+  const useLocationPath = () =>{
+
+    let newPathName = useLocation().pathname.slice(1);
+
+    newPathName = newPathName === ''? "home": newPathName;
+
+    newPathName = newPathName.charAt(0).toLocaleUpperCase() + newPathName.slice(1);
+
+    return newPathName;
+  }
+
   return (
     <>
       <div ref={headerRef} aria-expanded={ariaHandler()} id="header-holder">
@@ -76,7 +87,7 @@ const Layout = () => {
                   <img src='/img/logos/AI-World-Small.png'/>
               </Link>
 
-              <div className="slider-control" onClick={() =>{headerRef.current.setAttribute('aria-expanded', headerRef.current.getAttribute('aria-expanded') !== 'true')}}><BurgerLineSVG /> <span>Home</span></div>
+              <div className="slider-control" onClick={() =>{headerRef.current.setAttribute('aria-expanded', headerRef.current.getAttribute('aria-expanded') !== 'true')}}><BurgerLineSVG /> <span>{useLocationPath()}</span></div>
             </div>
             <div ref={headerMobileRef} className='mobile-nav'>
               <Link to='/search'>Search</Link>
