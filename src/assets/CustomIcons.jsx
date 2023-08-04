@@ -69,3 +69,22 @@ CopySVG.propTypes = {
 CopySVG.defaultProps = {
     fill: "black"
 };
+
+export const BurgerLineSVG  = ({ fill }) => {
+
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" width="115" height="100" viewBox="0 0 115 100" fill="none">
+            <g>
+                <path d="M10 90H105" stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+                <path d="M10 50H105" stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+                <path d="M10 10H105" stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+            </g>
+        </svg>
+    )
+}
+BurgerLineSVG.propTypes = {
+    fill: PropTypes.string
+};
+BurgerLineSVG.defaultProps = {
+    fill: "black"
+};
