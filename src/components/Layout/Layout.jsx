@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import './Layout.css'
-import { ArrowSVG } from '../../assets/CustomIcons';
+import { ArrowSVG, BurgerLineSVG} from '../../assets/CustomIcons';
 import { useState } from "react";
 import { useRef } from "react";
 
@@ -43,31 +43,47 @@ const Layout = () => {
   }
 
   const headerRef = useRef(null)
+  const headerMobileRef = useRef(null)
+
   return (
     <>
       <div ref={headerRef} aria-expanded={ariaHandler()} id="header-holder">
         <header className='qs__flex_column'>
-            <Link to='/' className='logo qs__flex_column __flex_center' onMouseEnter={tittleAnimation}>
-                <img src='/img/logos/AI-World-Small.png'/>
-                <span>{titleChanger}</span>
-            </Link>
+          <Link to='/' className='logo qs__flex_column __flex_center' onMouseEnter={tittleAnimation}>
+              <img src='/img/logos/AI-World-Small.png'/>
+              <span className='title'>{titleChanger}</span>
+          </Link>
 
-            <nav className='qs__flex_column __flex_center'>
-                <Link to='/search'>Search</Link>
-                <Link to='/feedback'>Feedback</Link>
-                <Link to='/about'>About</Link>
-            </nav>
+          <nav className='qs__flex_column __flex_center'>
+              <Link to='/search'>Search</Link>
+              <Link to='/feedback'>Feedback</Link>
+              <Link to='/about'>About</Link>
+          </nav>
 
-            <div className='quote-div'>
-                <p>Artificial intelligence is the next stage in the evolution of human beings</p>
-                <span>Stephen Hawking</span>
-            </div>
+          <div className='quote-div'>
+              <p>Artificial intelligence is the next stage in the evolution of human beings</p>
+              <span>Stephen Hawking</span>
+          </div>
         </header>
         <div className="slider-control" onClick={() =>{headerRef.current.setAttribute('aria-expanded', headerRef.current.getAttribute('aria-expanded') !== 'true')}}><ArrowSVG /></div>
       </div>
 
       <div className="qs__sidebar_spacing qs__flex_column qs__height_full_percent qs_scroll_y qs_animation">
         <main>
+          <div className="mobile-menu">
+            <div className="menuHolder qs__flex_row qs__inherit_height">
+              <Link to='/' className='logo'>
+                  <img src='/img/logos/AI-World-Small.png'/>
+              </Link>
+
+              <div className="slider-control" onClick={() =>{headerRef.current.setAttribute('aria-expanded', headerRef.current.getAttribute('aria-expanded') !== 'true')}}><BurgerLineSVG /> <span>Home</span></div>
+            </div>
+            <div ref={headerMobileRef} className='mobile-nav'>
+              <Link to='/search'>Search</Link>
+              <Link to='/feedback'>Feedback</Link>
+              <Link to='/about'>About</Link>
+            </div>
+          </div>
           <Outlet/>
         </main>
 
