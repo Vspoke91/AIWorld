@@ -87,7 +87,7 @@ const Layout = () => {
                   <img src='/img/logos/AI-World-Small.png'/>
               </Link>
 
-              <div className="slider-control" onClick={() =>{headerRef.current.setAttribute('aria-expanded', headerRef.current.getAttribute('aria-expanded') !== 'true')}}><BurgerLineSVG /> <span>{useLocationPath()}</span></div>
+              <div className="slider-control" onClick={() =>{headerMobileRef.current.setAttribute('aria-expanded', headerMobileRef.current.getAttribute('aria-expanded') !== 'true')}}><BurgerLineSVG /> <span>{useLocationPath()}</span></div>
             </div>
             <div ref={headerMobileRef} className='mobile-nav'>
               <Link to='/search'>Search</Link>
