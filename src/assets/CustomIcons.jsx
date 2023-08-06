@@ -69,3 +69,22 @@ CopySVG.propTypes = {
 CopySVG.defaultProps = {
     fill: "black"
 };
+
+export const BurgerLineSVG  = ({ fill, expanded }) => {
+
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" width="115" height="100" viewBox="0 0 115 100" fill="none">
+            <path id='top' d={expanded ? 'M10 90H105' : 'M26 85L89 14'} stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+            <path id='middle' d={expanded ? 'M10 50H105' : ''} stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+            <path id='bottom' d={expanded ? 'M10 10H105' : 'M26 14L89 85'}  stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+        </svg>
+    )
+}
+BurgerLineSVG.propTypes = {
+    fill: PropTypes.string,
+    expanded: PropTypes.bool
+};
+BurgerLineSVG.defaultProps = {
+    fill: "black",
+    expanded: false
+};

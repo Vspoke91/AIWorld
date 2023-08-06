@@ -164,8 +164,6 @@
     color: white;
 }
 
-
-
 #MediaSection_About>div {
     margin: 20px
 }
@@ -183,4 +181,17 @@
 
 #MediaSection_About>div>a>img:hover {
     transform: scale(1.1);
+}
+
+@media screen and (max-width: 1000px) {
+    #ContactSection_About .copyButton {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    :is(#MediaSection_About, #ContactSection_About, #CreatorSection_About)>span {
+        display: block;
+        padding: 0;
+    }
 }

@@ -71,21 +71,28 @@
     max-width: 900px;
 
     justify-content: center;
-    gap: 100px;
+    gap: 1vw;
+}
+
+#IntroductionSection .hidden-tittle {
+    display: none;
 }
 
 #IntroductionSection .description-holder {
     flex: 0.7;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
 }
 
 #IntroductionSection .description-holder h1 {
     padding-left: 20px;
     font-size: 2.5rem;
-    width: 23ch;
+    width: min(23ch, 90vw);
 }
 
 #IntroductionSection .description-holder p {
-    width: 60ch;
+    width: min(60ch, 90vw);
 }
 
 #IntroductionSection .description-holder button {
@@ -106,11 +113,14 @@
     background-color: #cfcfcf;
 }
 
-#IntroductionSection .item-holder {
-    flex: 0.3;
+#IntroductionSection .items-holder {
+    width: 250px;
+
+    flex: 1;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #IntroductionSection .item {
@@ -166,13 +176,19 @@
 }
 
 #IntroductionSection .item-graphic {
-    transform: translateX(-100px);
+    position: relative;
+    left: -40px;
+}
+
+#IntroductionSection .item-chat {
+    position: relative;
+    left: 40px;
 }
 
 #IntroductionSection .item-code {
-    transform: translateX(-50px) translateY(10px);
+    position: relative;
+    left: 10px;
 }
-
 
 /*---- Development Section ----*/
 #DevelopmentSection {
@@ -270,4 +286,91 @@
 #DevelopmentSection .loading-text {
     margin: 0 auto;
     font-size: 1.5rem;
+}
+
+
+@media screen and (max-width: 1000px) {
+
+    #IntroductionSection {
+        gap: 20px;
+    }
+
+    #IntroductionSection .hidden-tittle {
+        display: block;
+        font-family: "Bruno Ace SC";
+        font-size: 3rem;
+    }
+
+    #IntroductionSection {
+        flex-direction: column-reverse;
+    }
+
+    #IntroductionSection .items-holder {
+        flex-direction: row;
+    }
+
+    #IntroductionSection .description-holder h1 {
+        margin: auto;
+        padding: 0;
+    }
+
+    #IntroductionSection .item-graphic {
+        position: relative;
+        left: 0px;
+    }
+
+    #IntroductionSection .item-chat {
+        position: relative;
+        left: 0px;
+    }
+
+    #IntroductionSection .item-code {
+        position: relative;
+        left: 0px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    #IntroductionSection .items-holder {
+        flex-direction: column;
+    }
+
+    #IntroductionSection .description-holder h1 {
+        text-align: center;
+    }
+
+    #IntroductionSection .description-holder p {
+        margin: 20px auto;
+    }
+
+    #IntroductionSection .description-holder a {
+        align-self: center;
+    }
+
+    #IntroductionSection .item-graphic {
+        position: relative;
+        left: 50px;
+    }
+
+    #IntroductionSection .item-chat {
+        position: relative;
+        left: 0x;
+    }
+
+    #IntroductionSection .item-code {
+        position: relative;
+        left: -50px;
+    }
+
+    #DevelopmentSection {
+        width: 90%;
+    }
+
+    #DevelopmentSection .title-part {
+        text-align: center;
+    }
+
+    #DevelopmentSection .description-part {
+        overflow: auto;
+    }
 }

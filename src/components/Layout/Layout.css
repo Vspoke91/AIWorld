@@ -4,6 +4,10 @@ main {
     flex: 1 0 auto;
 }
 
+main .mobile-menu {
+    display: none;
+}
+
 /*--[HEADER]--*/
 
 #header-holder {
@@ -194,6 +198,105 @@ footer .opensource-div a img {
 footer .velta-logo-div a img {
     height: 70px;
     width: auto;
+}
+
+main .mobile-menu .mobile-nav {
+    background-color: #434343f9;
+    display: flex;
+    flex-direction: column;
+
+    width: 150px;
+    margin-left: 5px;
+    padding: 10px 0;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.85);
+
+    position: relative;
+    z-index: 10;
+}
+
+main .mobile-menu .mobile-nav a {
+    font-size: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.15em;
+
+    color: white;
+}
+
+main .mobile-menu .mobile-nav a:hover {
+    background-color: #262626;
+}
+
+main .mobile-menu .slider-control:hover {
+    background-color: rgb(122, 122, 122);
+}
+
+@media screen and (max-width: 1000px) {
+    #header-holder[aria-expanded='true']+.qs__sidebar_spacing {
+        padding: 0;
+    }
+
+    #header-holder :is(.quote-div, .title) {
+        display: none;
+    }
+
+    #header-holder,
+    #header-holder header {
+        display: none;
+    }
+
+
+    main .mobile-menu {
+        display: block;
+        height: 45px;
+    }
+
+    main .mobile-menu .menuHolder {
+        gap: 10px;
+        padding: 5px;
+    }
+
+    main .mobile-menu .logo img {
+        width: inherit;
+        height: inherit;
+    }
+
+    main .mobile-menu .logo {
+        width: auto;
+        height: inherit;
+    }
+
+    main .mobile-menu .slider-control {
+        display: flex;
+        background-color: rgb(93, 93, 93);
+        border-radius: 10px;
+
+        padding: 7px;
+
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+    main .mobile-menu .slider-control svg {
+        width: inherit;
+        height: inherit;
+    }
+
+    main .mobile-menu .slider-control svg path {
+        stroke: rgb(235, 235, 235);
+    }
+
+    main .mobile-menu .slider-control span {
+        font-weight: bold;
+        font-size: 1.4rem;
+        margin: auto;
+        padding-left: 5px;
+    }
+
+    main .mobile-menu[aria-expanded='false'] .mobile-nav {
+        display: none;
+    }
+
 }
 
 

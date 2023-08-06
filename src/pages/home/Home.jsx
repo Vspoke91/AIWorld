@@ -13,6 +13,7 @@ function Home() {
             </div>
             <div id='IntroductionSection'>
                 <Introduction/>
+                <span className='hidden-tittle'>AI World</span>
             </div>
             <div id='DevelopmentSection'>
                 <Development/>

@@ -17,6 +17,11 @@
     margin: 20px auto;
 }
 
+#FormSection_Feedback {
+    display: flex;
+    justify-content: center;
+}
+
 #FormSection_Feedback .successful_part {
     width: 80%;
     height: 400px;
@@ -79,7 +84,7 @@
 
 #FormSection_Feedback .form_part {
     width: fit-content;
-    margin: auto;
+    margin: 0 10px;
 
     font-size: 1.2rem;
 
@@ -193,4 +198,15 @@
 
 #FormSection_Feedback .form_part form .required::before {
     content: ' *';
+}
+
+@media screen and (max-width: 1000px) {
+    #IntroductionSection_Feedback {
+        width: 100%;
+    }
+
+    #FormSection_Feedback .form_part form>* {
+        display: block;
+        margin: 20px 15px;
+    }
 }
