@@ -44,6 +44,7 @@ const Layout = () => {
 
   const headerRef = useRef(null)
   const headerMobileRef = useRef(null)
+  const [headerExpandedMobile, setHeaderExpandedMobile] = useState(true);
 
   const useLocationPath = () =>{
 
@@ -81,15 +82,16 @@ const Layout = () => {
 
       <div className="qs__sidebar_spacing qs__flex_column qs__height_full_percent qs_scroll_y qs_animation">
         <main>
-          <div className="mobile-menu">
+          <div ref={headerMobileRef} className="mobile-menu" aria-expanded="false">
             <div className="menuHolder qs__flex_row qs__inherit_height">
               <Link to='/' className='logo'>
                   <img src='/img/logos/AI-World-Small.png'/>
               </Link>
 
-              <div className="slider-control" onClick={() =>{headerMobileRef.current.setAttribute('aria-expanded', headerMobileRef.current.getAttribute('aria-expanded') !== 'true')}}><BurgerLineSVG /> <span>{useLocationPath()}</span></div>
+              <div className="slider-control" onClick={() =>{headerMobileRef.current.setAttribute('aria-expanded', headerMobileRef.current.getAttribute('aria-expanded') !== 'true'); setHeaderExpandedMobile(headerMobileRef.current.getAttribute('aria-expanded') !== 'true')}}><BurgerLineSVG expanded={headerExpandedMobile} /> <span>{useLocationPath()}</span></div>
             </div>
-            <div ref={headerMobileRef} className='mobile-nav'>
+            <div className='mobile-nav'>
+            <Link to='/'>Home</Link>
               <Link to='/search'>Search</Link>
               <Link to='/feedback'>Feedback</Link>
               <Link to='/about'>About</Link>
