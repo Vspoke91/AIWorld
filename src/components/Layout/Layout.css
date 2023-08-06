@@ -227,6 +227,10 @@ main .mobile-menu .mobile-nav a:hover {
     background-color: #262626;
 }
 
+main .mobile-menu .slider-control:hover {
+    background-color: rgb(122, 122, 122);
+}
+
 @media screen and (max-width: 1000px) {
     #header-holder[aria-expanded='true']+.qs__sidebar_spacing {
         padding: 0;
