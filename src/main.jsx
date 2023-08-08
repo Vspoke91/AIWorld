@@ -7,6 +7,7 @@ import HomePage from './pages/home/Home'
 import SearchPage from './pages/search/Search'
 import FeedbackPage from './pages/feedback/Feedback'
 import AboutPage from './pages/about/About'
+import ErrorPage from './pages/error/Error'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +19,7 @@ const router = createBrowserRouter(
         <Route path='/about' element={<AboutPage />} />
       </Route>
 
-      <Route path='*' element={<>404 Page</>} />
+      <Route path='*' element={<ErrorPage/>} />
     </>
   )
 );
