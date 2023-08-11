@@ -11,16 +11,13 @@ import ErrorPage from './pages/error/Error'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
-      <Route path='/' element={<LayoutComponent/>} >
-        <Route index element={<HomePage />} />
-        <Route path='/search' element={<SearchPage />} />
-        <Route path='/feedback' element={<FeedbackPage />} />
-        <Route path='/about' element={<AboutPage />} />
-      </Route>
-
+    <Route path='/' element={<LayoutComponent/>} >
+      <Route index element={<HomePage />} />
+      <Route path='/search' element={<SearchPage />} />
+      <Route path='/feedback' element={<FeedbackPage />} />
+      <Route path='/about' element={<AboutPage />} />
       <Route path='*' element={<ErrorPage/>} />
-    </>
+    </Route>
   )
 );
 
