@@ -261,7 +261,7 @@ header .quote-div span::before {
 }
 
 
-h2 {
+#cards h2 {
     font-size: 2em;
     margin: 10px auto;
     width: fit-content;
@@ -269,11 +269,11 @@ h2 {
 }
 
 
-h2 a {
+#cards h2 a {
     color: var(--font-color);
 }
 
-h2 a:hover {
+#cards h2 a:hover {
     color: rgb(181, 230, 255)
 }
 

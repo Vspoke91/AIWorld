@@ -12,6 +12,12 @@ export const FilterSVG = ({ fill }) =>{
         </svg>
     )
 }
+FilterSVG.propTypes = {
+    fill: PropTypes.string
+};
+FilterSVG.defaultProps = {
+    fill: "white"
+};
 
 export const ExitSVG = ({ fill }) =>{
 
@@ -25,6 +31,12 @@ export const ExitSVG = ({ fill }) =>{
         </svg>
     )
 }
+ExitSVG.propTypes = {
+    fill: PropTypes.string
+};
+ExitSVG.defaultProps = {
+    fill: "#742626"
+};
 
 export const ArrowSVG = ({ fill }) => {
 
@@ -36,29 +48,43 @@ export const ArrowSVG = ({ fill }) => {
         </svg>
     )
 }
-
-
-FilterSVG.propTypes = {
-    fill: PropTypes.string
-};
-
-FilterSVG.defaultProps = {
-    fill: "white"
-};
-
-ExitSVG.propTypes = {
-    fill: PropTypes.string
-};
-
-ExitSVG.defaultProps = {
-    fill: "#742626"
-};
-
-
 ArrowSVG.propTypes = {
     fill: PropTypes.string
 };
-
 ArrowSVG.defaultProps = {
     fill: "white"
+};
+
+export const CopySVG  = ({ fill }) => {
+
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="101" viewBox="0 0 80 101" fill="none">
+            <path fillRule="evenodd" clipRule="evenodd" d="M6.75 9.75C6.75 8.09314 8.09315 6.75 9.75 6.74999L51.25 6.74999C52.9069 6.74999 54.25 5.40684 54.25 3.74999C54.25 2.09313 52.9069 0.749988 51.25 0.749985L9.75 0.749996C4.77944 0.749995 0.75 4.77943 0.75 9.75V59.25C0.75 60.9068 2.09315 62.25 3.75 62.25C5.40685 62.25 6.75 60.9068 6.75 59.25L6.75 9.75ZM22 17H70C72.2091 17 74 18.7909 74 21V91C74 93.2091 72.2091 95 70 95H22C19.7909 95 18 93.2091 18 91V21C18 18.7909 19.7909 17 22 17ZM12 21C12 15.4771 16.4772 11 22 11H70C75.5228 11 80 15.4771 80 21V91C80 96.5228 75.5228 101 70 101H22C16.4772 101 12 96.5228 12 91V21Z" fill={fill}/>
+        </svg>
+    )
+}
+CopySVG.propTypes = {
+    fill: PropTypes.string
+};
+CopySVG.defaultProps = {
+    fill: "black"
+};
+
+export const BurgerLineSVG  = ({ fill, expanded }) => {
+
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" width="115" height="100" viewBox="0 0 115 100" fill="none">
+            <path id='top' d={expanded ? 'M10 90H105' : 'M26 85L89 14'} stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+            <path id='middle' d={expanded ? 'M10 50H105' : ''} stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+            <path id='bottom' d={expanded ? 'M10 10H105' : 'M26 14L89 85'}  stroke={fill} strokeWidth="20" strokeLinecap="round"/>
+        </svg>
+    )
+}
+BurgerLineSVG.propTypes = {
+    fill: PropTypes.string,
+    expanded: PropTypes.bool
+};
+BurgerLineSVG.defaultProps = {
+    fill: "black",
+    expanded: false
 };
