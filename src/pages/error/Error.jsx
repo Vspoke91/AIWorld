@@ -1,13 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
+import './Error.css'
 
 function Error(){
 
     return(
         <>
-            <div>
+            <div id='MessageSection_Error'>
                 <h1>404 Error</h1>
-                <p><b>&quot;{useLocation().pathname.slice(1)}&quot;</b> not found!</p>
-                <Link to="/"><button>Go back to Home</button></Link>
+                <p>Sorry page <b>&quot;{useLocation().pathname.slice(1)}&quot;</b> was not found!</p>
+                <Link to="/"><button>Go to Home</button></Link>
             </div>
         </>
     );
