@@ -8,7 +8,11 @@
 
 ## Development
 This project is still under devepment 🚧 but a working version has been published: [aiworld.veltaproject.com](https://aiworld.veltaproject.com/)
+
+### Updates
+- Sorting: sorting helps you find website that you desire faster without showing the ones you dont want to see.
+
+
 ### Upcomming Features
-- Sorting: sorting will help you find website that you desire faster without showing the ones you dont want to see.
 - Rading: rading will be a good way to let you rate the best websites and the worse.
 - Feedback: feedback is a nice way to let anybody that has visit the same website to leave commend.
