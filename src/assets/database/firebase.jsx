@@ -1,11 +1,11 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
+import { collection, getDocs, getDoc } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyARM976K3XVIWFEgeQfgm7C_PcFxb1DERI",
   authDomain: "ai-world-eae98.firebaseapp.com",
@@ -18,4 +18,23 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const firestoreDataBase = getFirestore(app)
+
+const database = {
+  getWebsites: async () => {
+    try{
+      const documentsRef = await getDocs(collection(firestoreDataBase, 'websites'));
+      return documentsRef.docs.map(doc => doc.data())
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+}
+
+export default database
+
+export const getDocumentData = async (document) =>{
+  const documentRef = await getDoc(document);
+  return documentRef.data();
+};
