@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import './Home.css'
 import { Link } from 'react-router-dom';
-import {default as contentData } from '../../assets/sitesDataBase' 
+
+import {default as database} from '../../assets/database/firebase'
 
 function Home() {
     return (
@@ -24,12 +25,20 @@ function Home() {
 
 function Featured(){
 
+    const [featuredWebsites, setFeaturedWebsites] = useState([]);
+
+    useEffect(() => {
+        (async function (){
+            setFeaturedWebsites(await database.getFeaturedWebsites())
+        })()
+    },[])
+
     const getWebsiteItemElement = (item, index) =>{
         return (
             <div key={index} className='item'>
                 <a href={item.webLink} target='_black'>
-                    <img src={item.logo}/>
-                    <h3 className='title-part'>{item.title}</h3>
+                    <img src={item.logoUrl}/>
+                    <h3 className='title-part'>{item.name}</h3>
                 </a>
             </div>
         )
@@ -39,7 +48,12 @@ function Featured(){
         <>
             <h2>Featured</h2>
             <div>
-                {contentData.map((item, index) => getWebsiteItemElement(item, index))}
+                {
+                    featuredWebsites.length > 0 ? 
+                        featuredWebsites.map((item, index) => getWebsiteItemElement(item, index)) 
+                        : 
+                        <strong>Loading...</strong>
+                }
             </div>
         </>
     );
@@ -56,14 +70,14 @@ function Introduction(){
 
             <div className='items-holder'>
                 <div className='item item-graphic'>
-                    <img src='/img/logos/BlueWillow.png'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/ai-world-eae98.appspot.com/o/Logos%2FBlueWillow.png?alt=media&token=da9910cf-6c39-4436-a72c-380411f9f46c'/>
                     <a href='https://www.bluewillow.ai/' target='_black' rel='noreferrer'>
                         <span>BlueWillow</span>
                         <p>State-of-the-art artificial intelligence <strong>image generator</strong>.</p>
                     </a>
                 </div>
                 <div className='item item-chat'>
-                    <img src='/img/logos/ChatGPT.svg'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/ai-world-eae98.appspot.com/o/Logos%2FChatGPT.svg?alt=media&token=2f18a303-41ec-492e-ba79-3c31b32a4753'/>
                     <a href='https://chat.openai.com/' target='_blank' rel="noreferrer">
                         <span>ChatGPT</span>
                         <p>Natural language AI <strong>chatbot</strong> based on OpenAI&apos;s GPT-3.5.</p>
@@ -71,7 +85,7 @@ function Introduction(){
                 </div>
                 <div className='item item-code'>
                     <img src='/img/logos/Phind.png'/>
-                    <a href='https://www.phind.com/' target='_blank' rel="noreferrer">
+                    <a href='https://firebasestorage.googleapis.com/v0/b/ai-world-eae98.appspot.com/o/Logos%2FPhind.png?alt=media&token=51c09dd3-22ea-4b62-b5b5-b121882a69ce' target='_blank' rel="noreferrer">
                         <span>Phind</span>
                         <p>Generative AI search engine for <strong>developers</strong>.</p>
                     </a>
