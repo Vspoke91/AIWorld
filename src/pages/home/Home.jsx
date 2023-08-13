@@ -66,7 +66,7 @@ function Introduction(){
                     <img src='/img/logos/ChatGPT.svg'/>
                     <a href='https://chat.openai.com/' target='_blank' rel="noreferrer">
                         <span>ChatGPT</span>
-                        <p>Natural language AI <strong>chatbot</strong> based on OpenAI's GPT-3.5.</p>
+                        <p>Natural language AI <strong>chatbot</strong> based on OpenAI&apos;s GPT-3.5.</p>
                     </a>
                 </div>
                 <div className='item item-code'>
