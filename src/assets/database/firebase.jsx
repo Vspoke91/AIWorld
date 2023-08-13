@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
-import { collection, getDocs, getDoc } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
+import { collection, getDocs, getDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -29,12 +29,25 @@ const database = {
       console.error(error);
       return [];
     }
+  },
+  getFeaturedWebsites: async () => {
+    try{
+      const collectionRef = collection(firestoreDataBase, 'websites')
+      const queryRef = await getDocs(query(collectionRef, where('featured', '==', true)));
+      return queryRef.docs.map( doc => doc.data()) 
+
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }
+
 }
 
 export default database
 
 export const getDocumentData = async (document) =>{
   const documentRef = await getDoc(document);
+  console.log(document.path)
   return documentRef.data();
 };
