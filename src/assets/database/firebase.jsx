@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
-import { collection, getDocs, getDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
+import { collection, getDocs, getDoc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,9 +21,68 @@ const app = initializeApp(firebaseConfig);
 export const firestoreDataBase = getFirestore(app)
 
 const database = {
+  /* - Expected Return <Object> -
+    { 
+      name: <string>,
+      description: <string>,
+      webLink: <string>,
+      tag: { 
+        color: <string>, 
+        text: <string> 
+      },
+      categories: [ { color: <string>, text: <string>} ],
+      featured: <boolean>,
+      logoUrl: <string>
+    }
+  */
   getWebsites: async () => {
+
+    //documentsRef equals to <QuerySnapshot : Object>
+    const documentsRef = await getDocs(collection(firestoreDataBase, 'websites'));
+
+    /* - Expected Return <Array> -
+      [
+        { 
+          name: <string>,
+          description: <string>,
+          webLink: <string>,
+          tag: <DocumentReference>,
+          categories: [ <DocumentReference> ],
+          featured: <boolean>,
+          logoUrl: <string>
+        }
+      ]
+    */
+    let dataArray = documentsRef.docs.map(doc => doc.data())
+
+    // updatesDataArray holds dataArray with all <DocumentReference> already fetch
+    let updatedDataArray = await Promise.all(dataArray.map(async dataObject => {
+
+      if(dataObject.tag instanceof DocumentReference){
+
+        //re-assign tag from data inside <DocumentReference>
+        dataObject.tag = (await getDoc(dataObject.tag)).data()
+
+      }
+
+      if(dataObject.categories instanceof Array){
+        dataObject.categories = await Promise.all(dataObject.categories.map(async value => {
+          if(value instanceof DocumentReference){
+            //return from data inside <DocumentReference>
+            return (await getDoc(value)).data()
+          }
+
+          return value
+        }))
+      }
+      return dataObject;
+    }))
+
+    return updatedDataArray;
+  },
+  getCategories: async () => {
     try{
-      const documentsRef = await getDocs(collection(firestoreDataBase, 'websites'));
+      const documentsRef = await getDocs(collection(firestoreDataBase, 'categories'));
       return documentsRef.docs.map(doc => doc.data())
     } catch (error) {
       console.error(error);
@@ -48,6 +107,5 @@ export default database
 
 export const getDocumentData = async (document) =>{
   const documentRef = await getDoc(document);
-  console.log(document.path)
   return documentRef.data();
 };
