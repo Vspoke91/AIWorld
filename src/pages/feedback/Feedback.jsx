@@ -1,7 +1,7 @@
 //styles imports
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import './Feedback.css'
-import { default as contentData } from '../../assets/sitesDataBase' 
+import {default as database} from '../../assets/database/firebase'
 
 function Feedback() {
 
@@ -9,6 +9,16 @@ function Feedback() {
     const [feedbackType, setFeedbackType] = useState(null);
     const [formSubmited, setFormSubmited] = useState(false);
     const [submitedMessage, setSubmitedMessage] = useState("");
+
+    //--DATABASE--//
+    let [websitesData, setWebsitesData] = useState([]);
+
+    useEffect(() => {
+    (async function(){
+        setWebsitesData(await database.getWebsites())
+    })();
+    },[])
+    //-|DATABASE|-//
 
     const formRef = useRef();
 
@@ -92,8 +102,8 @@ function Feedback() {
                                 >
                                     <option value="" disabled>Select an option</option>
 
-                                    {Object.keys(contentData).map( (value, key) => 
-                                        <option key={key}>{contentData[value].title}</option>
+                                    {Object.keys(websitesData).map( (value, key) => 
+                                        <option key={key}>{websitesData[value].name}</option>
                                     )}
                                 </select>
 
@@ -190,7 +200,6 @@ function Feedback() {
         
           event.preventDefault();
     };
-
 
     return (
     <>
