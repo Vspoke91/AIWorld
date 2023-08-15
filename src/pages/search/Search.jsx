@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import {default as contentData, categories } from '../../assets/sitesDataBase' 
 import { FilterSVG, ExitSVG } from '../../assets/CustomIcons';
 import PropTypes from 'prop-types';
+import {default as database} from '../../assets/database/firebase'
 
 //styles imports
 import './Search.css'
@@ -10,7 +10,7 @@ function Search() {
 
   //useState for sorting names that will be use to create buttons and change main when filterting
   let [sortingButtonNames, setSortingButtonNames] = useState([]);
-
+  
   return (
     <>
       <div className='qs__flex_column __flex_extend'>
@@ -29,6 +29,16 @@ function Search() {
 
 function Sorting({sortingButtonNames, setSortingButtonNames}){
 
+  //--DATABASE--//
+  let [categories, setCategories] = useState([]);
+  
+  useEffect(() => {
+    (async function(){
+      setCategories(await database.getCategories());
+    })();
+  },[])
+  //-|DATABASE|-//
+
   //created buttons from sortingButtonNames array and return them as elements array for DOM
   const renderSortingButtons = () => {
     return sortingButtonNames.map((buttonName) => 
@@ -41,20 +51,21 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
   }
 
   //create checkbox from categories(sitesDataBase) and return them as elements array for DOM
-  const renderSortingCheckBoxes = () =>{
+  const renderSortingCheckBoxes = (categoriesArray) =>{
     return <>
+        {
+          Object.keys(categoriesArray).map((key) =>
+          <label 
+            className='item'  
+            key={key}>
+            <input 
+              type='checkbox'
+              name={categoriesArray[key].text} //name attribute is used to name buttons and to find input checkbox 
+              onChange={checkboxChangeHandler}/>
 
-    {Object.keys(categories).map((key) =>
-        <label 
-          className='item'  
-          key={key}>
-          <input 
-            type='checkbox'
-            name={categories[key].text} //name attribute is used to name buttons and to find input checkbox 
-            onChange={checkboxChangeHandler}/>
-
-          {categories[key].text}
-        </label>)}
+            {categoriesArray[key].text}
+          </label>)
+        }
     </>
   }
 
@@ -83,7 +94,6 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
     else
       //filter returns items that are not equal to newButtonName
       setSortingButtonNames(sortingButtonNames.filter((item) => item !== newButtonName));
-
   }
 
   const clearClickHandler = () => {
@@ -104,7 +114,7 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
       <div className='drop_down_div'>
         <span className='icon'><FilterSVG className="icon"/><span>Filter</span></span>
         <div className='items-holder'>
-        {renderSortingCheckBoxes()}
+          {categories.length ? renderSortingCheckBoxes(categories) : <label className='item'>Loading...</label>}
         </div>
       </div>
       <button className='clear-button' onClick={clearClickHandler}>Clear</button>
@@ -117,6 +127,16 @@ function Sorting({sortingButtonNames, setSortingButtonNames}){
 
 function MainCards({sortingButtonNames}){
 
+  //--DATABASE--//
+  let [websitesData, setWebsitesData] = useState([]);
+
+  useEffect(() => {
+    (async function(){
+      setWebsitesData(await database.getWebsites())
+    })();
+  },[])
+  //-|DATABASE|-//
+
   //state used in showDiv to be able to update when a different card is pressed
   let [showDivState, setShowDivState] = useState({
       display: false,
@@ -124,7 +144,7 @@ function MainCards({sortingButtonNames}){
       logoPath: "*Path*",
       description: "*Description*",
       tag: {},
-      category: [],
+      categories: [],
       webLink: ""
   });
 
@@ -132,12 +152,12 @@ function MainCards({sortingButtonNames}){
   let loadDisplayShowDiv = (index) =>{
     setShowDivState({
         display: true,
-        title: contentData[index].title, 
-        logoPath: contentData[index].logo, 
-        description: contentData[index].description, 
-        tag: contentData[index].tagType, 
-        category: contentData[index].category, 
-        webLink: contentData[index].webLink
+        title: websitesData[index].name, 
+        logoPath: websitesData[index].logoUrl, 
+        description: websitesData[index].description, 
+        tag: websitesData[index].tag, 
+        categories: websitesData[index].categories, 
+        webLink: websitesData[index].webLink
     });
   }
 
@@ -146,61 +166,60 @@ function MainCards({sortingButtonNames}){
 
   //useEffect used to update when sortingButtonsNames (sorted names) is change
   useEffect(()=>{
+    //run code only if websiteData is not empty
+    if(websitesData.length){
 
-    //return a element card
-    let getCardElement = (index, title, logoURL, tag, categories, description) =>{
-      return (
-        <div key={index} className='content-div' onClick={() => {loadDisplayShowDiv(index)}}>
-          <span className='tag' style={{backgroundColor: tag.color}}>{tag.text}</span>
-          <h2>{title}</h2>
+      let renderCards = () => {
+
+        //return a element card
+        let getCardElement = ({name, description, tag, categories, logoUrl}, index) =>{
+
+          return (
+            <div key={index} className='content-div' onClick={() => {loadDisplayShowDiv(index)}}>
+              <span className='tag' style={{backgroundColor: tag.color}}>{tag.text}</span>
+              <h2>{name}</h2>
+      
+              <div className='img-div'>
+                <img src={logoUrl} alt={name + " Logo"}/>
+              </div>
+      
+              <div className='category-div'>
+                {categories.map((category, index) => <span key={index}>{(typeof category) === "object" ? category.text : 'No Category'}</span>)}
+              </div>
+      
+              <div className='description'>
+                <p>{description}</p>
+              </div>
+      
+            </div>
+          );
+        }
+
+        //return card element array
+        let cardElements = websitesData.map((websiteObject, index) => {
+
+          if(hasEveryMatchingCategories(sortingButtonNames, websiteObject.categories))
+            return (getCardElement(websiteObject, index))
   
-          <div className='img-div'>
-            <img src={logoURL} alt={title + " Logo"}/>
-          </div>
+        //map returns items that were set to nothing as undefined, filter will return a new array with items != (not equals) undefined
+        }).filter((item) => item != undefined);
   
-          <div className='category-div'>
-            {categories.map((category, index) => 
-                <span key={index}>{category}</span>
-            )}
-          </div>
-  
-          <div className='description'>
-            <p>{description}</p>
-          </div>
-  
-        </div>
-      );
+        return(cardElements)
+      }
+
+      setSortedCards(renderCards())
     }
-
-    //return card element array fill with data in contentData
-    let renderCards = () => {
-
-      let cardElements = contentData.map(({title, logo, tagType, category, description}, index) => {
-        
-        if(hasEveryMatchingItem(sortingButtonNames, category))
-          return (getCardElement(index, title, logo,tagType, category, description))
-        
-
-      //map returns items that were set to nothing as undefined, filter will return a new array with items != (not equals) undefined
-      }).filter((item) => item != undefined);
-
-      return(cardElements)
-    }
-
-    //updates useState with new cards
-    setSortedCards(renderCards())
-
-  //[sortingButtonNames] is the dependency, if variable changes it will return useEffect Function
-  }, [sortingButtonNames])
+  }, [websitesData, sortingButtonNames])
 
   //hasEvery finds all cards that has only the selected filters
-  function hasEveryMatchingItem(array1, array2) {
-    return array1.every(item => array2.includes(item));
+  function hasEveryMatchingCategories(selectedNamesArray, cardCategories) {
+    const cardCategoriesArray = cardCategories.map( item => item.text)
+    return selectedNamesArray.every( item => cardCategoriesArray.includes(item));
   }
 
   return(
   <>
-    {sortedCards.length > 0 ? sortedCards :<p className='not-found'>Nothing was found! please change filter options</p>}
+    {sortedCards.length ? sortedCards : <p className='not-found'>Nothing was found! please change filter options</p>}
 
     <div id='backgroundBlur'
       className='background-blur'
@@ -228,7 +247,7 @@ function MainCards({sortingButtonNames}){
         </div>
 
         <div className='category-div'>
-          {showDivState.category.map((category, index)=><span key={index}>{category}</span>)}
+          {showDivState.categories.map((category, index)=><span key={index}>{category.text}</span>)}
         </div>
 
         <div className='description'>
