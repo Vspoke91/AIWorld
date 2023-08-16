@@ -1,9 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
-import { collection, getDocs, getDoc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js';
+import { getFirestore, collection, getDocs, setDoc, doc, getDoc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,8 +16,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const firestoreDataBase = getFirestore(app)
+const firestoreDataBase = getFirestore(app)
 
+//database
 const database = {
   /* - Expected Return <Object> -
     { 
@@ -100,12 +99,17 @@ const database = {
       return [];
     }
   }
-
 }
+export default database;
 
-export default database
+export const logIn = async (email, password) => {
+  try {
+    await signInWithEmailAndPassword(getAuth(), email, password)
+    return true;
 
-export const getDocumentData = async (document) =>{
-  const documentRef = await getDoc(document);
-  return documentRef.data();
-};
+  } catch(error){
+    console.log(error)
+    return false;
+    
+  }
+}
