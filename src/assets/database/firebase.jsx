@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
 import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, setDoc, doc, getDoc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, getDoc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -37,7 +37,7 @@ const database = {
   getWebsites: async () => {
 
     //documentsRef equals to <QuerySnapshot : Object>
-    const documentsRef = await getDocs(collection(firestoreDataBase, 'websites'));
+    const documentsRef = await getDocs(collection(firestoreDataBase, 'Public/websites/siteId'));
 
     /* - Expected Return <Array> -
       [
@@ -81,7 +81,7 @@ const database = {
   },
   getCategories: async () => {
     try{
-      const documentsRef = await getDocs(collection(firestoreDataBase, 'categories'));
+      const documentsRef = await getDocs(collection(firestoreDataBase, 'Public/websites/categoryId'));
       return documentsRef.docs.map(doc => doc.data())
     } catch (error) {
       console.error(error);
@@ -90,7 +90,7 @@ const database = {
   },
   getFeaturedWebsites: async () => {
     try{
-      const collectionRef = collection(firestoreDataBase, 'websites')
+      const collectionRef = collection(firestoreDataBase, 'Public/websites/siteId')
       const queryRef = await getDocs(query(collectionRef, where('featured', '==', true)));
       return queryRef.docs.map( doc => doc.data()) 
 
@@ -102,14 +102,21 @@ const database = {
 }
 export default database;
 
-export const logIn = async (email, password) => {
-  try {
-    await signInWithEmailAndPassword(getAuth(), email, password)
-    return true;
+export const authentication = {
+  login: async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(getAuth(), email, password)
+      return true;
+  
+    } catch(error){
+      console.log(error)
+      return false;
+      
+    }
+  },
+  getUserInfo: async () =>{
+    console.log(getAuth().currentUser);
 
-  } catch(error){
-    console.log(error)
-    return false;
-    
+    return null;
   }
 }
