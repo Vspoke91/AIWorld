@@ -7,10 +7,11 @@ import HomePage from './pages/home/Home'
 import SearchPage from './pages/search/Search'
 import FeedbackPage from './pages/feedback/Feedback'
 import AboutPage from './pages/about/About'
+import DatabasePage from './pages/database/Database'
 import ErrorPage from './pages/error/Error'
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
+  createRoutesFromElements(<>
     <Route path='/' element={<LayoutComponent/>} >
       <Route index element={<HomePage />} />
       <Route path='/search' element={<SearchPage />} />
@@ -18,6 +19,9 @@ const router = createBrowserRouter(
       <Route path='/about' element={<AboutPage />} />
       <Route path='*' element={<ErrorPage/>} />
     </Route>
+
+    <Route path='/database' element={<DatabasePage />} />
+    </>
   )
 );
 
