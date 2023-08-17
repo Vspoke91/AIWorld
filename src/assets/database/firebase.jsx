@@ -111,12 +111,25 @@ export const authentication = {
     } catch(error){
       console.log(error)
       return false;
-      
     }
   },
   getUserInfo: async () =>{
-    console.log(getAuth().currentUser);
+    try{
+      const collectionRef = collection(firestoreDataBase, 'Users/database/userId')
+      const queryRef = await getDocs(query(collectionRef, where('uid', '==', getAuth().currentUser.uid)));
+      
+      //array of data from the query specified
+      const queryArray = queryRef.docs.map( doc => doc.data());
 
-    return null;
+      if(queryArray.length == 1){
+        return queryArray[0]
+      }else{
+        console.error(`multiple users (${queryArray[0].uid}) with the same UID`)
+      }
+
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }
 }
