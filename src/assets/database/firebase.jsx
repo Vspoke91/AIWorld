@@ -88,6 +88,15 @@ const database = {
       return [];
     }
   },
+  getTags: async () => {
+    try{
+      const documentsRef = await getDocs(collection(firestoreDataBase, 'Public/websites/tagId'));
+      return documentsRef.docs.map(doc => doc.data())
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  },
   getFeaturedWebsites: async () => {
     try{
       const collectionRef = collection(firestoreDataBase, 'Public/websites/siteId')
