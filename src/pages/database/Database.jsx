@@ -34,6 +34,18 @@ function UserUI (){
         displayCollectionChangeHandler("websites")
     },[])
 
+    //start auto-refresh
+    useEffect(() => {
+        const refreshTime = 1000 // 1 sec = 1,000
+
+        const intervalId = setInterval(() => {
+            displayCollectionChangeHandler(collectionDisplayData.collectionName);
+        }, refreshTime);
+      
+        // Clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, [collectionDisplayData.collectionName]) 
+
     const renderCollectionList = ({collection, nameFieldRef, logoUrlFieldRef}) => {
         const elementArray = collection.map((item, index) => {
             return(
