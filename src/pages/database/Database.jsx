@@ -26,6 +26,8 @@ function UserUI (){
         nameFieldRef: null, 
         logoUrlFieldRef: null
     })
+    
+    const [itemElementRender, setItemElementRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you delete!</strong></p>)
 
     //loading information for component
     useEffect(() => {
@@ -57,6 +59,7 @@ function UserUI (){
         })
         return elementArray;
     }
+
     const displayCollectionChangeHandler = (value) =>{
         switch(value){
             case ('websites'): (async function() {setCollectionDisplayData({
@@ -64,22 +67,22 @@ function UserUI (){
                 collection: await database.getWebsites(), 
                 nameFieldRef: 'name', 
                 logoUrlFieldRef: 'logoUrl'
-
-            })})(); break;
+            })})(); console.log("websites"); break;
             case ('categories'): (async function() {setCollectionDisplayData({
                 collectionName: 'categories',
                 collection: await database.getCategories(), 
                 nameFieldRef: 'text', 
                 logoUrlFieldRef: 'logoUrl'
-            })})(); break; 
+            })})(); console.log("categories"); break; 
             case ('tag'): (async function() {setCollectionDisplayData({
                 collectionName: 'tag',
                 collection: await database.getTags(), 
                 nameFieldRef: 'text', 
                 logoUrlFieldRef: 'logoUrl'
-            })})(); break;
+            })})(); console.log("tag"); break;
         }
     }
+
 
     return(
         <>
@@ -98,7 +101,7 @@ function UserUI (){
                 <div>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
                     <div>
-
+                        {itemElementRender}
                     </div>
                 </div>
             </div>

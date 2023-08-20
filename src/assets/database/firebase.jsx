@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
 import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, getDoc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, getDoc, setDoc, doc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -107,6 +107,12 @@ const database = {
       console.error(error);
       return [];
     }
+  },
+  addWebsite:  async () => {
+
+    const documentRef = doc(firestoreDataBase, 'Public/websites/siteId', 'newStuff');
+
+    setDoc(documentRef, {testing: 'test'})
   }
 }
 export default database;
