@@ -27,7 +27,7 @@ function UserUI (){
         logoUrlFieldRef: null
     })
     
-    const [itemElementRender, setItemElementRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you delete!</strong></p>)
+    const [itemElementRender, setItemElementRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
 
     //loading information for component
     useEffect(() => {
@@ -60,40 +60,68 @@ function UserUI (){
         return elementArray;
     }
 
-    const displayCollectionChangeHandler = (value) =>{
-        switch(value){
-            case ('websites'): (async function() {setCollectionDisplayData({
-                collectionName: 'websites',
-                collection: await database.getWebsites(), 
-                nameFieldRef: 'name', 
-                logoUrlFieldRef: 'logoUrl'
-            })})(); console.log("websites"); break;
-            case ('categories'): (async function() {setCollectionDisplayData({
-                collectionName: 'categories',
-                collection: await database.getCategories(), 
-                nameFieldRef: 'text', 
-                logoUrlFieldRef: 'logoUrl'
-            })})(); console.log("categories"); break; 
-            case ('tag'): (async function() {setCollectionDisplayData({
-                collectionName: 'tag',
-                collection: await database.getTags(), 
-                nameFieldRef: 'text', 
-                logoUrlFieldRef: 'logoUrl'
-            })})(); console.log("tag"); break;
+    let currentAsyncTask = null;
+
+    const displayCollectionChangeHandler = async (value, force) =>{
+
+        if (currentAsyncTask && !force) {
+            return;
+        }
+
+        currentAsyncTask = (async () => {
+            try{
+                switch(value){
+                    case ('websites'):
+                        setCollectionDisplayData({
+                            collectionName: 'websites',
+                            collection: await database.getWebsites(), 
+                            nameFieldRef: 'name', 
+                            logoUrlFieldRef: 'logoUrl'
+                        }); 
+                    break;
+                    case ('categories'):setCollectionDisplayData({
+                            collectionName: 'categories',
+                            collection: await database.getCategories(), 
+                            nameFieldRef: 'text', 
+                            logoUrlFieldRef: 'logoUrl'
+                        });
+                    break; 
+                    case ('tag'): setCollectionDisplayData({
+                            collectionName: 'tag',
+                            collection: await database.getTags(), 
+                            nameFieldRef: 'text', 
+                            logoUrlFieldRef: 'logoUrl'
+                        });
+                    break;
+                }
+            } finally {
+                currentAsyncTask = null;
+            }
+        })();
+
+        try {
+            await currentAsyncTask;
+        } catch (error) {
+            console.error(error)
         }
     }
 
+    const addNewClickHandler = (e) => {
+        e.preventDefault()
+
+        
+    }
 
     return(
         <>
             <div className='qs__flex_row'>
                 <div className='qs__flex_column'> 
-                    <select className='' defaultValue="websites" onChange={(event) => displayCollectionChangeHandler(event.target.value)}>
+                    <select className='' defaultValue="websites" onChange={(event) => {displayCollectionChangeHandler(event.target.value, true)}}>
                         <option value="websites">Websites</option>
                         <option value='tag'>Tag</option>
                         <option value='categories'>Categories</option>
                     </select>
-                    <button onClick={null}>Add New</button>
+                    <button onClick={addNewClickHandler}>Add New</button>
                     <div className='qs__flex_column'>
                         {collectionDisplayData != null ?  renderCollectionList(collectionDisplayData):  "loading..."}
                     </div>
