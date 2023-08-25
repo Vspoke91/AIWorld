@@ -19,7 +19,11 @@ function Database (){
 
 function UserUI (){
 
-    let [collectionsData, setCollectionsData] = useState(null);
+    let [collectionsData, setCollectionsData] = useState({
+        websites: {},
+        tags: {},
+        categories: {}
+    });
 
 
     const [userInfo, setUserInfo] = useState(null)
@@ -39,7 +43,7 @@ function UserUI (){
         (async function (){
             setCollectionsData({
                 websites: await database.getWebsites(),
-                tag: await database.getTags(),
+                tags: await database.getTags(),
                 categories: await database.getCategories(),
             });
 
@@ -66,9 +70,9 @@ function UserUI (){
                     const data = await database.getCategories();
                     setCollectionsData(prev => ({...prev, categories: data}));
                 break;}
-                case ('tag'):{
+                case ('tags'):{
                     const data = await database.getTags();
-                    setCollectionsData(prev => ({...prev, tag: data}));
+                    setCollectionsData(prev => ({...prev, tags: data}));
                 break;}
             }
         }
@@ -80,6 +84,31 @@ function UserUI (){
         // Clear the interval when the component unmounts
         return () => clearInterval(intervalId);
     }, [collectionDisplayData.collectionName]) 
+
+    useEffect(() => {
+        switch (collectionDisplayData.collectionName) {
+            case 'websites':
+                setCollectionDisplayData(prevData => ({
+                    ...prevData,
+                    collection: collectionsData.websites
+                }));
+                break;
+            case 'categories':
+                setCollectionDisplayData(prevData => ({
+                    ...prevData,
+                    collection: collectionsData.categories
+                }));
+                break;
+            case 'tags':
+                setCollectionDisplayData(prevData => ({
+                    ...prevData,
+                    collection: collectionsData.tags
+                }));
+                break;
+            default:
+                break;
+        }
+    },[collectionsData])
 
     const renderCollectionList = ({collection, nameFieldRef, logoUrlFieldRef}) => {
         const elementArray = collection.map((item, index) => {
@@ -96,31 +125,28 @@ function UserUI (){
     const displayCollectionChangeHandler = (value) =>{
         switch(value){
             case ('websites'):{
-                setCollectionDisplayData((prev) => ({
-                    ...prev,
+                setCollectionDisplayData({
                     collectionName: 'websites',
-                    collection: collectionsData[value], 
+                    collection: collectionsData.websites, 
                     nameFieldRef: 'name', 
                     logoUrlFieldRef: 'logoUrl'
-                })); 
+                }); 
             break;}
             case ('categories'):{
-                    setCollectionDisplayData((prev) => ({
-                        ...prev,
-                        collectionName: 'categories',
-                        collection: collectionsData[value], 
-                        nameFieldRef: 'text', 
-                        logoUrlFieldRef: 'logoUrl'
-                    }));
+                setCollectionDisplayData({
+                    collectionName: 'categories',
+                    collection: collectionsData.categories, 
+                    nameFieldRef: 'text', 
+                    logoUrlFieldRef: 'logoUrl'
+                });
             break;}
-            case ('tag'):{
-                setCollectionDisplayData((prev) => ({
-                        ...prev,
-                        collectionName: 'tag',
-                        collection: collectionsData[value], 
-                        nameFieldRef: 'text', 
-                        logoUrlFieldRef: 'logoUrl'
-                    }));
+            case ('tags'):{
+                setCollectionDisplayData({
+                    collectionName: 'tags',
+                    collection: collectionsData.tags, 
+                    nameFieldRef: 'text', 
+                    logoUrlFieldRef: 'logoUrl'
+                });
             break;}
         }
     }
@@ -137,7 +163,7 @@ function UserUI (){
                 <div className='qs__flex_column'> 
                     <select className='' defaultValue="websites" onChange={(event) => {displayCollectionChangeHandler(event.target.value)}}>
                         <option value="websites">Websites</option>
-                        <option value='tag'>Tag</option>
+                        <option value='tags'>Tags</option>
                         <option value='categories'>Categories</option>
                     </select>
                     <button onClick={addNewClickHandler}>Add New</button>
