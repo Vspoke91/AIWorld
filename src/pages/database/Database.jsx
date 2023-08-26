@@ -140,11 +140,26 @@ function UserUI (){
         
     }
 
+    const rederItemForm = (variable) => {
+
+        switch(variable) {
+            case("variable"):
+            
+            break;
+        }
+
+        return (
+            <>
+            
+            </>
+        )
+    }
+
     return(
         <>
             <div className='qs__flex_row'>
                 <div className='qs__flex_column'> 
-                    <select className='' defaultValue="websites" onChange={(event) => {setTargetCollectionName(event.target.value)}}>
+                    <select defaultValue="websites" onChange={(event) => {setTargetCollectionName(event.target.value)}}>
                         <option value="websites">Websites</option>
                         <option value='tags'>Tags</option>
                         <option value='categories'>Categories</option>
