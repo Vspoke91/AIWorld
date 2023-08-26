@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import './Database.css'
 
 import { default as database, authentication } from '../../assets/database/firebase'
@@ -19,21 +19,20 @@ function Database (){
 
 function UserUI (){
 
-    let [collectionsData, setCollectionsData] = useState({
-        websites: {},
-        tags: {},
-        categories: {}
-    });
+    //collectionsData keep all the data of the collections and updates in every auto-refresh or when site starts using a useEffect
+    const [collectionsData, setCollectionsData] = useState(null);
+    //targetCollectionName keep the current selected target collection the user picks in the <select> element
+    const [targetCollectionName, setTargetCollectionName] = useState(null);
+    /*
+    displayDataList is the list that needs to be updated to show the user the data in the collection targeted.
+    when null the list will show a 'loading' text, 
+    keep displayDatList null until there is data in collectionsData.
+    */
+    const [displayDataList, setDisplayDataList] = useState()
 
-
+    //userInfo hold... userInfo
     const [userInfo, setUserInfo] = useState(null)
-    const [collectionDisplayData, setCollectionDisplayData] = useState({
-        collectionName: null,
-        collection: [], 
-        nameFieldRef: null, 
-        logoUrlFieldRef: null
-    })
-    
+
     const [itemElementRender, setItemElementRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
 
     //loading information for component
@@ -41,18 +40,18 @@ function UserUI (){
         (async function(){setUserInfo(await authentication.getUserInfo())})();
 
         (async function (){
-            setCollectionsData({
-                websites: await database.getWebsites(),
-                tags: await database.getTags(),
-                categories: await database.getCategories(),
-            });
+            /*
+            get collection of data to make sure there is data to show when it starts UserUI
+            */
+            const data = await database.getWebsites()
 
-            setCollectionDisplayData({
-                collectionName: 'websites',
-                collection: await database.getWebsites(),
-                nameFieldRef: 'name', 
-                logoUrlFieldRef: 'logoUrl'
-            }); 
+            setCollectionsData(prev => ({
+                ...prev,
+                websites: data,
+            }));
+
+            //waits until await is done to run, making targetCollectionName to never trigger the displayDataList in the useEffect until data is in collectionsData
+            setTargetCollectionName('websites')
         })();
     },[])
 
@@ -78,39 +77,65 @@ function UserUI (){
         }
 
         const intervalId = setInterval(() => {
-            refreshVariable(collectionDisplayData.collectionName);
+            //it will only refresh the current targetCollection to make sure is not updating all the data collections everytime
+            refreshVariable(targetCollectionName);
         }, refreshTime);
       
         // Clear the interval when the component unmounts
         return () => clearInterval(intervalId);
-    }, [collectionDisplayData.collectionName]) 
+    }, [targetCollectionName]) // when target changes it makes a new interval for refresh
 
+    /*
+    updates collection data inside of collectionDisplay everytime collectionData changes or targetCollectionName changes
+    so the only way it displays new data is if collectionData changes in auto-refresh
+    or if targetCollectionName changes when user changes the list display in the <select> element
+    */
     useEffect(() => {
-        switch (collectionDisplayData.collectionName) {
+        let collectionData = null;
+
+        switch (targetCollectionName) {
             case 'websites':
-                setCollectionDisplayData(prevData => ({
-                    ...prevData,
-                    collection: collectionsData.websites
-                }));
+                if(collectionsData.websites != null)
+                    collectionData = {
+                        collectionName: 'websites',
+                        collection: collectionsData.websites,
+                        nameFieldRef: 'name',
+                        logoUrlFieldRef: 'logoUrl'
+                    }
                 break;
             case 'categories':
-                setCollectionDisplayData(prevData => ({
-                    ...prevData,
-                    collection: collectionsData.categories
-                }));
+                if(collectionsData.categories != null)
+                    collectionData = {
+                        collectionName: 'categories',
+                        collection: collectionsData.categories, 
+                        nameFieldRef: 'text', 
+                        logoUrlFieldRef: 'logoUrl'
+                    }
                 break;
             case 'tags':
-                setCollectionDisplayData(prevData => ({
-                    ...prevData,
-                    collection: collectionsData.tags
-                }));
+                if(collectionsData.tags != null)
+                    collectionData = {
+                        collectionName: 'tags',
+                        collection: collectionsData.tags, 
+                        nameFieldRef: 'text', 
+                        logoUrlFieldRef: 'logoUrl'
+                    }
                 break;
-            default:
+            default: 
                 break;
         }
-    },[collectionsData])
+
+        //if collectionData is null even after the switch, it will display loading, since displayDataList is set to null
+        setDisplayDataList(collectionData);
+
+    },[collectionsData, targetCollectionName])
 
     const renderCollectionList = ({collection, nameFieldRef, logoUrlFieldRef}) => {
+
+        /*
+        this will check if the collection is null, so it wait for auto-refresh to load it.
+        is null since all fields in collectionData is are not loaded until the user calls it for the first time
+        */
         const elementArray = collection.map((item, index) => {
             return(
                 <button key={index}>
@@ -120,35 +145,6 @@ function UserUI (){
             )
         })
         return elementArray;
-    }
-
-    const displayCollectionChangeHandler = (value) =>{
-        switch(value){
-            case ('websites'):{
-                setCollectionDisplayData({
-                    collectionName: 'websites',
-                    collection: collectionsData.websites, 
-                    nameFieldRef: 'name', 
-                    logoUrlFieldRef: 'logoUrl'
-                }); 
-            break;}
-            case ('categories'):{
-                setCollectionDisplayData({
-                    collectionName: 'categories',
-                    collection: collectionsData.categories, 
-                    nameFieldRef: 'text', 
-                    logoUrlFieldRef: 'logoUrl'
-                });
-            break;}
-            case ('tags'):{
-                setCollectionDisplayData({
-                    collectionName: 'tags',
-                    collection: collectionsData.tags, 
-                    nameFieldRef: 'text', 
-                    logoUrlFieldRef: 'logoUrl'
-                });
-            break;}
-        }
     }
 
     const addNewClickHandler = (e) => {
@@ -161,14 +157,14 @@ function UserUI (){
         <>
             <div className='qs__flex_row'>
                 <div className='qs__flex_column'> 
-                    <select className='' defaultValue="websites" onChange={(event) => {displayCollectionChangeHandler(event.target.value)}}>
+                    <select className='' defaultValue="websites" onChange={(event) => {setTargetCollectionName(event.target.value)}}>
                         <option value="websites">Websites</option>
                         <option value='tags'>Tags</option>
                         <option value='categories'>Categories</option>
                     </select>
                     <button onClick={addNewClickHandler}>Add New</button>
                     <div className='qs__flex_column'>
-                        {collectionDisplayData != null ?  renderCollectionList(collectionDisplayData):  "loading..."}
+                        {displayDataList != null ?  renderCollectionList(displayDataList):  "loading..."}
                     </div>
                 </div>
                 <div>
@@ -180,7 +176,6 @@ function UserUI (){
             </div>
         </>
     )
-
 }
 
 function Login ({loggedInState}){
