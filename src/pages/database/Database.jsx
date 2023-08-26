@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Database.css'
-
 import { default as database, authentication } from '../../assets/database/firebase'
 
 function Database (){
@@ -20,9 +19,9 @@ function Database (){
 function UserUI (){
 
     //collectionsData keep all the data of the collections and updates in every auto-refresh or when site starts using a useEffect
-    const [collectionsData, setCollectionsData] = useState(null);
+    const [collectionsData, setCollectionsData] = useState({websites: null, tags: null, categories: null});
     //targetCollectionName keep the current selected target collection the user picks in the <select> element
-    const [targetCollectionName, setTargetCollectionName] = useState(null);
+    const [targetCollectionName, setTargetCollectionName] = useState('websites');
     /*
     displayDataList is the list that needs to be updated to show the user the data in the collection targeted.
     when null the list will show a 'loading' text, 
@@ -38,21 +37,6 @@ function UserUI (){
     //loading information for component
     useEffect(() => {
         (async function(){setUserInfo(await authentication.getUserInfo())})();
-
-        (async function (){
-            /*
-            get collection of data to make sure there is data to show when it starts UserUI
-            */
-            const data = await database.getWebsites()
-
-            setCollectionsData(prev => ({
-                ...prev,
-                websites: data,
-            }));
-
-            //waits until await is done to run, making targetCollectionName to never trigger the displayDataList in the useEffect until data is in collectionsData
-            setTargetCollectionName('websites')
-        })();
     },[])
 
     //start auto-refresh
@@ -75,6 +59,9 @@ function UserUI (){
                 break;}
             }
         }
+
+        //before it start the interval refresh the variable or it will call it until the timer runs out
+        refreshVariable(targetCollectionName);
 
         const intervalId = setInterval(() => {
             //it will only refresh the current targetCollection to make sure is not updating all the data collections everytime
