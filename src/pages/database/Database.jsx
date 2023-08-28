@@ -32,7 +32,8 @@ function UserUI (){
     //userInfo hold... userInfo
     const [userInfo, setUserInfo] = useState(null)
 
-    const [itemElementRender, setItemElementRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
+    const [itemFormElementsRender, setItemFormElementsRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
+    const itemFormRef = useRef(null);
 
     //loading information for component
     useEffect(() => {
@@ -140,31 +141,34 @@ function UserUI (){
         
     }
 
-    const rederItemForm = (collection, item) => {
+    const rederItemForm = (collectionName, item) => {
+        if(itemFormRef.current != null)
+            itemFormRef.current.reset();
 
-        let form =  null;
-        
-        switch(collection) {
+        switch(collectionName) {
             case("websites"):
-                form = 
-                <form>
-                    <label>Featured: <input type="checkbox"/></label>
-                    <label>Name: <input type="text" value={item.name}/></label>
-                    <label>Description: <textarea type="text" value={item.description}/></label>
-                    <label>Web Link: <input type="text" value={item.webLink}/></label>
-                    <label>Logo Url: <textarea type="text" value={item.logoUrl} onChange={()=>{}}></textarea></label>
-                    <img/>
-                    <select defaultValue="free">
-                        <option value="free">free</option>
-                        <option value='paid'>paid</option>
-                        <option value='new'>new</option>
-                    </select>
-                    <div>categories: <label>graphics: <input type="checkbox"/></label><label>discord: <input type="checkbox"/></label><label>login: <input type="checkbox"/></label></div>
-                </form>;
+                setItemFormElementsRender(
+                    <>
+                        <label>Featured: <input type="checkbox" defaultChecked={item.featured}/></label>
+                        <label>Name: <input type="text" defaultValue={item.name}/></label>
+                        <label>Description: <textarea type="text" defaultValue={item.description}/></label>
+                        <label>Web Link: <input type="text" defaultValue={item.webLink}/></label>
+                        <label>Logo Url: <textarea type="text" defaultValue={item.logoUrl} onChange={()=>{}}></textarea></label>
+                        <img/>
+                        <select defaultValue="free">
+                            <option value="free">free</option>
+                            <option value='paid'>paid</option>
+                            <option value='new'>new</option>
+                        </select>
+                        <div>categories: 
+                            <label>graphics: <input type="checkbox"/></label>
+                            <label>discord: <input type="checkbox"/></label>
+                            <label>login: <input type="checkbox"/></label>
+                        </div>
+                    </>
+                )
                 break;
         }
-
-        setItemElementRender(form)
     }
 
     return(
@@ -183,9 +187,9 @@ function UserUI (){
                 </div>
                 <div>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <div>
-                        {itemElementRender}
-                    </div>
+                    <form useRef={itemFormRef}>
+                        {itemFormElementsRender}
+                    </form>
                 </div>
             </div>
         </>
