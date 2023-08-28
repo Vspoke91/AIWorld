@@ -27,7 +27,7 @@ function UserUI (){
     when null the list will show a 'loading' text, 
     keep displayDatList null until there is data in collectionsData.
     */
-    const [displayDataList, setDisplayDataList] = useState()
+    const [displayDataList, setDisplayDataList] = useState(null)
 
     //userInfo hold... userInfo
     const [userInfo, setUserInfo] = useState(null)
@@ -125,7 +125,7 @@ function UserUI (){
         */
         const elementArray = collection.map((item, index) => {
             return(
-                <button key={index}>
+                <button key={index} onClick={() => rederItemForm(targetCollectionName, item)}>
                     <span>{item[nameFieldRef]}</span>
                     {logoUrlFieldRef != undefined ?<img src={item[logoUrlFieldRef]}/>: <></>}
                 </button>
@@ -140,19 +140,31 @@ function UserUI (){
         
     }
 
-    const rederItemForm = (variable) => {
+    const rederItemForm = (collection, item) => {
 
-        switch(variable) {
-            case("variable"):
-            
-            break;
+        let form =  null;
+        
+        switch(collection) {
+            case("websites"):
+                form = 
+                <form>
+                    <label>Featured: <input type="checkbox"/></label>
+                    <label>Name: <input type="text" value={item.name}/></label>
+                    <label>Description: <textarea type="text" value={item.description}/></label>
+                    <label>Web Link: <input type="text" value={item.webLink}/></label>
+                    <label>Logo Url: <textarea type="text" value={item.logoUrl} onChange={()=>{}}></textarea></label>
+                    <img/>
+                    <select defaultValue="free">
+                        <option value="free">free</option>
+                        <option value='paid'>paid</option>
+                        <option value='new'>new</option>
+                    </select>
+                    <div>categories: <label>graphics: <input type="checkbox"/></label><label>discord: <input type="checkbox"/></label><label>login: <input type="checkbox"/></label></div>
+                </form>;
+                break;
         }
 
-        return (
-            <>
-            
-            </>
-        )
+        setItemElementRender(form)
     }
 
     return(
