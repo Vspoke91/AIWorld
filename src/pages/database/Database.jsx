@@ -42,7 +42,7 @@ function UserUI (){
 
     //start auto-refresh
     useEffect(() => {
-        const refreshTime = 1000 // 1 sec = 1,000
+        const refreshTime = 10000 // 10 sec = 1,000
 
         const refreshVariable = async (value) => {
             switch(value){
