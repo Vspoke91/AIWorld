@@ -145,56 +145,57 @@ function UserUI (){
         
     }
 
-    const imgRef = useRef(null);
     const rederItemForm = (collectionName, item) => {
 
-        if(itemFormRef.current != null)
+        if(itemFormRef.current != null) 
             itemFormRef.current.reset();
         
+        let formElements = null;
+
         switch(collectionName) {
             case("websites"):{
-                setItemFormElementsRender(
-                    <>
-                        <label>Featured: <input type="checkbox" defaultChecked={item.featured}/></label>
-                        <label>Name: <input type="text" defaultValue={item.name}/></label>
-                        <label>Description: <textarea type="text" defaultValue={item.description}/></label>
-                        <label>Web Link: <input type="text" defaultValue={item.webLink}/></label>
-                        <label>Logo Url: <textarea type="text" defaultValue={item.logoUrl} onChange={(e)=>{imgRef.current.src = e.target.value}}></textarea></label>
-                        <img ref={imgRef} src={item.logoUrl}/>
-                        <select defaultValue={item.tag.text}>
-                            {collectionsData.tags.map(tag => <option value={tag.text}>{tag.text}</option>)}
-                        </select>
-                        <div>categories:
-                            {collectionsData.categories.map(category =>  <label>{category.text}: <input type="checkbox" defaultChecked={item.categories.some(item => category.text == item.text)}/></label>)}
-                        </div>
-                        <button>Update</button>
-                    </>
-                )
+                formElements = <>
+                    <label>Featured: <input type="checkbox" defaultChecked={item.featured}/></label>
+                    <label>Name: <input type="text" defaultValue={item.name}/></label>
+                    <label>Description: <textarea type="text" defaultValue={item.description}/></label>
+                    <label>Web Link: <input type="text" defaultValue={item.webLink}/></label>
+                    <label>Logo Url: <textarea type="text" defaultValue={item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                    <img id='logoUrlImgDisplay' src={item.logoUrl}/>
+                    <select defaultValue={item.tag.text}>
+                        {collectionsData.tags.map(tag =>
+                            <option value={tag.text}>{tag.text}</option>
+                        )}
+                    </select>
+                    <div>categories:
+                        {collectionsData.categories.map(category =>
+                            <label>{category.text}: 
+                                <input type="checkbox" defaultChecked={item.categories.some(value => category.text == value.text)}/>
+                            </label>
+                        )}
+                    </div>
+                    <button>Update</button>
+                </>
                 break;
             }
             case("tags"):{
-                setItemFormElementsRender(
-                    <>
-                        <label>Text: <input type="text" defaultValue={item.text}/></label>
-                        <label>Color: <input type="text" defaultValue={item.color}/></label>
-                        <button>Update</button>
-                    </>
-                )
+                formElements = <>
+                    <label>Text: <input type="text" defaultValue={item.text}/></label>
+                    <label>Color: <input type="text" defaultValue={item.color}/></label>
+                    <button>Update</button>
+                </>
                 break;
             }
-
             case("categories"):{
-                setItemFormElementsRender(
-                    <>
-                        <label>Text: <input type="text" defaultValue={item.text}/></label>
-                        <label>Color: <input type="text" defaultValue={item.color}/></label>
-                        <button>Update</button>
-                    </>
-                )
+                formElements = <>
+                    <label>Text: <input type="text" defaultValue={item.text}/></label>
+                    <label>Color: <input type="text" defaultValue={item.color}/></label>
+                    <button>Update</button>
+                </>
                 break;
             }
-
         }
+
+        setItemFormElementsRender(formElements);
     }
 
     return(
@@ -247,8 +248,8 @@ function Login ({loggedInState}){
             <div id='login'>
                 <h1>Login</h1>
                 <form onSubmit={onSubmitLoginHandler}>
-                    <input ref = {emailInputRef} type='email'/>
-                    <input ref = {passwordInputRef} type='password'/>
+                    <input ref={emailInputRef} type='email'/>
+                    <input ref={passwordInputRef} type='password'/>
                     <button type='submit'>Login</button>
                 </form>
             </div>
