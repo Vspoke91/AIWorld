@@ -187,7 +187,7 @@ function UserUI (){
                 </div>
                 <div>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <form useRef={itemFormRef}>
+                    <form ref={itemFormRef}>
                         {itemFormElementsRender}
                     </form>
                 </div>
