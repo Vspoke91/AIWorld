@@ -47,8 +47,12 @@ function UserUI (){
         const refreshVariable = async (value) => {
             switch(value){
                 case ('websites'):{
-                    const data = await database.getWebsites();
-                    setCollectionsData(prev => ({...prev, websites: data}));
+                    //exeption: update all data when in website, since is used in form
+                    setCollectionsData({
+                        websites: await database.getWebsites(),
+                        categories: await database.getCategories(),
+                        tags: await database.getTags()
+                    });
                 break;}
                 case ('categories'):{
                     const data = await database.getCategories();
@@ -141,33 +145,32 @@ function UserUI (){
         
     }
 
+    const imgRef = useRef(null);
     const rederItemForm = (collectionName, item) => {
+
         if(itemFormRef.current != null)
             itemFormRef.current.reset();
-
+        
         switch(collectionName) {
-            case("websites"):
+            case("websites"):{
                 setItemFormElementsRender(
                     <>
                         <label>Featured: <input type="checkbox" defaultChecked={item.featured}/></label>
                         <label>Name: <input type="text" defaultValue={item.name}/></label>
                         <label>Description: <textarea type="text" defaultValue={item.description}/></label>
                         <label>Web Link: <input type="text" defaultValue={item.webLink}/></label>
-                        <label>Logo Url: <textarea type="text" defaultValue={item.logoUrl} onChange={()=>{}}></textarea></label>
-                        <img/>
-                        <select defaultValue="free">
-                            <option value="free">free</option>
-                            <option value='paid'>paid</option>
-                            <option value='new'>new</option>
+                        <label>Logo Url: <textarea type="text" defaultValue={item.logoUrl} onChange={(e)=>{imgRef.current.src = e.target.value}}></textarea></label>
+                        <img ref={imgRef} src={item.logoUrl}/>
+                        <select defaultValue={item.tag.text}>
+                            {collectionsData.tags.map(tag => <option value={tag.text}>{tag.text}</option>)}
                         </select>
-                        <div>categories: 
-                            <label>graphics: <input type="checkbox"/></label>
-                            <label>discord: <input type="checkbox"/></label>
-                            <label>login: <input type="checkbox"/></label>
+                        <div>categories:
+                            {collectionsData.categories.map(category =>  <label>{category.text}: <input type="checkbox" defaultChecked={item.categories.some(item => category.text == item.text)}/></label>)}
                         </div>
                     </>
                 )
                 break;
+            }
         }
     }
 
