@@ -167,10 +167,33 @@ function UserUI (){
                         <div>categories:
                             {collectionsData.categories.map(category =>  <label>{category.text}: <input type="checkbox" defaultChecked={item.categories.some(item => category.text == item.text)}/></label>)}
                         </div>
+                        <button>Update</button>
                     </>
                 )
                 break;
             }
+            case("tags"):{
+                setItemFormElementsRender(
+                    <>
+                        <label>Text: <input type="text" defaultValue={item.text}/></label>
+                        <label>Color: <input type="text" defaultValue={item.color}/></label>
+                        <button>Update</button>
+                    </>
+                )
+                break;
+            }
+
+            case("categories"):{
+                setItemFormElementsRender(
+                    <>
+                        <label>Text: <input type="text" defaultValue={item.text}/></label>
+                        <label>Color: <input type="text" defaultValue={item.color}/></label>
+                        <button>Update</button>
+                    </>
+                )
+                break;
+            }
+
         }
     }
 
