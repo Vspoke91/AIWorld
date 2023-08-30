@@ -157,7 +157,17 @@ function UserUI (){
 
                 const submitHandler = () => {
     
-                   
+                    // Collect form data
+                    const formData = new FormData(itemFormRef.current);
+                    const formObject = {};
+                    
+                    console.log(formData)
+                    // Convert FormData to an object
+                    formData.forEach((value, key) => {
+                    formObject[key] = value;
+                    });
+
+                    console.log(formObject)
                 }
 
                 formElements = <>
