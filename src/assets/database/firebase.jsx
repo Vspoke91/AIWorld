@@ -108,7 +108,7 @@ const database = {
       return [];
     }
   },
-  addWebsite:  async () => {
+  addWebsite: (siteInfo) => {
 
     const documentRef = doc(firestoreDataBase, 'Public/websites/siteId', 'newStuff');
 
