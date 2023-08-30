@@ -42,12 +42,12 @@ function UserUI (){
 
     //start auto-refresh
     useEffect(() => {
-        const refreshTime = 10000 // 10 sec = 1,000
+        const refreshTime = 300000 // 5 min
 
         const refreshVariable = async (value) => {
             switch(value){
                 case ('websites'):{
-                    //exeption: update all data when in website, since is used in form
+                    //exeption: update all data when in website, since is used in forms
                     setCollectionsData({
                         websites: await database.getWebsites(),
                         categories: await database.getCategories(),
@@ -154,26 +154,32 @@ function UserUI (){
 
         switch(collectionName) {
             case("websites"):{
+
+                const submitHandler = () => {
+    
+                   
+                }
+
                 formElements = <>
-                    <label>Featured: <input type="checkbox" defaultChecked={item.featured}/></label>
-                    <label>Name: <input type="text" defaultValue={item.name}/></label>
-                    <label>Description: <textarea type="text" defaultValue={item.description}/></label>
-                    <label>Web Link: <input type="text" defaultValue={item.webLink}/></label>
-                    <label>Logo Url: <textarea type="text" defaultValue={item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                    <label>Featured: <input name='featured' type="checkbox" defaultChecked={item.featured}/></label>
+                    <label>Name: <input name='name' type="text" defaultValue={item.name}/></label>
+                    <label>Description: <textarea name='description' type="text" defaultValue={item.description}/></label>
+                    <label>Web Link: <input name='webLink' type="text" defaultValue={item.webLink}/></label>
+                    <label>Logo Url: <textarea name='logoUrl' type="text" defaultValue={item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
                     <img id='logoUrlImgDisplay' src={item.logoUrl}/>
-                    <select defaultValue={item.tag.text}>
+                    <select name='tag' defaultValue={item.tag.text}>
                         {collectionsData.tags.map(tag =>
-                            <option value={tag.text}>{tag.text}</option>
+                            <option value={tag.text.toLowerCase()}>{tag.text}</option>
                         )}
                     </select>
                     <div>categories:
                         {collectionsData.categories.map(category =>
                             <label>{category.text}: 
-                                <input type="checkbox" defaultChecked={item.categories.some(value => category.text == value.text)}/>
+                                <input type="checkbox" name='' defaultChecked={item.categories.some(value => category.text == value.text)}/>
                             </label>
                         )}
                     </div>
-                    <button>Update</button>
+                    <button onClick={submitHandler}>Update</button>
                 </>
                 break;
             }
@@ -214,7 +220,7 @@ function UserUI (){
                 </div>
                 <div>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <form ref={itemFormRef}>
+                    <form ref={itemFormRef} onSubmit={(e) => e.preventDefault()}>
                         {itemFormElementsRender}
                     </form>
                 </div>
