@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
 import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, getDoc, setDoc, doc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, getDoc, updateDoc, setDoc, doc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -52,7 +52,11 @@ const database = {
         }
       ]
     */
-    let dataArray = documentsRef.docs.map(doc => doc.data())
+    let dataArray = documentsRef.docs.map(doc => {
+      const docData = doc.data();
+      docData['id'] = doc.id;
+      return docData;
+    })
 
     // updatesDataArray holds dataArray with all <DocumentReference> already fetch
     let updatedDataArray = await Promise.all(dataArray.map(async dataObject => {
@@ -82,7 +86,12 @@ const database = {
   getCategories: async () => {
     try{
       const documentsRef = await getDocs(collection(firestoreDataBase, 'Public/websites/categoryId'));
-      return documentsRef.docs.map(doc => doc.data())
+      return documentsRef.docs.map(doc => {
+        const docData = doc.data();
+        docData['id'] = doc.id;
+        return docData;
+      })
+      
     } catch (error) {
       console.error(error);
       return [];
@@ -91,7 +100,11 @@ const database = {
   getTags: async () => {
     try{
       const documentsRef = await getDocs(collection(firestoreDataBase, 'Public/websites/tagId'));
-      return documentsRef.docs.map(doc => doc.data())
+      return documentsRef.docs.map(doc => {
+        const docData = doc.data();
+        docData['id'] = doc.id;
+        return docData;
+      })
     } catch (error) {
       console.error(error);
       return [];
