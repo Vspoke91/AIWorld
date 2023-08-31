@@ -121,11 +121,28 @@ const database = {
       return [];
     }
   },
-  addWebsite: (siteInfo) => {
+  updateWebsite: async (siteInfo) => {
 
-    const documentRef = doc(firestoreDataBase, 'Public/websites/siteId', 'newStuff');
+    const docRef = doc(firestoreDataBase, `Public/websites/siteId/${siteInfo.id}`);
+    const docSnapshot = await getDoc(docRef);
 
-    setDoc(documentRef, {testing: 'test'})
+    if(docSnapshot.exists()){
+      const uploadableObject = {
+        ...siteInfo,
+        categories: siteInfo.categories.map(category => {
+          return doc(firestoreDataBase, `Public/websites/categoryId/${category}`)
+        }),
+        tag: doc(firestoreDataBase, `Public/websites/tagId/${siteInfo.tag}`),
+      }
+
+      updateDoc(docRef, uploadableObject)
+
+      return true;
+    } else {
+      console.error(`DATABASE ERROR: doc with id ${siteInfo.id} not found!`)
+
+      return false;
+    }
   }
 }
 export default database;
