@@ -161,13 +161,22 @@ function UserUI (){
                     const formData = new FormData(itemFormRef.current);
                     const formObject = {};
                     
-                    console.log(formData)
+                    console.log(formData);
                     // Convert FormData to an object
                     formData.forEach((value, key) => {
-                    formObject[key] = value;
+                        console.log(key)
+                        if(key === "featured"){
+                            formObject[key] = true;
+                        } else {
+                            formObject[key] = value;
+                        }
                     });
 
-                    console.log(formObject)
+                    if (!("featured" in formObject)) {
+                        formObject["featured"] = false;
+                      }
+
+                    console.log(formObject);
                 }
 
                 formElements = <>
@@ -178,13 +187,13 @@ function UserUI (){
                     <label>Logo Url: <textarea name='logoUrl' type="text" defaultValue={item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
                     <img id='logoUrlImgDisplay' src={item.logoUrl}/>
                     <select name='tag' defaultValue={item.tag.text}>
-                        {collectionsData.tags.map(tag =>
-                            <option value={tag.text.toLowerCase()}>{tag.text}</option>
+                        {collectionsData.tags.map((tag, index) =>
+                            <option key={index} value={tag.text.toLowerCase()}>{tag.text}</option>
                         )}
                     </select>
                     <div>categories:
-                        {collectionsData.categories.map(category =>
-                            <label>{category.text}: 
+                        {collectionsData.categories.map((category, index)  =>
+                            <label key={index}>{category.text}: 
                                 <input type="checkbox" name='' defaultChecked={item.categories.some(value => category.text == value.text)}/>
                             </label>
                         )}
