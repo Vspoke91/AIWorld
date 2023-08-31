@@ -155,9 +155,8 @@ function UserUI (){
         switch(collectionName) {
             case("websites"):{
 
-                const submitHandler = () => {
+                const submitHandler = async () => {
     
-                    
                     const formData = new FormData(itemFormRef.current);
                     const websiteVariables = {};
                     const categoriesArray = [];
@@ -175,14 +174,18 @@ function UserUI (){
                     });
 
                     websiteVariables['categories'] = categoriesArray;
+                    websiteVariables['id'] = item.id;
                     
                     //check for missing properties
                     if (!("featured" in websiteVariables)) {
                         websiteVariables["featured"] = false;
                     }
+
+                    database.updateWebsite(websiteVariables);
                 }
 
                 formElements = <>
+                    <label>Id: {item.id}</label>
                     <label>Featured: <input name='featured' type="checkbox" defaultChecked={item.featured}/></label>
                     <label>Name: <input name='name' type="text" defaultValue={item.name}/></label>
                     <label>Description: <textarea name='description' type="text" defaultValue={item.description}/></label>
@@ -191,13 +194,13 @@ function UserUI (){
                     <img id='logoUrlImgDisplay' src={item.logoUrl}/>
                     <select name='tag' defaultValue={item.tag.text}>
                         {collectionsData.tags.map((tag, index) =>
-                            <option key={index} value={tag.text.toLowerCase()}>{tag.text}</option>
+                            <option key={index} value={tag.id}>{tag.text}</option>
                         )}
                     </select>
                     <div>categories:
                         {collectionsData.categories.map((category, index)  =>
                             <label key={index}>{category.text}: 
-                                <input type="checkbox" name={`$${category.text}`} defaultChecked={item.categories.some(value => category.text == value.text)}/>
+                                <input type="checkbox" name={`$${category.id}`} defaultChecked={item.categories.some(value => category.text == value.text)}/>
                             </label>
                         )}
                     </div>
