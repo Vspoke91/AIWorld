@@ -157,26 +157,29 @@ function UserUI (){
 
                 const submitHandler = () => {
     
-                    // Collect form data
-                    const formData = new FormData(itemFormRef.current);
-                    const formObject = {};
                     
-                    console.log(formData);
-                    // Convert FormData to an object
+                    const formData = new FormData(itemFormRef.current);
+                    const websiteVariables = {};
+                    const categoriesArray = [];
+
                     formData.forEach((value, key) => {
-                        console.log(key)
+
                         if(key === "featured"){
-                            formObject[key] = true;
+                            websiteVariables[key] = true;
+                        } else if (key.startsWith('$')){
+                            categoriesArray.push(key.substring(1));
                         } else {
-                            formObject[key] = value;
+                            websiteVariables[key] = value;
                         }
+
                     });
 
-                    if (!("featured" in formObject)) {
-                        formObject["featured"] = false;
-                      }
-
-                    console.log(formObject);
+                    websiteVariables['categories'] = categoriesArray;
+                    
+                    //check for missing properties
+                    if (!("featured" in websiteVariables)) {
+                        websiteVariables["featured"] = false;
+                    }
                 }
 
                 formElements = <>
@@ -194,7 +197,7 @@ function UserUI (){
                     <div>categories:
                         {collectionsData.categories.map((category, index)  =>
                             <label key={index}>{category.text}: 
-                                <input type="checkbox" name='' defaultChecked={item.categories.some(value => category.text == value.text)}/>
+                                <input type="checkbox" name={`$${category.text}`} defaultChecked={item.categories.some(value => category.text == value.text)}/>
                             </label>
                         )}
                     </div>
@@ -219,7 +222,6 @@ function UserUI (){
                 break;
             }
         }
-
         setItemFormElementsRender(formElements);
     }
 
