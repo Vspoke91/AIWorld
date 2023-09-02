@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Database.css'
 import { default as database, authentication } from '../../assets/database/firebase'
@@ -40,42 +40,55 @@ function UserUI (){
         (async function(){setUserInfo(await authentication.getUserInfo())})();
     },[])
 
+    const refreshCollectionData = useCallback(async (collectionName, updateDependant) => {
+
+        let dataUpdate = {}
+
+        switch(collectionName){
+            case ('websites'):{
+                //updateDependant: update all data when in website, since is used in forms
+                if(updateDependant){
+                    dataUpdate = {
+                        websites: await database.getWebsites(),
+                        categories: await database.getCategories(),
+                        tags: await database.getTags()
+                    }
+                }else{
+                    dataUpdate = {
+                        websites: await database.getWebsites()
+                    }
+                }
+            break;}
+            case ('categories'):{
+                dataUpdate = {
+                    categories: await database.getCategories()
+                }
+            break;}
+            case ('tags'):{
+                dataUpdate = {
+                    tags: await database.getTags()
+                };
+            break;}
+        }
+
+        setCollectionsData(prev => ({...prev, ...dataUpdate}))
+    }, []);
+
     //start auto-refresh
     useEffect(() => {
         const refreshTime = 300000 // 5 min
 
-        const refreshVariable = async (value) => {
-            switch(value){
-                case ('websites'):{
-                    //exeption: update all data when in website, since is used in forms
-                    setCollectionsData({
-                        websites: await database.getWebsites(),
-                        categories: await database.getCategories(),
-                        tags: await database.getTags()
-                    });
-                break;}
-                case ('categories'):{
-                    const data = await database.getCategories();
-                    setCollectionsData(prev => ({...prev, categories: data}));
-                break;}
-                case ('tags'):{
-                    const data = await database.getTags();
-                    setCollectionsData(prev => ({...prev, tags: data}));
-                break;}
-            }
-        }
-
         //before it start the interval refresh the variable or it will call it until the timer runs out
-        refreshVariable(targetCollectionName);
+        refreshCollectionData(targetCollectionName, true);
 
         const intervalId = setInterval(() => {
             //it will only refresh the current targetCollection to make sure is not updating all the data collections everytime
-            refreshVariable(targetCollectionName);
+            refreshCollectionData(targetCollectionName, true);
         }, refreshTime);
       
         // Clear the interval when the component unmounts
         return () => clearInterval(intervalId);
-    }, [targetCollectionName]) // when target changes it makes a new interval for refresh
+    }, [targetCollectionName, refreshCollectionData]) // when target changes it makes a new interval for refresh
 
     /*
     updates collection data inside of collectionDisplay everytime collectionData changes or targetCollectionName changes
@@ -199,7 +212,7 @@ function UserUI (){
                     </select>
                     <div>categories:
                         {collectionsData.categories.map((category, index)  =>
-                            <label key={index}>{category.text}: 
+                            <label key={index}>{`${category.text}: `}
                                 <input type="checkbox" name={`$${category.id}`} defaultChecked={item.categories.some(value => category.text == value.text)}/>
                             </label>
                         )}
