@@ -194,7 +194,8 @@ function UserUI (){
                         websiteVariables["featured"] = false;
                     }
 
-                    database.updateWebsite(websiteVariables);
+                    //wait for database to update before refreshing
+                    await database.updateWebsite(websiteVariables);
 
                     refreshCollectionData(targetCollectionName)
                 }
