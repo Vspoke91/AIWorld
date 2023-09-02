@@ -195,6 +195,8 @@ function UserUI (){
                     }
 
                     database.updateWebsite(websiteVariables);
+
+                    refreshCollectionData(targetCollectionName)
                 }
 
                 formElements = <>
