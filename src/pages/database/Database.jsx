@@ -34,6 +34,7 @@ function UserUI (){
 
     const [itemFormElementsRender, setItemFormElementsRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
     const itemFormRef = useRef(null);
+    const [submitHandlerFunction, setSubmitHandlerFunction] = useState(null);
 
     //loading information for component
     useEffect(() => {
@@ -155,7 +156,7 @@ function UserUI (){
     const addNewClickHandler = (e) => {
         e.preventDefault()
 
-        
+        rederItemForm(targetCollectionName, null)
     }
 
     const rederItemForm = (collectionName, item) => {
@@ -168,8 +169,36 @@ function UserUI (){
         switch(collectionName) {
             case("websites"):{
 
-                const submitHandler = async () => {
-    
+                const formElementsBuilder = (isEmpty) => {
+                    return (
+                        <>
+                            <label>Id: {isEmpty ? "N/A" : item.id }</label>
+                            <label>Featured: <input name='featured' type="checkbox" defaultChecked={isEmpty ? false : item.featured}/></label>
+                            <label>Name: <input required name='name' type="text" defaultValue={isEmpty ? '' : item.name}/></label>
+                            <label>Description: <textarea required name='description' type="text" defaultValue={isEmpty ? '' : item.description}/></label>
+                            <label>Web Link: <input required name='webLink' type="text" defaultValue={isEmpty ? '' : item.webLink}/></label>
+                            <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isEmpty ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                            <img id='logoUrlImgDisplay' src={isEmpty ? '' : item.logoUrl}/>
+                            <select name='tag' defaultValue={isEmpty ? null : item.tag.text}>
+                                {collectionsData.tags.map((tag, index) =>
+                                    <option key={index} value={tag.id}>{tag.text}</option>
+                                )}
+                            </select>
+                            <div>categories:
+                                {collectionsData.categories.map((category, index)  =>
+                                    <label key={index}>{`${category.text}: `}
+                                        <input type="checkbox" name={`$${category.id}`} defaultChecked={ isEmpty ? false : item.categories.some(value => category.text == value.text)}/>
+                                    </label>
+                                )}
+                            </div>
+                            <button type="submit">Update</button>
+                        </>
+                    )
+                }
+
+                formElements = formElementsBuilder(item == null)
+
+                const submitFunction = async (isNew) => {
                     const formData = new FormData(itemFormRef.current);
                     const websiteVariables = {};
                     const categoriesArray = [];
@@ -194,34 +223,22 @@ function UserUI (){
                         websiteVariables["featured"] = false;
                     }
 
-                    //wait for database to update before refreshing
-                    await database.updateWebsite(websiteVariables);
+                    if(isNew){
+                        console.log('run addwebsite')
+                        //await database.addWebsite(websiteVariables);
+                    } else {
+                        //wait for database to update before refreshin
+                        await database.updateWebsite(websiteVariables);
+                    }
 
                     refreshCollectionData(targetCollectionName)
                 }
 
-                formElements = <>
-                    <label>Id: {item.id}</label>
-                    <label>Featured: <input name='featured' type="checkbox" defaultChecked={item.featured}/></label>
-                    <label>Name: <input name='name' type="text" defaultValue={item.name}/></label>
-                    <label>Description: <textarea name='description' type="text" defaultValue={item.description}/></label>
-                    <label>Web Link: <input name='webLink' type="text" defaultValue={item.webLink}/></label>
-                    <label>Logo Url: <textarea name='logoUrl' type="text" defaultValue={item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
-                    <img id='logoUrlImgDisplay' src={item.logoUrl}/>
-                    <select name='tag' defaultValue={item.tag.text}>
-                        {collectionsData.tags.map((tag, index) =>
-                            <option key={index} value={tag.id}>{tag.text}</option>
-                        )}
-                    </select>
-                    <div>categories:
-                        {collectionsData.categories.map((category, index)  =>
-                            <label key={index}>{`${category.text}: `}
-                                <input type="checkbox" name={`$${category.id}`} defaultChecked={item.categories.some(value => category.text == value.text)}/>
-                            </label>
-                        )}
-                    </div>
-                    <button onClick={submitHandler}>Update</button>
-                </>
+                if(item != null){
+                    setSubmitHandlerFunction(() => handlerFunction);
+                } else {
+                    setSubmitHandlerFunction(() => () => handlerFunction(true));
+                }
                 break;
             }
             case("tags"):{
@@ -260,7 +277,7 @@ function UserUI (){
                 </div>
                 <div>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <form ref={itemFormRef} onSubmit={(e) => e.preventDefault()}>
+                    <form ref={itemFormRef} onSubmit={(e) => {e.preventDefault(); submitHandlerFunction()}}>
                         {itemFormElementsRender}
                     </form>
                 </div>
