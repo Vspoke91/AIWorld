@@ -235,9 +235,9 @@ function UserUI (){
                 }
 
                 if(item != null){
-                    setSubmitHandlerFunction(() => handlerFunction);
+                    setSubmitHandlerFunction(() => submitFunction);
                 } else {
-                    setSubmitHandlerFunction(() => () => handlerFunction(true));
+                    setSubmitHandlerFunction(() => () => submitFunction(true));
                 }
                 break;
             }
