@@ -191,7 +191,7 @@ function UserUI (){
                                     </label>
                                 )}
                             </div>
-                            <button type="submit">Update</button>
+                            {isEmpty ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                         </>
                     )
                 }
@@ -216,17 +216,16 @@ function UserUI (){
                     });
 
                     websiteVariables['categories'] = categoriesArray;
-                    websiteVariables['id'] = item.id;
-                    
+
                     //check for missing properties
                     if (!("featured" in websiteVariables)) {
                         websiteVariables["featured"] = false;
                     }
 
                     if(isNew){
-                        console.log('run addwebsite')
-                        //await database.addWebsite(websiteVariables);
+                        await database.addWebsite(websiteVariables);
                     } else {
+                        websiteVariables['id'] = item.id;
                         //wait for database to update before refreshin
                         await database.updateWebsite(websiteVariables);
                     }
