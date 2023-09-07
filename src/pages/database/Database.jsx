@@ -159,12 +159,24 @@ function UserUI (){
         rederItemForm(targetCollectionName, null)
     }
 
+    const model = useRef(null);
+
     const rederItemForm = (collectionName, item) => {
 
         if(itemFormRef.current != null) 
             itemFormRef.current.reset();
         
         let formElements = null;
+
+        const handleClickOutside = (event) => {
+            console.log(model.current.open,'isOpen')
+            if (model.current && !model.current.contains(event.target) && model.current.open) {
+              model.current.close()
+              console.log('hella')
+            }
+          };
+      
+          // Add a click event listener to the document
 
         switch(collectionName) {
             case("websites"):{
@@ -192,6 +204,20 @@ function UserUI (){
                                 )}
                             </div>
                             {isEmpty ? <button type="submit">Create</button> : <button type="submit">Update</button>}
+                            {!isEmpty && 
+                            <> 
+                                <button onClick={() => {
+                                    model.current.showModal();
+                                    document.addEventListener('click', handleClickOutside)
+                                }
+                                }>Delete</button>
+
+                                <dialog ref={model} open>
+                                    <p>{`To confirm, type "${item.id}" in the box below`}</p>
+                                    <input type='text'></input>
+                                    <button>Delete</button>
+                                </dialog>
+                            </>}
                         </>
                     )
                 }
