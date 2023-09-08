@@ -151,7 +151,8 @@ const database = {
       tag: doc(firestoreDataBase, `Public/websites/tagId/${siteInfo.tag}`),
     }
     await setDoc(docRef, uploadableObject);
-  }
+  },
+  deleteWebsite: async (siteInfo) => {}
 }
 export default database;
 
