@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Database.css'
 import { default as database, authentication } from '../../assets/database/firebase'
+import { id } from 'date-fns/locale';
 
 function Database (){
 
@@ -167,19 +168,28 @@ function UserUI (){
             itemFormRef.current.reset();
         
         let formElements = null;
-
-        const handleClickOutside = (event) => {
-            console.log(model.current.open,'isOpen')
-            if (model.current && !model.current.contains(event.target) && model.current.open) {
-              model.current.close()
-              console.log('hella')
-            }
-          };
       
           // Add a click event listener to the document
 
         switch(collectionName) {
             case("websites"):{
+
+                const handleClickOutside = (event) => {
+                    
+                    if(model.current.open){
+                        //mouse pointer coordinates 
+                        const x = event.clientX;
+                        const y = event.clientY;
+            
+                        const element = model.current;
+            
+                        //check if click is outside of element border else it was clicked inside
+                        if (x < element.offsetLeft || x > element.offsetLeft + element.offsetWidth ||
+                            y < element.offsetTop || y > element.offsetTop + element.offsetHeight) {
+                            model.current.close();
+                        }
+                    }
+                };
 
                 const formElementsBuilder = (isEmpty) => {
                     return (
@@ -212,7 +222,7 @@ function UserUI (){
                                 }
                                 }>Delete</button>
 
-                                <dialog ref={model} open>
+                                <dialog ref={model}>
                                     <p>{`To confirm, type "${item.id}" in the box below`}</p>
                                     <input type='text'></input>
                                     <button>Delete</button>
