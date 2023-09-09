@@ -32,11 +32,9 @@ function UserUI (){
     //userInfo holds... userInfo
     const [userInfo, setUserInfo] = useState(null)
 
-    const [itemFormElementsRender, setItemFormElementsRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
+    const [formElementsRender, setFormElementsRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
     const itemFormRef = useRef(null);
     const [submitHandlerFunction, setSubmitHandlerFunction] = useState(null);
-
-    const deletePromptModal = useRef(null);
 
     //loading information for component
     useEffect(() => {
@@ -163,79 +161,95 @@ function UserUI (){
 
     const rederItemForm = (collectionName, item) => {
 
+        function DialogModalDelete ({requiredText, onDeleteClick}){
+
+            const modalElementRef = useRef(null);
+            const [isDisable, setDisable] = useState(true);
+
+            const handleClickOutside = (event) => {
+                //mouse pointer coordinates 
+                const x = event.clientX;
+                const y = event.clientY;
+    
+                const element = modalElementRef.current;
+    
+                //check if click is outside of element border else it was clicked inside
+                if (x < element.offsetLeft || x > element.offsetLeft + element.offsetWidth ||
+                    y < element.offsetTop || y > element.offsetTop + element.offsetHeight) {
+                    modalElementRef.current.close();
+                    document.removeEventListener('click', handleClickOutside);
+                }
+            };
+
+            return(
+                <>
+                    <button onClick={(e) => {
+                        /* Explanation for e.stopPropagation()
+                        when click on button it shows model and adds the listener, 
+                        but because of propagation after everything was run on click function
+                        it was also clicking the 'document' witch was outside of the model,
+                        so it was closing the modal. 
+                        
+                        the only way it would work as intended without the stopPropagation() was
+                        if you position the delete button right were the modal was going to popup.
+                        */
+                        e.stopPropagation(); 
+
+                        modalElementRef.current.showModal();
+                        document.addEventListener('click', handleClickOutside)
+                    }}>Delete</button>
+
+                    <dialog ref={modalElementRef}>
+                            <p>{`To confirm, type "${requiredText}" in the box below`}</p>
+                            <input type='text' placeholder={requiredText} onChange={(e) => {
+                                if(e.target.value === requiredText) 
+                                    setDisable(false);
+                                else
+                                    setDisable(true);
+                            }}></input>
+                            <button disabled={isDisable} onClick={onDeleteClick}>Delete</button>
+                    </dialog>
+                </>
+            )
+        } 
+        DialogModalDelete.propTypes = {
+            requiredText: PropTypes.string, onDeleteClick: PropTypes.func
+        };
+
         if(itemFormRef.current != null) 
             itemFormRef.current.reset();
         
         let formElements = null;
-      
-          // Add a click event listener to the document
 
         switch(collectionName) {
             case("websites"):{
-
-                const handleClickOutside = (event) => {
-                    //mouse pointer coordinates 
-                    const x = event.clientX;
-                    const y = event.clientY;
-        
-                    const element = deletePromptModal.current;
-        
-                    //check if click is outside of element border else it was clicked inside
-                    if (x < element.offsetLeft || x > element.offsetLeft + element.offsetWidth ||
-                        y < element.offsetTop || y > element.offsetTop + element.offsetHeight) {
-                        deletePromptModal.current.close();
-                        document.removeEventListener('click', handleClickOutside);
-                    }
-                };
-
                 const formElementsBuilder = (isEmpty) => {
                     return (
                         <>
-                            <label>Id: {isEmpty ? "N/A" : item.id }</label>
-                            <label>Featured: <input name='featured' type="checkbox" defaultChecked={isEmpty ? false : item.featured}/></label>
-                            <label>Name: <input required name='name' type="text" defaultValue={isEmpty ? '' : item.name}/></label>
-                            <label>Description: <textarea required name='description' type="text" defaultValue={isEmpty ? '' : item.description}/></label>
-                            <label>Web Link: <input required name='webLink' type="text" defaultValue={isEmpty ? '' : item.webLink}/></label>
-                            <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isEmpty ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
-                            <img id='logoUrlImgDisplay' src={isEmpty ? '' : item.logoUrl}/>
-                            <select name='tag' defaultValue={isEmpty ? null : item.tag.text}>
-                                {collectionsData.tags.map((tag, index) =>
-                                    <option key={index} value={tag.id}>{tag.text}</option>
-                                )}
-                            </select>
-                            <div>categories:
-                                {collectionsData.categories.map((category, index)  =>
-                                    <label key={index}>{`${category.text}: `}
-                                        <input type="checkbox" name={`$${category.id}`} defaultChecked={ isEmpty ? false : item.categories.some(value => category.text == value.text)}/>
-                                    </label>
-                                )}
-                            </div>
-                            {isEmpty ? <button type="submit">Create</button> : <button type="submit">Update</button>}
-                            {!isEmpty && 
-                            <> 
-                                <button onClick={(e) => {
-                                    /* Explanation for e.stopPropagation()
-                                    when click on button it shows model and adds the listener, 
-                                    but because of propagation after everything was run on click function
-                                    it was also clicking the 'document' witch was outside of the model,
-                                    so it was closing the modal. 
-                                    
-                                    the only way it would work as intended without the stopPropagation() was
-                                    if you position the delete button right were the modal was going to popup.
-                                    */
-                                    e.stopPropagation(); 
+                            <form ref={itemFormRef} onSubmit={(e) => {e.preventDefault(); submitHandlerFunction()}}>
+                                <label>Id: {isEmpty ? "N/A" : item.id }</label>
+                                <label>Featured: <input name='featured' type="checkbox" defaultChecked={isEmpty ? false : item.featured}/></label>
+                                <label>Name: <input required name='name' type="text" defaultValue={isEmpty ? '' : item.name}/></label>
+                                <label>Description: <textarea required name='description' type="text" defaultValue={isEmpty ? '' : item.description}/></label>
+                                <label>Web Link: <input required name='webLink' type="text" defaultValue={isEmpty ? '' : item.webLink}/></label>
+                                <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isEmpty ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                                <img id='logoUrlImgDisplay' src={isEmpty ? '' : item.logoUrl}/>
+                                <select name='tag' defaultValue={isEmpty ? null : item.tag.text}>
+                                    {collectionsData.tags.map((tag, index) =>
+                                        <option key={index} value={tag.id}>{tag.text}</option>
+                                    )}
+                                </select>
+                                <div>categories:
+                                    {collectionsData.categories.map((category, index)  =>
+                                        <label key={index}>{`${category.text}: `}
+                                            <input type="checkbox" name={`$${category.id}`} defaultChecked={ isEmpty ? false : item.categories.some(value => category.text == value.text)}/>
+                                        </label>
+                                    )}
+                                </div>
+                                {isEmpty ? <button type="submit">Create</button> : <button type="submit">Update</button>}
+                            </form>
 
-                                    deletePromptModal.current.showModal();
-                                    document.addEventListener('click', handleClickOutside)
-                                }
-                                }>Delete</button>
-
-                                <dialog ref={deletePromptModal}>
-                                    <p>{`To confirm, type "${item.id}" in the box below`}</p>
-                                    <input type='text'></input>
-                                    <button>Delete</button>
-                                </dialog>
-                            </>}
+                            {!isEmpty && <DialogModalDelete requiredText={item.id} onDeleteClick={()=>{console.log("delete Test")}}/>}
                         </>
                     )
                 }
@@ -301,7 +315,7 @@ function UserUI (){
                 break;
             }
         }
-        setItemFormElementsRender(formElements);
+        setFormElementsRender(formElements);
     }
 
     return(
@@ -320,9 +334,7 @@ function UserUI (){
                 </div>
                 <div>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <form ref={itemFormRef} onSubmit={(e) => {e.preventDefault(); submitHandlerFunction()}}>
-                        {itemFormElementsRender}
-                    </form>
+                    {formElementsRender}
                 </div>
             </div>
         </>
