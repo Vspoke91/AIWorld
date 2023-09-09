@@ -161,7 +161,7 @@ function UserUI (){
 
     const rederItemForm = (collectionName, item) => {
 
-        function DialogModalDelete ({requiredText, onDeleteClick}){
+        function DialogModalDelete ({websiteId}){
 
             const modalElementRef = useRef(null);
             const [isDisable, setDisable] = useState(true);
@@ -200,20 +200,22 @@ function UserUI (){
                     }}>Delete</button>
 
                     <dialog ref={modalElementRef}>
-                            <p>{`To confirm, type "${requiredText}" in the box below`}</p>
-                            <input type='text' placeholder={requiredText} onChange={(e) => {
-                                if(e.target.value === requiredText) 
+                            <p>{`To confirm, type "${websiteId}" in the box below`}</p>
+                            <input type='text' placeholder={websiteId} onChange={(e) => {
+                                if(e.target.value === websiteId) 
                                     setDisable(false);
                                 else
                                     setDisable(true);
                             }}></input>
-                            <button disabled={isDisable} onClick={onDeleteClick}>Delete</button>
+                            <button disabled={isDisable} onClick={() => {
+                                database.deleteWebsite(websiteId);
+                            }}>Delete</button>
                     </dialog>
                 </>
             )
         } 
         DialogModalDelete.propTypes = {
-            requiredText: PropTypes.string, onDeleteClick: PropTypes.func
+            websiteId: PropTypes.string
         };
 
         if(itemFormRef.current != null) 
@@ -249,7 +251,7 @@ function UserUI (){
                                 {isEmpty ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                             </form>
 
-                            {!isEmpty && <DialogModalDelete requiredText={item.id} onDeleteClick={()=>{console.log("delete Test")}}/>}
+                            {!isEmpty && <DialogModalDelete websiteId={item.id}/>}
                         </>
                     )
                 }
