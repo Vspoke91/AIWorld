@@ -29,12 +29,14 @@ function UserUI (){
     */
     const [displayDataList, setDisplayDataList] = useState(null)
 
-    //userInfo hold... userInfo
+    //userInfo holds... userInfo
     const [userInfo, setUserInfo] = useState(null)
 
     const [itemFormElementsRender, setItemFormElementsRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
     const itemFormRef = useRef(null);
     const [submitHandlerFunction, setSubmitHandlerFunction] = useState(null);
+
+    const deletePromptModal = useRef(null);
 
     //loading information for component
     useEffect(() => {
@@ -159,8 +161,6 @@ function UserUI (){
         rederItemForm(targetCollectionName, null)
     }
 
-    const model = useRef(null);
-
     const rederItemForm = (collectionName, item) => {
 
         if(itemFormRef.current != null) 
@@ -178,12 +178,12 @@ function UserUI (){
                     const x = event.clientX;
                     const y = event.clientY;
         
-                    const element = model.current;
+                    const element = deletePromptModal.current;
         
                     //check if click is outside of element border else it was clicked inside
                     if (x < element.offsetLeft || x > element.offsetLeft + element.offsetWidth ||
                         y < element.offsetTop || y > element.offsetTop + element.offsetHeight) {
-                        model.current.close();
+                        deletePromptModal.current.close();
                         document.removeEventListener('click', handleClickOutside);
                     }
                 };
@@ -225,12 +225,12 @@ function UserUI (){
                                     */
                                     e.stopPropagation(); 
 
-                                    model.current.showModal();
+                                    deletePromptModal.current.showModal();
                                     document.addEventListener('click', handleClickOutside)
                                 }
                                 }>Delete</button>
 
-                                <dialog ref={model}>
+                                <dialog ref={deletePromptModal}>
                                     <p>{`To confirm, type "${item.id}" in the box below`}</p>
                                     <input type='text'></input>
                                     <button>Delete</button>
