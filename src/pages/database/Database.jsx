@@ -175,19 +175,17 @@ function UserUI (){
             case("websites"):{
 
                 const handleClickOutside = (event) => {
-                    
-                    if(model.current.open){
-                        //mouse pointer coordinates 
-                        const x = event.clientX;
-                        const y = event.clientY;
-            
-                        const element = model.current;
-            
-                        //check if click is outside of element border else it was clicked inside
-                        if (x < element.offsetLeft || x > element.offsetLeft + element.offsetWidth ||
-                            y < element.offsetTop || y > element.offsetTop + element.offsetHeight) {
-                            model.current.close();
-                        }
+                    //mouse pointer coordinates 
+                    const x = event.clientX;
+                    const y = event.clientY;
+        
+                    const element = model.current;
+        
+                    //check if click is outside of element border else it was clicked inside
+                    if (x < element.offsetLeft || x > element.offsetLeft + element.offsetWidth ||
+                        y < element.offsetTop || y > element.offsetTop + element.offsetHeight) {
+                        model.current.close();
+                        document.removeEventListener('click', handleClickOutside);
                     }
                 };
 
@@ -216,7 +214,18 @@ function UserUI (){
                             {isEmpty ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                             {!isEmpty && 
                             <> 
-                                <button onClick={() => {
+                                <button onClick={(e) => {
+                                    /* Explanation for e.stopPropagation()
+                                    when click on button it shows model and adds the listener, 
+                                    but because of propagation after everything was run on click function
+                                    it was also clicking the 'document' witch was outside of the model,
+                                    so it was closing the modal. 
+                                    
+                                    the only way it would work as intended without the stopPropagation() was
+                                    if you position the delete button right were the modal was going to popup.
+                                    */
+                                    e.stopPropagation(); 
+
                                     model.current.showModal();
                                     document.addEventListener('click', handleClickOutside)
                                 }
