@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
 import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, getDoc, updateDoc, setDoc, doc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, deleteDoc, getDoc, updateDoc, setDoc, doc, query, where, DocumentReference } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -152,7 +152,10 @@ const database = {
     }
     await setDoc(docRef, uploadableObject);
   },
-  deleteWebsite: async (siteInfo) => {}
+  deleteWebsite: async (websiteId) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, websiteId);
+    await deleteDoc(docRef);
+  }
 }
 export default database;
 
