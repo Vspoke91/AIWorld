@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Database.css'
 import { default as database, authentication } from '../../assets/database/firebase'
-import { id } from 'date-fns/locale';
 
 function Database (){
 
