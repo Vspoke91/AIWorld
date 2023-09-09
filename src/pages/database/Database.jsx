@@ -207,8 +207,9 @@ function UserUI (){
                                 else
                                     setDisable(true);
                             }}></input>
-                            <button disabled={isDisable} onClick={() => {
-                                database.deleteWebsite(websiteId);
+                            <button disabled={isDisable} onClick={async () => {
+                                await database.deleteWebsite(websiteId);
+                                refreshCollectionData(targetCollectionName)
                             }}>Delete</button>
                     </dialog>
                 </>
