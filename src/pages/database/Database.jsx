@@ -34,7 +34,6 @@ function UserUI (){
 
     const [formElementsRender, setFormElementsRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong>Careful with what you change!</strong></p>)
     const itemFormRef = useRef(null);
-    const [submitHandlerFunction, setSubmitHandlerFunction] = useState(null);
 
     //loading information for component
     useEffect(() => {
@@ -226,41 +225,12 @@ function UserUI (){
 
         switch(collectionName) {
             case("websites"):{
-
+                
+                let formSubmitFunction = null;
                 const isNull = item == null;
 
-                formElement =  <>
-                    <form ref={itemFormRef} onSubmit={(e) => {
-                        e.preventDefault();
-                        () => submitHandlerFunction(e.currentTarget)
-                    }}>
-                        <label>Id: {isNull ? "N/A" : item.id }</label>
-                        <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : item.featured}/></label>
-                        <label>Name: <input required name='name' type="text" defaultValue={isNull ? '' : item.name}/></label>
-                        <label>Description: <textarea required name='description' type="text" defaultValue={isNull ? '' : item.description}/></label>
-                        <label>Web Link: <input required name='webLink' type="text" defaultValue={isNull ? '' : item.webLink}/></label>
-                        <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isNull ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
-                        <img id='logoUrlImgDisplay' src={isNull ? '' : item.logoUrl}/>
-                        <select name='tag' defaultValue={isNull ? null : item.tag.text}>
-                            {collectionsData.tags.map((tag, index) =>
-                                <option key={index} value={tag.id}>{tag.text}</option>
-                            )}
-                        </select>
-                        <div>categories:
-                            {collectionsData.categories.map((category, index)  =>
-                                <label key={index}>{`${category.text}: `}
-                                    <input type="checkbox" name={`$${category.id}`} defaultChecked={ isNull ? false : item.categories.some(value => category.text == value.text)}/>
-                                </label>
-                            )}
-                        </div>
-                        {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
-                    </form>
-
-                    {!isNull && <DialogModalDelete itemId={item.id}/>}
-                </>;
-
-
                 const transformData = (form) => {
+                    console.log('running')
                     const formData = new FormData(form);
                     const websiteVariables = {};
                     const categoriesArray = [];
@@ -291,15 +261,46 @@ function UserUI (){
 
                 //if null add the website to database else update the website;
                 if(isNull)
-                    setSubmitHandlerFunction(async (formRef) => {
+                    formSubmitFunction = async (formRef) => {
                         await database.addWebsite(transformData(formRef))
                         refreshCollectionData(targetCollectionName)
-                    });
+                    };
                 else 
-                    setSubmitHandlerFunction(async (formRef) => {
+                    formSubmitFunction = async (formRef) => {
                         await database.updateWebsite(transformData(formRef))
                         refreshCollectionData(targetCollectionName)
-                    });
+                    };
+
+                formElement =  <>
+                    <form ref={itemFormRef} onSubmit={(e) => {
+                        e.preventDefault();
+                        formSubmitFunction(e.target)
+                    }}>
+                        <label>Id: {isNull ? "N/A" : item.id }</label>
+                        <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : item.featured}/></label>
+                        <label>Name: <input required name='name' type="text" defaultValue={isNull ? '' : item.name}/></label>
+                        <label>Description: <textarea required name='description' type="text" defaultValue={isNull ? '' : item.description}/></label>
+                        <label>Web Link: <input required name='webLink' type="text" defaultValue={isNull ? '' : item.webLink}/></label>
+                        <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isNull ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                        <img id='logoUrlImgDisplay' src={isNull ? '' : item.logoUrl}/>
+                        <select name='tag' defaultValue={isNull ? null : item.tag.text}>
+                            {collectionsData.tags.map((tag, index) =>
+                                <option key={index} value={tag.id}>{tag.text}</option>
+                            )}
+                        </select>
+                        <div>categories:
+                            {collectionsData.categories.map((category, index)  =>
+                                <label key={index}>{`${category.text}: `}
+                                    <input type="checkbox" name={`$${category.id}`} defaultChecked={ isNull ? false : item.categories.some(value => category.text == value.text)}/>
+                                </label>
+                            )}
+                        </div>
+                        {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
+                    </form>
+
+                    {!isNull && <DialogModalDelete itemId={item.id}/>}
+                </>;
+
                 break;
             }
             case("tags"):{
