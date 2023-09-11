@@ -161,7 +161,7 @@ function UserUI (){
 
     const rederItemForm = (collectionName, item) => {
 
-        function DialogModalDelete ({websiteId}){
+        function DialogModalDelete ({itemId}){
 
             const modalElementRef = useRef(null);
             const [isDisable, setDisable] = useState(true);
@@ -200,15 +200,15 @@ function UserUI (){
                     }}>Delete</button>
 
                     <dialog ref={modalElementRef}>
-                            <p>{`To confirm, type "${websiteId}" in the box below`}</p>
-                            <input type='text' placeholder={websiteId} onChange={(e) => {
-                                if(e.target.value === websiteId) 
+                            <p>{`To confirm, type "${itemId}" in the box below`}</p>
+                            <input type='text' placeholder={itemId} onChange={(e) => {
+                                if(e.target.value === itemId) 
                                     setDisable(false);
                                 else
                                     setDisable(true);
                             }}></input>
                             <button disabled={isDisable} onClick={async () => {
-                                await database.deleteWebsite(websiteId);
+                                await database.deleteWebsite(itemId);
                                 refreshCollectionData(targetCollectionName)
                             }}>Delete</button>
                     </dialog>
@@ -216,51 +216,52 @@ function UserUI (){
             )
         } 
         DialogModalDelete.propTypes = {
-            websiteId: PropTypes.string
+            itemId: PropTypes.string
         };
 
         if(itemFormRef.current != null) 
             itemFormRef.current.reset();
         
-        let formElements = null;
+        let formElement = null;
 
         switch(collectionName) {
             case("websites"):{
-                const formElementsBuilder = (isEmpty) => {
-                    return (
-                        <>
-                            <form ref={itemFormRef} onSubmit={(e) => {e.preventDefault(); submitHandlerFunction()}}>
-                                <label>Id: {isEmpty ? "N/A" : item.id }</label>
-                                <label>Featured: <input name='featured' type="checkbox" defaultChecked={isEmpty ? false : item.featured}/></label>
-                                <label>Name: <input required name='name' type="text" defaultValue={isEmpty ? '' : item.name}/></label>
-                                <label>Description: <textarea required name='description' type="text" defaultValue={isEmpty ? '' : item.description}/></label>
-                                <label>Web Link: <input required name='webLink' type="text" defaultValue={isEmpty ? '' : item.webLink}/></label>
-                                <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isEmpty ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
-                                <img id='logoUrlImgDisplay' src={isEmpty ? '' : item.logoUrl}/>
-                                <select name='tag' defaultValue={isEmpty ? null : item.tag.text}>
-                                    {collectionsData.tags.map((tag, index) =>
-                                        <option key={index} value={tag.id}>{tag.text}</option>
-                                    )}
-                                </select>
-                                <div>categories:
-                                    {collectionsData.categories.map((category, index)  =>
-                                        <label key={index}>{`${category.text}: `}
-                                            <input type="checkbox" name={`$${category.id}`} defaultChecked={ isEmpty ? false : item.categories.some(value => category.text == value.text)}/>
-                                        </label>
-                                    )}
-                                </div>
-                                {isEmpty ? <button type="submit">Create</button> : <button type="submit">Update</button>}
-                            </form>
 
-                            {!isEmpty && <DialogModalDelete websiteId={item.id}/>}
-                        </>
-                    )
-                }
+                const isNull = item == null;
 
-                formElements = formElementsBuilder(item == null)
+                formElement =  <>
+                    <form ref={itemFormRef} onSubmit={(e) => {
+                        e.preventDefault();
+                        () => submitHandlerFunction(e.currentTarget)
+                    }}>
+                        <label>Id: {isNull ? "N/A" : item.id }</label>
+                        <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : item.featured}/></label>
+                        <label>Name: <input required name='name' type="text" defaultValue={isNull ? '' : item.name}/></label>
+                        <label>Description: <textarea required name='description' type="text" defaultValue={isNull ? '' : item.description}/></label>
+                        <label>Web Link: <input required name='webLink' type="text" defaultValue={isNull ? '' : item.webLink}/></label>
+                        <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isNull ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                        <img id='logoUrlImgDisplay' src={isNull ? '' : item.logoUrl}/>
+                        <select name='tag' defaultValue={isNull ? null : item.tag.text}>
+                            {collectionsData.tags.map((tag, index) =>
+                                <option key={index} value={tag.id}>{tag.text}</option>
+                            )}
+                        </select>
+                        <div>categories:
+                            {collectionsData.categories.map((category, index)  =>
+                                <label key={index}>{`${category.text}: `}
+                                    <input type="checkbox" name={`$${category.id}`} defaultChecked={ isNull ? false : item.categories.some(value => category.text == value.text)}/>
+                                </label>
+                            )}
+                        </div>
+                        {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
+                    </form>
 
-                const submitFunction = async (isNew) => {
-                    const formData = new FormData(itemFormRef.current);
+                    {!isNull && <DialogModalDelete itemId={item.id}/>}
+                </>;
+
+
+                const transformData = (form) => {
+                    const formData = new FormData(form);
                     const websiteVariables = {};
                     const categoriesArray = [];
 
@@ -278,31 +279,31 @@ function UserUI (){
 
                     websiteVariables['categories'] = categoriesArray;
 
-                    //check for missing properties
-                    if (!("featured" in websiteVariables)) {
-                        websiteVariables["featured"] = false;
-                    }
-
-                    if(isNew){
-                        await database.addWebsite(websiteVariables);
-                    } else {
+                    if(!isNull)
                         websiteVariables['id'] = item.id;
-                        //wait for database to update before refreshin
-                        await database.updateWebsite(websiteVariables);
-                    }
 
-                    refreshCollectionData(targetCollectionName)
+                    //check for missing properties
+                    if (!("featured" in websiteVariables)) 
+                        websiteVariables["featured"] = false;
+
+                    return websiteVariables;
                 }
 
-                if(item != null){
-                    setSubmitHandlerFunction(() => submitFunction);
-                } else {
-                    setSubmitHandlerFunction(() => () => submitFunction(true));
-                }
+                //if null add the website to database else update the website;
+                if(isNull)
+                    setSubmitHandlerFunction(async (formRef) => {
+                        await database.addWebsite(transformData(formRef))
+                        refreshCollectionData(targetCollectionName)
+                    });
+                else 
+                    setSubmitHandlerFunction(async (formRef) => {
+                        await database.updateWebsite(transformData(formRef))
+                        refreshCollectionData(targetCollectionName)
+                    });
                 break;
             }
             case("tags"):{
-                formElements = <>
+                formElement = <>
                     <label>Text: <input type="text" defaultValue={item.text}/></label>
                     <label>Color: <input type="text" defaultValue={item.color}/></label>
                     <button>Update</button>
@@ -310,7 +311,7 @@ function UserUI (){
                 break;
             }
             case("categories"):{
-                formElements = <>
+                formElement = <>
                     <label>Text: <input type="text" defaultValue={item.text}/></label>
                     <label>Color: <input type="text" defaultValue={item.color}/></label>
                     <button>Update</button>
@@ -318,7 +319,8 @@ function UserUI (){
                 break;
             }
         }
-        setFormElementsRender(formElements);
+
+        setFormElementsRender(formElement);
     }
 
     return(
