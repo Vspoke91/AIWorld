@@ -158,7 +158,7 @@ function UserUI (){
         rederItemForm(targetCollectionName, null)
     }
 
-    const rederItemForm = (collectionName, item) => {
+    const rederItemForm = (collectionName, itemObject) => {
 
         function DialogModalDelete ({itemId}){
 
@@ -222,15 +222,12 @@ function UserUI (){
             itemFormRef.current.reset();
         
         let formElement = null;
+        const isNull = itemObject == null;
 
         switch(collectionName) {
             case("websites"):{
-                
-                let formSubmitFunction = null;
-                const isNull = item == null;
 
                 const transformData = (form) => {
-                    console.log('running')
                     const formData = new FormData(form);
                     const websiteVariables = {};
                     const categoriesArray = [];
@@ -250,7 +247,7 @@ function UserUI (){
                     websiteVariables['categories'] = categoriesArray;
 
                     if(!isNull)
-                        websiteVariables['id'] = item.id;
+                        websiteVariables['id'] = itemObject.id;
 
                     //check for missing properties
                     if (!("featured" in websiteVariables)) 
@@ -259,31 +256,26 @@ function UserUI (){
                     return websiteVariables;
                 }
 
-                //if null add the website to database else update the website;
-                if(isNull)
-                    formSubmitFunction = async (formRef) => {
-                        await database.addWebsite(transformData(formRef))
-                        refreshCollectionData(targetCollectionName)
-                    };
-                else 
-                    formSubmitFunction = async (formRef) => {
-                        await database.updateWebsite(transformData(formRef))
-                        refreshCollectionData(targetCollectionName)
-                    };
-
                 formElement =  <>
-                    <form ref={itemFormRef} onSubmit={(e) => {
+                    <form ref={itemFormRef} onSubmit={async (e) => {
                         e.preventDefault();
-                        formSubmitFunction(e.target)
+
+                        //if null add the website to database else update the website;
+                        if(isNull)
+                            await database.addWebsite(transformData(e.target))
+                        else 
+                            await database.updateWebsite(transformData(e.target))
+
+                        refreshCollectionData(targetCollectionName)
                     }}>
-                        <label>Id: {isNull ? "N/A" : item.id }</label>
-                        <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : item.featured}/></label>
-                        <label>Name: <input required name='name' type="text" defaultValue={isNull ? '' : item.name}/></label>
-                        <label>Description: <textarea required name='description' type="text" defaultValue={isNull ? '' : item.description}/></label>
-                        <label>Web Link: <input required name='webLink' type="text" defaultValue={isNull ? '' : item.webLink}/></label>
-                        <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isNull ? '' : item.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
-                        <img id='logoUrlImgDisplay' src={isNull ? '' : item.logoUrl}/>
-                        <select name='tag' defaultValue={isNull ? null : item.tag.text}>
+                        <label>Id: {isNull ? "N/A" : itemObject.id }</label>
+                        <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : itemObject.featured}/></label>
+                        <label>Name: <input required name='name' type="text" defaultValue={isNull ? '' : itemObject.name}/></label>
+                        <label>Description: <textarea required name='description' type="text" defaultValue={isNull ? '' : itemObject.description}/></label>
+                        <label>Web Link: <input required name='webLink' type="text" defaultValue={isNull ? '' : itemObject.webLink}/></label>
+                        <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isNull ? '' : itemObject.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                        <img id='logoUrlImgDisplay' src={isNull ? '' : itemObject.logoUrl}/>
+                        <select name='tag' defaultValue={isNull ? null : itemObject.tag.text}>
                             {collectionsData.tags.map((tag, index) =>
                                 <option key={index} value={tag.id}>{tag.text}</option>
                             )}
@@ -291,30 +283,30 @@ function UserUI (){
                         <div>categories:
                             {collectionsData.categories.map((category, index)  =>
                                 <label key={index}>{`${category.text}: `}
-                                    <input type="checkbox" name={`$${category.id}`} defaultChecked={ isNull ? false : item.categories.some(value => category.text == value.text)}/>
+                                    <input type="checkbox" name={`$${category.id}`} defaultChecked={ isNull ? false : itemObject.categories.some(value => category.text == value.text)}/>
                                 </label>
                             )}
                         </div>
                         {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                     </form>
 
-                    {!isNull && <DialogModalDelete itemId={item.id}/>}
+                    {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
                 </>;
 
                 break;
             }
             case("tags"):{
                 formElement = <>
-                    <label>Text: <input type="text" defaultValue={item.text}/></label>
-                    <label>Color: <input type="text" defaultValue={item.color}/></label>
+                    <label>Text: <input type="text" defaultValue={itemObject.text}/></label>
+                    <label>Color: <input type="text" defaultValue={itemObject.color}/></label>
                     <button>Update</button>
                 </>
                 break;
             }
             case("categories"):{
                 formElement = <>
-                    <label>Text: <input type="text" defaultValue={item.text}/></label>
-                    <label>Color: <input type="text" defaultValue={item.color}/></label>
+                    <label>Text: <input type="text" defaultValue={itemObject.text}/></label>
+                    <label>Color: <input type="text" defaultValue={itemObject.color}/></label>
                     <button>Update</button>
                 </>
                 break;
