@@ -218,6 +218,48 @@ function UserUI (){
             itemId: PropTypes.string
         };
 
+        function DialogModalMessage ({message}){
+
+            const modalElementRef = useRef(null);
+            document.addEventListener('click', handleClickOutside)
+            
+            const closeModal = () => {
+                modalElementRef.current.close();
+                document.removeEventListener('click', handleClickOutside);
+            }
+
+            const handleClickOutside = (event) => {
+                //mouse pointer coordinates 
+                const x = event.clientX;
+                const y = event.clientY;
+    
+                const element = modalElementRef.current;
+    
+                //check if click is outside of element border else it was clicked inside
+                if (x < element.offsetLeft || 
+                    x > element.offsetLeft + element.offsetWidth ||
+                    y < element.offsetTop || 
+                    y > element.offsetTop + element.offsetHeight
+                )
+                    closeModal();
+                
+            };
+
+            const element = <>
+                <dialog ref={modalElementRef}>
+                        <p>{message}</p>
+                        <button onClick={closeModal}>Close</button>
+                </dialog>
+            </>;
+
+            return({
+                element: element,
+                show: function () {
+                    modalElementRef.current.showModal();
+                }
+            });
+        }
+
         if(itemFormRef.current != null) 
             itemFormRef.current.reset();
         
@@ -256,6 +298,8 @@ function UserUI (){
                     return websiteVariables;
                 }
 
+                const test = DialogModalMessage("hello");
+
                 formElement =  <>
                     <form ref={itemFormRef} onSubmit={async (e) => {
                         e.preventDefault();
@@ -266,7 +310,9 @@ function UserUI (){
                         else 
                             await database.updateWebsite(transformData(e.target))
 
-                        refreshCollectionData(targetCollectionName)
+                        await refreshCollectionData(targetCollectionName)
+
+                        test.show();
                     }}>
                         <label>Id: {isNull ? "N/A" : itemObject.id }</label>
                         <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : itemObject.featured}/></label>
@@ -290,12 +336,15 @@ function UserUI (){
                         {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                     </form>
 
+                    {test.element}
+
                     {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
                 </>;
 
                 break;
             }
             case("tags"):{
+
                 formElement = <>
                     <label>Text: <input type="text" defaultValue={itemObject.text}/></label>
                     <label>Color: <input type="text" defaultValue={itemObject.color}/></label>
