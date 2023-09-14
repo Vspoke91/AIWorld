@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Database.css'
 import { default as database, authentication } from '../../assets/database/firebase'
@@ -158,6 +158,7 @@ function UserUI (){
         rederItemForm(targetCollectionName, null)
     }
 
+    let test = useRef(null);
     const rederItemForm = (collectionName, itemObject) => {
 
         function DialogModalDelete ({itemId}){
@@ -218,16 +219,8 @@ function UserUI (){
             itemId: PropTypes.string
         };
 
-        function DialogModalMessage ({message}){
-
-            const modalElementRef = useRef(null);
-            document.addEventListener('click', handleClickOutside)
-            
-            const closeModal = () => {
-                modalElementRef.current.close();
-                document.removeEventListener('click', handleClickOutside);
-            }
-
+        const DialogModalMessage = forwardRef(({message}, modalElementRef) => {
+        
             const handleClickOutside = (event) => {
                 //mouse pointer coordinates 
                 const x = event.clientX;
@@ -242,23 +235,37 @@ function UserUI (){
                     y > element.offsetTop + element.offsetHeight
                 )
                     closeModal();
-                
             };
 
-            const element = <>
+            const closeModal = () => {
+                modalElementRef.current.close();
+                document.removeEventListener('click', handleClickOutside);
+            }
+
+            function openModal() {
+                if (modalElementRef.current) {
+                    console.log(modalElementRef.current);
+                    modalElementRef.current.showModal();
+                    document.addEventListener('click', handleClickOutside);
+                }
+            }
+
+            useImperativeHandle(modalElementRef, () => ({
+                openModal
+                //need to add old methods
+            }));
+
+            return(<>
                 <dialog ref={modalElementRef}>
                         <p>{message}</p>
                         <button onClick={closeModal}>Close</button>
                 </dialog>
-            </>;
-
-            return({
-                element: element,
-                show: function () {
-                    modalElementRef.current.showModal();
-                }
-            });
-        }
+            </>);
+        });
+        DialogModalMessage.displayName = 'DialogModalMessage';
+        DialogModalMessage.propTypes = {
+            message: PropTypes.string
+        };
 
         if(itemFormRef.current != null) 
             itemFormRef.current.reset();
@@ -298,8 +305,6 @@ function UserUI (){
                     return websiteVariables;
                 }
 
-                const test = DialogModalMessage("hello");
-
                 formElement =  <>
                     <form ref={itemFormRef} onSubmit={async (e) => {
                         e.preventDefault();
@@ -312,7 +317,7 @@ function UserUI (){
 
                         await refreshCollectionData(targetCollectionName)
 
-                        test.show();
+                        console.log(test.current.openModal())
                     }}>
                         <label>Id: {isNull ? "N/A" : itemObject.id }</label>
                         <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : itemObject.featured}/></label>
@@ -336,8 +341,7 @@ function UserUI (){
                         {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                     </form>
 
-                    {test.element}
-
+                    <DialogModalMessage ref={test} message={"Submited!"}/>
                     {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
                 </>;
 
