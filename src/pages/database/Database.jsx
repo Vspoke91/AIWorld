@@ -158,7 +158,7 @@ function UserUI (){
         rederItemForm(targetCollectionName, null)
     }
 
-    let test = useRef(null);
+    let messageModalRef = useRef(null);
     const rederItemForm = (collectionName, itemObject) => {
 
         function DialogModalDelete ({itemId}){
@@ -219,14 +219,16 @@ function UserUI (){
             itemId: PropTypes.string
         };
 
-        const DialogModalMessage = forwardRef(({message}, modalElementRef) => {
+        const DialogModalMessage = forwardRef(({message}, ref) => {
+
+            const modalRef = useRef(null);
         
             const handleClickOutside = (event) => {
                 //mouse pointer coordinates 
                 const x = event.clientX;
                 const y = event.clientY;
     
-                const element = modalElementRef.current;
+                const element = modalRef.current;
     
                 //check if click is outside of element border else it was clicked inside
                 if (x < element.offsetLeft || 
@@ -238,41 +240,42 @@ function UserUI (){
             };
 
             const closeModal = () => {
-                modalElementRef.current.close();
+                modalRef.current.close();
                 document.removeEventListener('click', handleClickOutside);
             }
 
-            function openModal() {
-                if (modalElementRef.current) {
-                    console.log(modalElementRef.current);
-                    modalElementRef.current.showModal();
-                    document.addEventListener('click', handleClickOutside);
-                }
+            const openModal= () => {
+                modalRef.current.showModal();
+                document.addEventListener('click', handleClickOutside);
             }
 
-            useImperativeHandle(modalElementRef, () => ({
+            useImperativeHandle(ref, () => ({
                 openModal
-                //need to add old methods
             }));
 
             return(<>
-                <dialog ref={modalElementRef}>
+                <dialog ref={modalRef}>
                         <p>{message}</p>
                         <button onClick={closeModal}>Close</button>
                 </dialog>
             </>);
         });
         DialogModalMessage.displayName = 'DialogModalMessage';
-        DialogModalMessage.propTypes = {
-            message: PropTypes.string
-        };
-
-        if(itemFormRef.current != null) 
-            itemFormRef.current.reset();
+        DialogModalMessage.propTypes = {message: PropTypes.string};
         
+        if(itemFormRef.current != null){
+            itemFormRef.current.reset()
+        }
+
+        const setDisableChildrenOf = (element, switcher) =>{
+            for (let i = 0; i < element.length; i++) {
+                element[i].disabled = switcher;
+            }
+        }
+
         let formElement = null;
         const isNull = itemObject == null;
-
+        
         switch(collectionName) {
             case("websites"):{
 
@@ -307,17 +310,19 @@ function UserUI (){
 
                 formElement =  <>
                     <form ref={itemFormRef} onSubmit={async (e) => {
+                        
                         e.preventDefault();
+                        setDisableChildrenOf(e.target, true);
 
                         //if null add the website to database else update the website;
                         if(isNull)
                             await database.addWebsite(transformData(e.target))
                         else 
                             await database.updateWebsite(transformData(e.target))
-
                         await refreshCollectionData(targetCollectionName)
 
-                        console.log(test.current.openModal())
+                        setDisableChildrenOf(e.target, false);
+                        messageModalRef.current.openModal()
                     }}>
                         <label>Id: {isNull ? "N/A" : itemObject.id }</label>
                         <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : itemObject.featured}/></label>
@@ -341,7 +346,7 @@ function UserUI (){
                         {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                     </form>
 
-                    <DialogModalMessage ref={test} message={"Submited!"}/>
+                    <DialogModalMessage ref={messageModalRef} message={`'${itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
                     {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
                 </>;
 
