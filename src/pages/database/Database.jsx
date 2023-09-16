@@ -275,17 +275,15 @@ function UserUI (){
 
         let formElement = null;
         const isNull = itemObject == null;
-        
+      
         switch(collectionName) {
             case("websites"):{
 
-                const transformData = (form) => {
-                    const formData = new FormData(form);
+                const transformData = (formData) => {
                     const websiteVariables = {};
                     const categoriesArray = [];
 
                     formData.forEach((value, key) => {
-
                         if(key === "featured"){
                             websiteVariables[key] = true;
                         } else if (key.startsWith('$')){
@@ -293,7 +291,6 @@ function UserUI (){
                         } else {
                             websiteVariables[key] = value;
                         }
-
                     });
 
                     websiteVariables['categories'] = categoriesArray;
@@ -310,19 +307,24 @@ function UserUI (){
 
                 formElement =  <>
                     <form ref={itemFormRef} onSubmit={async (e) => {
-                        
+
                         e.preventDefault();
+
+                        //get form data before disable all children
+                        const formData = new FormData(e.target);
                         setDisableChildrenOf(e.target, true);
 
                         //if null add the website to database else update the website;
                         if(isNull)
-                            await database.addWebsite(transformData(e.target))
+                            await database.addWebsite(transformData(formData))
                         else 
-                            await database.updateWebsite(transformData(e.target))
+                            await database.updateWebsite(transformData(formData))
+
                         await refreshCollectionData(targetCollectionName)
 
                         setDisableChildrenOf(e.target, false);
                         messageModalRef.current.openModal()
+
                     }}>
                         <label>Id: {isNull ? "N/A" : itemObject.id }</label>
                         <label>Featured: <input name='featured' type="checkbox" defaultChecked={isNull ? false : itemObject.featured}/></label>
@@ -331,7 +333,8 @@ function UserUI (){
                         <label>Web Link: <input required name='webLink' type="text" defaultValue={isNull ? '' : itemObject.webLink}/></label>
                         <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isNull ? '' : itemObject.logoUrl} onChange={(e)=>{itemFormRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
                         <img id='logoUrlImgDisplay' src={isNull ? '' : itemObject.logoUrl}/>
-                        <select name='tag' defaultValue={isNull ? null : itemObject.tag.text}>
+                        <select required name='tag' defaultValue={isNull ? '' : itemObject.tag.id}>
+                            <option value='' disabled>Select tag</option>
                             {collectionsData.tags.map((tag, index) =>
                                 <option key={index} value={tag.id}>{tag.text}</option>
                             )}
@@ -346,7 +349,7 @@ function UserUI (){
                         {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                     </form>
 
-                    <DialogModalMessage ref={messageModalRef} message={`'${itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
+                    <DialogModalMessage ref={messageModalRef} message={`'${ isNull? 'New website' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
                     {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
                 </>;
 
