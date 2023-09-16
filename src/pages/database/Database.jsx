@@ -357,10 +357,48 @@ function UserUI (){
             }
             case("tags"):{
 
+                const transformData = (formData) => {
+                    const websiteVariables = {};
+
+                    formData.forEach((value, key) => {
+                        websiteVariables[key] = value;
+                    });
+
+                    if(!isNull)
+                        websiteVariables['id'] = itemObject.id;
+
+                    return websiteVariables;
+                }
+
                 formElement = <>
-                    <label>Text: <input type="text" defaultValue={itemObject.text}/></label>
-                    <label>Color: <input type="text" defaultValue={itemObject.color}/></label>
-                    <button>Update</button>
+
+                    <form ref={itemFormRef} onSubmit={async (e) => {
+                        e.preventDefault();
+
+                        //get form data before disable all children
+                        const formData = new FormData(e.target);
+                        setDisableChildrenOf(e.target, true);
+
+                        //if null add the website to database else update the website;
+                        if(isNull)
+                            await database.addTag(transformData(formData))
+                        else 
+                            await database.updateTag(transformData(formData))
+
+                        await refreshCollectionData(targetCollectionName)
+
+                        setDisableChildrenOf(e.target, false);
+                        messageModalRef.current.openModal()
+
+                    }}>
+                        <label>Id: {isNull ? "N/A" : itemObject.id }</label>
+                        <label>Text: <input required name='text' type="text" defaultValue={isNull ? '' : itemObject.text}/></label>
+                        <label>Color: <input required name='color' type="text" defaultValue={isNull ? '' : itemObject.color}/></label>
+                        {isNull ? <button required type="submit">Create</button> : <button type="submit">Update</button>}
+                    </form>
+                    
+                    <DialogModalMessage ref={messageModalRef} message={`'${ isNull? 'New tag' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
+                    {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
                 </>
                 break;
             }
