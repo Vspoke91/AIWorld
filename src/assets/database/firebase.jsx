@@ -141,6 +141,20 @@ const database = {
       return false;
     }
   },
+  updateTag: async (tagInfo) => {
+
+    const docRef = doc(firestoreDataBase, `Public/websites/tagId/${tagInfo.id}`);
+    const docSnapshot = await getDoc(docRef);
+
+    if(docSnapshot.exists()){
+      const uploadableObject = {...tagInfo}
+      await updateDoc(docRef, uploadableObject)
+      return true;
+    } else {
+      console.error(`DATABASE ERROR: doc with id ${tagInfo.id} not found!`)
+      return false;
+    }
+  },
   addWebsite: async (siteInfo) => {
     const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, siteInfo.name.toLowerCase());
     const uploadableObject = {
@@ -150,6 +164,11 @@ const database = {
       }),
       tag: doc(firestoreDataBase, `Public/websites/tagId/${siteInfo.tag}`),
     }
+    await setDoc(docRef, uploadableObject);
+  },
+  addTag: async (tagInfo) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/tagId/`, tagInfo.name.toLowerCase());
+    const uploadableObject = {...tagInfo}
     await setDoc(docRef, uploadableObject);
   },
   deleteWebsite: async (websiteId) => {
