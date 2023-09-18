@@ -161,7 +161,7 @@ function UserUI (){
     let messageModalRef = useRef(null);
     const rederItemForm = (collectionName, itemObject) => {
 
-        function DialogModalDelete ({itemId}){
+        function DialogModalDelete ({itemId, deleteFunction}){
 
             const modalElementRef = useRef(null);
             const [isDisable, setDisable] = useState(true);
@@ -208,7 +208,7 @@ function UserUI (){
                                     setDisable(true);
                             }}></input>
                             <button disabled={isDisable} onClick={async () => {
-                                await database.deleteWebsite(itemId);
+                                await deleteFunction(itemId);
                                 refreshCollectionData(targetCollectionName)
                             }}>Delete</button>
                     </dialog>
@@ -216,7 +216,8 @@ function UserUI (){
             )
         } 
         DialogModalDelete.propTypes = {
-            itemId: PropTypes.string
+            itemId: PropTypes.string,
+            deleteFunction: PropTypes.func
         };
 
         const DialogModalMessage = forwardRef(({message}, ref) => {
@@ -350,7 +351,7 @@ function UserUI (){
                     </form>
 
                     <DialogModalMessage ref={messageModalRef} message={`'${ isNull? 'New website' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
-                    {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
+                    {!isNull && <DialogModalDelete itemId={itemObject.id} deleteFunction={database.deleteWebsite}/>}
                 </>;
 
                 break;
@@ -371,7 +372,6 @@ function UserUI (){
                 }
 
                 formElement = <>
-
                     <form ref={itemFormRef} onSubmit={async (e) => {
                         e.preventDefault();
 
@@ -394,19 +394,57 @@ function UserUI (){
                         <label>Id: {isNull ? "N/A" : itemObject.id }</label>
                         <label>Text: <input required name='text' type="text" defaultValue={isNull ? '' : itemObject.text}/></label>
                         <label>Color: <input required name='color' type="text" defaultValue={isNull ? '' : itemObject.color}/></label>
-                        {isNull ? <button required type="submit">Create</button> : <button type="submit">Update</button>}
+                        {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
                     </form>
                     
                     <DialogModalMessage ref={messageModalRef} message={`'${ isNull? 'New tag' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
-                    {!isNull && <DialogModalDelete itemId={itemObject.id}/>}
+                    {!isNull && <DialogModalDelete itemId={itemObject.id} deleteFunction={database.deleteTag}/>}
                 </>
                 break;
             }
             case("categories"):{
+                
+                const transformData = (formData) => {
+                    const websiteVariables = {};
+
+                    formData.forEach((value, key) => {
+                        websiteVariables[key] = value;
+                    });
+
+                    if(!isNull)
+                        websiteVariables['id'] = itemObject.id;
+
+                    return websiteVariables;
+                }
+
                 formElement = <>
-                    <label>Text: <input type="text" defaultValue={itemObject.text}/></label>
-                    <label>Color: <input type="text" defaultValue={itemObject.color}/></label>
-                    <button>Update</button>
+                    <form ref={itemFormRef} onSubmit={async (e) => {
+                        e.preventDefault();
+
+                        //get form data before disable all children
+                        const formData = new FormData(e.target);
+                        setDisableChildrenOf(e.target, true);
+
+                        //if null add the website to database else update the website;
+                        if(isNull)
+                            await database.addCategory(transformData(formData))
+                        else 
+                            await database.updateCategory(transformData(formData))
+
+                        await refreshCollectionData(targetCollectionName)
+
+                        setDisableChildrenOf(e.target, false);
+                        messageModalRef.current.openModal()
+
+                    }}>
+                        <label>Id: {isNull ? "N/A" : itemObject.id }</label>
+                        <label>Text: <input required name='text' type="text" defaultValue={isNull ? '' : itemObject.text}/></label>
+                        <label>Color: <input required name='color' type="text" defaultValue={isNull ? '' : itemObject.color}/></label>
+                        {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
+                    </form>
+                    
+                    <DialogModalMessage ref={messageModalRef} message={`'${ isNull? 'New Category' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
+                    {!isNull && <DialogModalDelete itemId={itemObject.id} deleteFunction={database.deleteCategory}/>}
                 </>
                 break;
             }
