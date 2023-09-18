@@ -155,6 +155,19 @@ const database = {
       return false;
     }
   },
+  updateCategory: async (categoryInfo) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/categoryId/${categoryInfo.id}`);
+    const docSnapshot = await getDoc(docRef);
+
+    if(docSnapshot.exists()){
+      const uploadableObject = {...categoryInfo}
+      await updateDoc(docRef, uploadableObject)
+      return true;
+    } else {
+      console.error(`DATABASE ERROR: doc with id ${categoryInfo.id} not found!`)
+      return false;
+    }
+  },
   addWebsite: async (siteInfo) => {
     const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, siteInfo.name.toLowerCase());
     const uploadableObject = {
@@ -167,12 +180,25 @@ const database = {
     await setDoc(docRef, uploadableObject);
   },
   addTag: async (tagInfo) => {
-    const docRef = doc(firestoreDataBase, `Public/websites/tagId/`, tagInfo.name.toLowerCase());
+    const docRef = doc(firestoreDataBase, `Public/websites/tagId/`, tagInfo.text.toLowerCase());
+    const uploadableObject = {...tagInfo}
+    await setDoc(docRef, uploadableObject);
+  },
+  addCategory: async (tagInfo) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/categoryId/`, tagInfo.text.toLowerCase());
     const uploadableObject = {...tagInfo}
     await setDoc(docRef, uploadableObject);
   },
   deleteWebsite: async (websiteId) => {
     const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, websiteId);
+    await deleteDoc(docRef);
+  },
+  deleteTag: async (websiteId) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/tagId/`, websiteId);
+    await deleteDoc(docRef);
+  },
+  deleteCategory: async (websiteId) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/categoryId/`, websiteId);
     await deleteDoc(docRef);
   }
 }
