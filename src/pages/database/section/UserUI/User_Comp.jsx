@@ -170,33 +170,6 @@ export default function User() {
         switch(collectionName) {
             case("websites"):{
 
-                const transformData = (formData) => {
-                    const websiteVariables = {};
-                    const categoriesArray = [];
-
-                    formData.forEach((value, key) => {
-                        if(key === "featured"){
-                            websiteVariables[key] = true;
-                        } else if (websiteVariables[key]){
-                            console.log(value, key)
-                        } else {
-                            websiteVariables[key] = value;
-                        }
-                    });
-
-                    websiteVariables['categories'] = categoriesArray;
-
-                    if(!isNull)
-                        websiteVariables['id'] = itemObject.id;
-
-                    //check for missing properties
-                    if (!("featured" in websiteVariables)) 
-                        websiteVariables["featured"] = false;
-
-                    return websiteVariables;
-                }
-                
-
                 formElement =  <>
                     <WebsiteFormEdit ref={itemFormRef}
                         isWebObjectNew={isNull} 
@@ -205,25 +178,18 @@ export default function User() {
                         onSubmitFunction={async (e) => {
                             e.preventDefault()
 
-                            //get form data before disable all children
-                            const formData = new FormData(e.target)
-                            setDisableChildrenOf(e.target, true)
+                            const formData = itemFormRef.current.getDataObject();
 
-                            //if null add the website to database else update the website;
                             if(isNull){
-                                console.log(transformData(formData))
-                                //await database.addWebsite(transformData(formData))
+                                await database.addWebsite(formData)
                             }
                             else {
-                                console.log(transformData(formData))
-                                //await database.updateWebsite(transformData(formData))
+                                await database.updateWebsite(formData)
                             }
-
+                            
                             await refreshCollectionData(targetCollectionName)
 
-                            setDisableChildrenOf(e.target, false)
                             messageModalRef.current.openModal()
-
                         }
                     }/>
 

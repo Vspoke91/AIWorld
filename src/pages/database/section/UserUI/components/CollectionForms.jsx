@@ -1,8 +1,9 @@
-import { forwardRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import PropTypes from 'prop-types';
 
 export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, database, onSubmitFunction}, ref) => {
 
+    const formRef = useRef(null);
 
     /* WebsiteObject Rule
     if websiteObject is new then websiteObject is null,
@@ -17,7 +18,7 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
 
         return database.categories.map((category, index)  =>
             <label key={index}>{`${category.text}: `}
-                <input type="checkbox" name='categories[]' value={category.id} defaultChecked={isWebObjectNew ? false : webObjectHasCategory(category)}/>
+                <input type="checkbox" name='categories' value={category.id} defaultChecked={isWebObjectNew ? false : webObjectHasCategory(category)}/>
             </label>
         )
     }
@@ -28,10 +29,39 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
         )
     }
 
+    function getDataObject () {
+
+        const formData =  new FormData(formRef.current)
+        const websiteVariables = {
+            featured: false,
+            categories: []
+        }
+
+        formData.forEach((value, key) => {
+            if(Array.isArray(websiteVariables[key])){ // checks if key is in variables if not then just add it, useful when using an array since it will come up more than one
+                websiteVariables[key].push(value) // add the new value to the variable
+            } else {
+                websiteVariables[key] = value
+            }
+        });
+
+        if(!isWebObjectNew)
+            websiteVariables['id'] = websiteObject.id
+
+        return websiteVariables;
+    }
+
+    useImperativeHandle(ref, () => ({
+        getDataObject,
+        reset: function(){
+            formRef.current.reset();
+        }
+    }));
+
     return(
-        <form ref={ref} onSubmit={onSubmitFunction}>
+        <form ref={formRef} onSubmit={onSubmitFunction}>
                 <label>Id: {isWebObjectNew ? "N/A" : websiteObject.id }</label>
-                <label>Featured: <input name='featured' type="checkbox" defaultChecked={isWebObjectNew ? false : websiteObject.featured}/></label>
+                <label>Featured: <input value={true} name='featured' type="checkbox" defaultChecked={isWebObjectNew ? false : websiteObject.featured}/></label>
                 <label>Name: <input required name='name' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.name}/></label>
                 <label>Description: <textarea required name='description' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.description}/></label>
                 <label>Web Link: <input required name='webLink' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.webLink}/></label>
