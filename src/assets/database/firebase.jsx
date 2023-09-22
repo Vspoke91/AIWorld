@@ -169,7 +169,7 @@ const database = {
     }
   },
   addWebsite: async (siteInfo) => {
-    const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, siteInfo.name.toLowerCase());
+    const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, siteInfo.id);
     const uploadableObject = {
       ...siteInfo,
       categories: siteInfo.categories.map(category => {

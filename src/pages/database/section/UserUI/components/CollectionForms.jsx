@@ -45,8 +45,7 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
             }
         });
 
-        if(!isWebObjectNew)
-            websiteVariables['id'] = websiteObject.id
+        websiteVariables['id'] = websiteObject.id ?? websiteVariables['name'].toLowerCase();
 
         return websiteVariables;
     }
