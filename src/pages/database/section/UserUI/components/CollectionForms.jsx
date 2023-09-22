@@ -45,7 +45,7 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
             }
         });
 
-        websiteVariables['id'] = websiteObject.id ?? websiteVariables['name'].toLowerCase();
+        websiteVariables['id'] = websiteObject?.id ?? websiteVariables['name'].toLowerCase();
 
         return websiteVariables;
     }
@@ -64,7 +64,7 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
                 <label>Name: <input required name='name' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.name}/></label>
                 <label>Description: <textarea required name='description' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.description}/></label>
                 <label>Web Link: <input required name='webLink' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.webLink}/></label>
-                <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.logoUrl} onChange={(e)=>{/*FIXME: this code renders weird, flickes*/ref.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
+                <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.logoUrl} onChange={(e)=>{/*FIXME: this code renders weird, flickes*/formRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value}}></textarea></label>
                 <img id='logoUrlImgDisplay' src={isWebObjectNew ? '' : websiteObject.logoUrl}/>
                 <select required name='tag' defaultValue={isWebObjectNew ? '' : websiteObject.tag.id}>
                     <option value={''} disabled>Select tag</option>
