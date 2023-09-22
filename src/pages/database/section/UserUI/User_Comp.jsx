@@ -186,7 +186,7 @@ export default function User() {
                             else {
                                 await database.updateWebsite(formData)
                             }
-                            
+
                             await refreshCollectionData(targetCollectionName)
 
                             messageModalRef.current.openModal()
@@ -197,7 +197,7 @@ export default function User() {
                         message={`'${ isNull? 'New website' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}
                     />
 
-                    {!isNull && <ModalDeleteButton inputRequired={itemObject.id} deleteFunction={
+                    {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteWebsite(itemObject.id);
                             refreshCollectionData(targetCollectionName)
