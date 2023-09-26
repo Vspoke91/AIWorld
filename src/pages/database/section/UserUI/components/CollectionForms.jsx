@@ -132,6 +132,51 @@ TagFormEdit.propTypes = {
     onSubmitFunction: PropTypes.func,
 };
 
+export const CategoryFormEdit = forwardRef(({ isObjectNew, categoryObject, onSubmitFunction }, ref) => {
+
+    const formRef = useRef(null);
+
+    function getDataObject() {
+
+        const formData = new FormData(formRef.current)
+        const newObject = {}
+
+        formData.forEach((value, key) => {
+            newObject[key] = value
+        });
+
+        /* Expain Code
+        this if goes as "if object exist then give Object.id, else give name in lowercase"
+        the ? means that Object.id might be undefined, so if it is dont try to get id or it will break.
+        */
+        newObject['id'] = categoryObject?.id ?? newObject['text'].toLowerCase();
+
+        return newObject;
+    }
+
+    useImperativeHandle(ref, () => ({
+        getDataObject,
+        reset: function() {
+            formRef.current.reset();
+        }
+    }));
+
+    return (
+        <form ref={formRef} onSubmit={onSubmitFunction}>
+            <label>Id: {isObjectNew ? "N/A" : categoryObject.id}</label>
+            <label>Text: <input required name='text' type="text" defaultValue={isObjectNew ? '' : categoryObject.text} /></label>
+            <label>Color: <input required name='color' type="text" defaultValue={isObjectNew ? '' : categoryObject.color} /></label>
+            <SubmitButton isNew={isObjectNew} />
+        </form>
+    );
+})
+CategoryFormEdit.displayName = 'CategoryFormEdit';
+CategoryFormEdit.propTypes = {
+    isObjectNew: PropTypes.bool,
+    categoryObject: PropTypes.object,
+    onSubmitFunction: PropTypes.func,
+};
+
 function SubmitButton({ isNew }) {
     return isNew ? <button type="submit">Create</button> : <button type="submit">Update</button>
 }
