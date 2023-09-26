@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import PropTypes from 'prop-types';
 
-export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, database, onSubmitFunction }, ref) => {
+export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, database, onSubmitFunction }, ref) => {
 
     const formRef = useRef(null);
 
@@ -18,7 +18,7 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
 
         return database.categories.map((category, index) =>
             <label key={index}>{`${category.text}: `}
-                <input type="checkbox" name='categories' value={category.id} defaultChecked={isWebObjectNew ? false : webObjectHasCategory(category)} />
+                <input type="checkbox" name='categories' value={category.id} defaultChecked={isObjectNew ? false : webObjectHasCategory(category)} />
             </label>
         )
     }
@@ -63,25 +63,25 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
 
     return (
         <form ref={formRef} onSubmit={onSubmitFunction}>
-            <label>Id: {isWebObjectNew ? "N/A" : websiteObject.id}</label>
-            <label>Featured: <input value={true} name='featured' type="checkbox" defaultChecked={isWebObjectNew ? false : websiteObject.featured} /></label>
-            <label>Name: <input required name='name' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.name} /></label>
-            <label>Description: <textarea required name='description' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.description} /></label>
-            <label>Web Link: <input required name='webLink' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.webLink} /></label>
-            <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isWebObjectNew ? '' : websiteObject.logoUrl} onChange={(e) => {/*FIXME: this code renders weird, flickes*/formRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value }}></textarea></label>
-            <img id='logoUrlImgDisplay' src={isWebObjectNew ? '' : websiteObject.logoUrl} />
-            <select required name='tag' defaultValue={isWebObjectNew ? '' : websiteObject.tag.id}>
+            <label>Id: {isObjectNew ? "N/A" : websiteObject.id}</label>
+            <label>Featured: <input value={true} name='featured' type="checkbox" defaultChecked={isObjectNew ? false : websiteObject.featured} /></label>
+            <label>Name: <input required name='name' type="text" defaultValue={isObjectNew ? '' : websiteObject.name} /></label>
+            <label>Description: <textarea required name='description' type="text" defaultValue={isObjectNew ? '' : websiteObject.description} /></label>
+            <label>Web Link: <input required name='webLink' type="text" defaultValue={isObjectNew ? '' : websiteObject.webLink} /></label>
+            <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isObjectNew ? '' : websiteObject.logoUrl} onChange={(e) => {/*FIXME: this code renders weird, flickes*/formRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value }}></textarea></label>
+            <img id='logoUrlImgDisplay' src={isObjectNew ? '' : websiteObject.logoUrl} />
+            <select required name='tag' defaultValue={isObjectNew ? '' : websiteObject.tag.id}>
                 <option value={''} disabled>Select tag</option>
                 <TagsOptions />
             </select>
             <div>categories: <CategoriesInputs /> </div>
-            {isWebObjectNew ? <button type="submit">Create</button> : <button type="submit">Update</button>}
+            <SubmitButton isNew={isObjectNew} />
         </form>
     );
 })
 WebsiteFormEdit.displayName = 'ModalMessagePopup';
 WebsiteFormEdit.propTypes = {
-    isWebObjectNew: PropTypes.bool,
+    isObjectNew: PropTypes.bool,
     websiteObject: PropTypes.object,
     onSubmitFunction: PropTypes.func,
     database: PropTypes.object
