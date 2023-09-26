@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import PropTypes from 'prop-types';
 
-export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, database, onSubmitFunction}, ref) => {
+export const WebsiteFormEdit = forwardRef(({isWebObjectNew, websiteObject, database, onSubmitFunction}, ref) => {
 
     const formRef = useRef(null);
 
@@ -45,6 +45,10 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
             }
         });
 
+        /* Expain Code
+        this if goes as "if object exist then give Object.id, else give name in lowercase"
+        the ? means that Object.id might be undefined, so if it is dont try to get id or it will break.
+        */
         websiteVariables['id'] = websiteObject?.id ?? websiteVariables['name'].toLowerCase();
 
         return websiteVariables;
@@ -72,8 +76,8 @@ export const WebsiteFormEdit = forwardRef(({ isWebObjectNew, websiteObject, data
                 </select>
                 <div>categories: <CategoriesInputs/> </div>
                 {isWebObjectNew ? <button type="submit">Create</button> : <button type="submit">Update</button>}
-            </form>
-        );
+        </form>
+    );
 })
 WebsiteFormEdit.displayName = 'ModalMessagePopup';
 WebsiteFormEdit.propTypes = {
@@ -83,7 +87,46 @@ WebsiteFormEdit.propTypes = {
     database: PropTypes.object
 };
 
-export const TagFormEdit = forwardRef(({}, ref) => {
-    return <></>;
+export const TagFormEdit = forwardRef(({isTagObjectNew, tagObject, onSubmitFunction}, ref) => {
+
+    const formRef = useRef(null);
+
+    function getDataObject () {
+
+        const formData =  new FormData(formRef.current)
+        const websiteVariables = {}
+
+        formData.forEach((value, key) => {
+            websiteVariables[key] = value
+        });
+
+        /* Expain Code
+        this if goes as "if object exist then give Object.id, else give name in lowercase"
+        the ? means that Object.id might be undefined, so if it is dont try to get id or it will break.
+        */
+        websiteVariables['id'] = tagObject?.id ?? websiteVariables['name'].toLowerCase();
+
+        return websiteVariables;
+    }
+
+    useImperativeHandle(ref, () => ({
+        getDataObject,
+        reset: function(){
+            formRef.current.reset();
+        }
+    }));
+
+    return (
+        <form ref={formRef} onSubmit={onSubmitFunction}>
+            <label>Id: {isTagObjectNew ? "N/A" : tagObject.id }</label>
+            <label>Text: <input required name='text' type="text" defaultValue={isTagObjectNew ? '' : tagObject.text}/></label>
+            <label>Color: <input required name='color' type="text" defaultValue={isTagObjectNew ? '' : tagObject.color}/></label>
+        </form>
+    );
 })
 TagFormEdit.displayName = 'TagFormEdit';
+TagFormEdit.propTypes = {
+    isTagObjectNew: PropTypes.bool,
+    tagObject: PropTypes.object, 
+    onSubmitFunction: PropTypes.func, 
+};
