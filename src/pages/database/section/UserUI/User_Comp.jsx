@@ -169,7 +169,7 @@ export default function User() {
             case ("websites"): {
                 formElement = <>
                     <WebsiteFormEdit ref={itemFormRef}
-                        isWebObjectNew={isNull}
+                        isObjectNew={isNull}
                         websiteObject={itemObject}
                         database={collectionsData}
                         onSubmitFunction={async (e) => {
@@ -188,7 +188,7 @@ export default function User() {
 
                             messageModalRef.current.openModal()
                         }
-                        } />
+                    } />
 
                     <ModalMessagePopup ref={messageModalRef}
                         message={`'${isNull ? 'New website' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`}
@@ -222,7 +222,7 @@ export default function User() {
                             await refreshCollectionData(targetCollectionName)
                             messageModalRef.current.openModal()
                         }
-                        } />
+                    } />
 
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New tag' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
@@ -239,7 +239,7 @@ export default function User() {
                 formElement = <>
                     <CategoryFormEdit ref={itemFormRef}
                         isObjectNew={isNull}
-                        tagObject={itemObject}
+                        categoryObject={itemObject}
                         onSubmitFunction={async (e) => {
                             e.preventDefault()
 
@@ -254,7 +254,7 @@ export default function User() {
                             await refreshCollectionData(targetCollectionName)
                             messageModalRef.current.openModal()
                         }
-                        } />
+                    } />
 
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New Category' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
