@@ -82,7 +82,7 @@ export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, databas
 WebsiteFormEdit.displayName = 'ModalMessagePopup';
 WebsiteFormEdit.propTypes = {
     isObjectNew: PropTypes.bool,
-    isObjectNew: PropTypes.object,
+    websiteObject: PropTypes.object,
     onSubmitFunction: PropTypes.func,
     database: PropTypes.object
 };
