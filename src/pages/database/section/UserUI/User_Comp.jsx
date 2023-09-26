@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { default as database, authentication } from '@/assets/database/firebase'
 import { ModalDeleteButton, ModalMessagePopup } from './components/DialogModals'
-import { WebsiteFormEdit } from './components/CollectionForms'
+import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/CollectionForms'
 
 export default function User() {
     //collectionsData keep all the data of the collections and updates in every auto-refresh or when site starts using a useEffect
@@ -132,12 +132,13 @@ export default function User() {
         */
         const elementArray = collection.map((item, index) => {
             return (
-                <button key= { index } onClick = {() => rederItemForm(targetCollectionName, item)}>
-                <span>{ item[nameFieldRef]} </span>
+                <button key={index} onClick={() => rederItemForm(targetCollectionName, item)}>
+                    <span>{item[nameFieldRef]} </span>
 
-                { logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef] } /> : <></ >}
+                    {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
                 </button>
-            )})
+            )
+        })
 
 
         return elementArray;
@@ -145,42 +146,38 @@ export default function User() {
 
     const addNewClickHandler = (e) => {
         e.preventDefault()
-    
+
         rederItemForm(targetCollectionName, null)
     }
 
     let messageModalRef = useRef(null);
     const rederItemForm = (collectionName, itemObject) => {
-        
-        //
-        if(itemFormRef.current != null){
+
+        /* Code Explain
+        the next if check if form was already called before,
+        is needed to make sure it reset the form before rendering
+        sometimes inputs values tranfer to new render forms
+        */
+        if (itemFormRef.current != null) {
             itemFormRef.current.reset()
         }
 
-        //TODO: Make this use a different type of loop
-        function setDisableChildrenOf(element, value) {
-            for (let i = 0; i < element.length; i++) {
-                element[i].disabled = value;
-            }
-        }
-
         let formElement = null;
-        const isNull = itemObject == null;
-      
-        switch(collectionName) {
-            case("websites"):{
+        const isNull = (itemObject == null); //sets to a boolean
 
+        switch (collectionName) {
+            case ("websites"): {
                 formElement = <>
                     <WebsiteFormEdit ref={itemFormRef}
-                        isWebObjectNew={isNull} 
-                        websiteObject={itemObject} 
-                        database={collectionsData} 
+                        isWebObjectNew={isNull}
+                        websiteObject={itemObject}
+                        database={collectionsData}
                         onSubmitFunction={async (e) => {
                             e.preventDefault()
 
                             const formData = itemFormRef.current.getDataObject();
 
-                            if(isNull){
+                            if (isNull) {
                                 await database.addWebsite(formData)
                             }
                             else {
@@ -191,10 +188,10 @@ export default function User() {
 
                             messageModalRef.current.openModal()
                         }
-                    }/>
+                        } />
 
-                    <ModalMessagePopup ref={messageModalRef} 
-                        message={`'${ isNull? 'New website' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}
+                    <ModalMessagePopup ref={messageModalRef}
+                        message={`'${isNull ? 'New website' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`}
                     />
 
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
@@ -202,110 +199,70 @@ export default function User() {
                             await database.deleteWebsite(itemObject.id);
                             refreshCollectionData(targetCollectionName)
                         }
-                    }/>}
+                    } />}
                 </>;
-
                 break;
             }
-            case("tags"):{
-
-                const transformData = (formData) => {
-                    const websiteVariables = {};
-
-                    formData.forEach((value, key) => {
-                        websiteVariables[key] = value;
-                    });
-
-                    if(!isNull)
-                        websiteVariables['id'] = itemObject.id;
-
-                    return websiteVariables;
-                }
-
+            case ("tags"): {
                 formElement = <>
-                    <form ref={itemFormRef} onSubmit={async (e) => {
-                        e.preventDefault();
+                    <TagFormEdit ref={itemFormRef}
+                        isObjectNew={isNull}
+                        tagObject={itemObject}
+                        onSubmitFunction={async (e) => {
+                            e.preventDefault()
 
-                        //get form data before disable all children
-                        const formData = new FormData(e.target);
-                        setDisableChildrenOf(e.target, true);
+                            const formData = itemFormRef.current.getDataObject();
+                            if (isNull) {
+                                await database.addTag(formData)
+                            }
+                            else {
+                                await database.updateTag(formData)
+                            }
 
-                        //if null add the website to database else update the website;
-                        if(isNull)
-                            await database.addTag(transformData(formData))
-                        else 
-                            await database.updateTag(transformData(formData))
+                            await refreshCollectionData(targetCollectionName)
+                            messageModalRef.current.openModal()
+                        }
+                        } />
 
-                        await refreshCollectionData(targetCollectionName)
-
-                        setDisableChildrenOf(e.target, false);
-                        messageModalRef.current.openModal()
-
-                    }}>
-                        <label>Id: {isNull ? "N/A" : itemObject.id }</label>
-                        <label>Text: <input required name='text' type="text" defaultValue={isNull ? '' : itemObject.text}/></label>
-                        <label>Color: <input required name='color' type="text" defaultValue={isNull ? '' : itemObject.color}/></label>
-                        {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
-                    </form>
-                    
-                    <ModalMessagePopup ref={messageModalRef} message={`'${ isNull? 'New tag' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
-                    {!isNull && <ModalDeleteButton inputRequired={itemObject.id} deleteFunction={
+                    <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New tag' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
+                    {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteTag(itemObject.id);
                             refreshCollectionData(targetCollectionName)
                         }
-                    }/>}
+                    } />}
                 </>
                 break;
             }
-            case("categories"):{
-                
-                const transformData = (formData) => {
-                    const websiteVariables = {};
-
-                    formData.forEach((value, key) => {
-                        websiteVariables[key] = value;
-                    });
-
-                    if(!isNull)
-                        websiteVariables['id'] = itemObject.id;
-
-                    return websiteVariables;
-                }
+            case ("categories"): {
 
                 formElement = <>
-                    <form ref={itemFormRef} onSubmit={async (e) => {
-                        e.preventDefault();
+                    <CategoryFormEdit ref={itemFormRef}
+                        isObjectNew={isNull}
+                        tagObject={itemObject}
+                        onSubmitFunction={async (e) => {
+                            e.preventDefault()
 
-                        //get form data before disable all children
-                        const formData = new FormData(e.target);
-                        setDisableChildrenOf(e.target, true);
+                            const formData = itemFormRef.current.getDataObject();
+                            if (isNull) {
+                                await database.addCategory(formData)
+                            }
+                            else {
+                                await database.updateCategory(formData)
+                            }
 
-                        //if null add the website to database else update the website;
-                        if(isNull)
-                            await database.addCategory(transformData(formData))
-                        else 
-                            await database.updateCategory(transformData(formData))
+                            await refreshCollectionData(targetCollectionName)
+                            messageModalRef.current.openModal()
+                        }
+                        } />
 
-                        await refreshCollectionData(targetCollectionName)
-
-                        setDisableChildrenOf(e.target, false);
-                        messageModalRef.current.openModal()
-
-                    }}>
-                        <label>Id: {isNull ? "N/A" : itemObject.id }</label>
-                        <label>Text: <input required name='text' type="text" defaultValue={isNull ? '' : itemObject.text}/></label>
-                        <label>Color: <input required name='color' type="text" defaultValue={isNull ? '' : itemObject.color}/></label>
-                        {isNull ? <button type="submit">Create</button> : <button type="submit">Update</button>}
-                    </form>
-                    
-                    <ModalMessagePopup ref={messageModalRef} message={`'${ isNull? 'New Category' : itemObject.id}' was ${isNull? 'created': 'updated'}!`}/>
-                    {!isNull && <ModalDeleteButton inputRequired={itemObject.id} deleteFunction={
+                    <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New Category' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
+                    {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteCategory(itemObject.id);
                             refreshCollectionData(targetCollectionName)
                         }
-                    }/>}
+                    } />}
                 </>
                 break;
             }
@@ -313,18 +270,19 @@ export default function User() {
 
         setFormElementsRender(formElement);
     }
-    return(
+    
+    return (
         <>
             <div className='qs__flex_row'>
-                <div className='qs__flex_column'> 
-                    <select defaultValue="websites" onChange={(event) => {setTargetCollectionName(event.target.value)}}>
+                <div className='qs__flex_column'>
+                    <select defaultValue="websites" onChange={(event) => { setTargetCollectionName(event.target.value) }}>
                         <option value="websites">Websites</option>
                         <option value='tags'>Tags</option>
                         <option value='categories'>Categories</option>
                     </select>
                     <button onClick={addNewClickHandler}>Add New</button>
                     <div className='qs__flex_column'>
-                        {displayDataList != null ?  renderCollectionList(displayDataList):  "loading..."}
+                        {displayDataList != null ? renderCollectionList(displayDataList) : "loading..."}
                     </div>
                 </div>
                 <div>
