@@ -1,5 +1,6 @@
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import PropTypes from 'prop-types';
+import { useState } from "react";
 
 export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, database, onSubmitFunction }, ref) => {
 
@@ -70,10 +71,10 @@ export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, databas
             <label>Web Link: <input required name='webLink' type="text" defaultValue={isObjectNew ? '' : websiteObject.webLink} /></label>
             <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isObjectNew ? '' : websiteObject.logoUrl} onChange={(e) => {/*FIXME: this code renders weird, flickes*/formRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value }}></textarea></label>
             <img id='logoUrlImgDisplay' src={isObjectNew ? '' : websiteObject.logoUrl} />
-            <select required name='tag' defaultValue={isObjectNew ? '' : websiteObject.tag.id}>
+            <SelectReactive required name='tag' defaultValue={isObjectNew ? '' : websiteObject.tag.id} trigger={websiteObject?.id}>
                 <option value={''} disabled>Select tag</option>
                 <TagsOptions />
-            </select>
+            </SelectReactive>
             <div>categories: <CategoriesInputs /> </div>
             <SubmitButton isNew={isObjectNew} />
         </form>
@@ -182,4 +183,54 @@ function SubmitButton({ isNew }) {
 }
 SubmitButton.propTypes = {
     isNew: PropTypes.bool,
+};
+
+function SelectReactive({children, defaultValue, trigger, ...selectProps}) {
+
+    /* Why Make A New Select Component
+
+    the problem with <select> is that it does change defaultValue after each render,
+    so the first render defines what the rest of the defaultValue will be.
+
+    to fix this SelectReactive will change 'default value' when ever it changes, 
+    but another problem was found.
+
+    what if defaultValue did not change but the form you are using has different values for example:
+
+        [
+            {
+                Name: Toyota,
+                Color: Red,
+            },
+            {
+                Name: Subaru,
+                Color: Red,
+            }
+        ]
+    
+    what if you change form from toyota to subaru but the color (select) did not change,
+    if you were on the Toyota form and you change from red to blue then move to Subaru it will stay on blue,
+    because the default of toyota was red such as subaru.
+
+    thats why trigger was added,
+    so you can setValue back to defaultValue if default is the same as the last form.
+
+    */
+    const [value, setValue] = useState(defaultValue);
+
+    useEffect(() => {
+        console.log('reder', defaultValue)
+        setValue(defaultValue);
+    },[defaultValue, trigger]) // trigger is used when defaultValue did not change, but we need to reset the value to default.
+
+    return (
+        <select {...selectProps} value={value} onChange={(e) => setValue(e.target.value)}>
+            {children}
+        </select>
+    )
+}
+SelectReactive.propTypes = {
+    children: PropTypes.Array,
+    defaultValue: PropTypes.string,
+    trigger: PropTypes.object
 };
