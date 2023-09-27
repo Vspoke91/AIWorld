@@ -219,7 +219,6 @@ function SelectReactive({children, defaultValue, trigger, ...selectProps}) {
     const [value, setValue] = useState(defaultValue);
 
     useEffect(() => {
-        console.log('reder', defaultValue)
         setValue(defaultValue);
     },[defaultValue, trigger]) // trigger is used when defaultValue did not change, but we need to reset the value to default.
 
