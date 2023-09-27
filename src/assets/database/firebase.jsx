@@ -62,10 +62,8 @@ const database = {
     let updatedDataArray = await Promise.all(dataArray.map(async dataObject => {
 
       if(dataObject.tag instanceof DocumentReference){
-
         //re-assign tag from data inside <DocumentReference>
         dataObject.tag = (await getDoc(dataObject.tag)).data()
-
       }
 
       if(dataObject.categories instanceof Array){
@@ -78,7 +76,8 @@ const database = {
           return value
         }))
       }
-      return dataObject;
+
+      return validation.checkWebsite(dataObject);
     }))
 
     return updatedDataArray;
@@ -103,6 +102,7 @@ const database = {
       return documentsRef.docs.map(doc => {
         const docData = doc.data();
         docData['id'] = doc.id;
+
         return docData;
       })
     } catch (error) {
@@ -204,6 +204,27 @@ const database = {
 }
 export default database;
 
+const validation = {
+  checkWebsite: function(object){
+
+    const objectDefault = {
+      tag: {
+        id: 'free',
+        text: 'Free',
+        color: 'rgb(1, 71, 11)'
+      }
+    }
+
+    //validate tag
+    if(!object.tag){
+      console.error(`Website with ID of '${object.id}' has invalid tag of '${object.tag}'`)
+      object.tag = objectDefault.tag
+      console.warn(`Tag for Website with ID of '${object.id}' was change to default`, objectDefault.tag)
+    }
+
+    return object;
+  },
+}
 export const authentication = {
   login: async (email, password) => {
     try {
