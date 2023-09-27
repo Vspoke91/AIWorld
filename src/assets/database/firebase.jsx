@@ -209,9 +209,9 @@ const validation = {
 
     const objectDefault = {
       tag: {
-        id: 'free',
-        text: 'Free',
-        color: 'rgb(1, 71, 11)'
+        id: 'error',
+        text: 'Error',
+        color: 'rgb(204, 0, 0)'
       }
     }
 
