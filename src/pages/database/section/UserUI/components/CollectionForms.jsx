@@ -55,6 +55,16 @@ export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, databas
         return websiteVariables;
     }
 
+    let logoImgTimeOut;
+    function onInputChangeHandler(e){
+        clearTimeout(logoImgTimeOut); // Clear any existing timeouts
+
+        logoImgTimeOut = setTimeout(() => {
+            if(e.target.value)
+                formRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value  
+        }, 500);
+    }
+
     useImperativeHandle(ref, () => ({
         getDataObject,
         reset: function () {
@@ -69,8 +79,10 @@ export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, databas
             <label>Name: <input required name='name' type="text" defaultValue={isObjectNew ? '' : websiteObject.name} /></label>
             <label>Description: <textarea required name='description' type="text" defaultValue={isObjectNew ? '' : websiteObject.description} /></label>
             <label>Web Link: <input required name='webLink' type="text" defaultValue={isObjectNew ? '' : websiteObject.webLink} /></label>
-            <label>Logo Url: <textarea required name='logoUrl' type="text" defaultValue={isObjectNew ? '' : websiteObject.logoUrl} onChange={(e) => {/*FIXME: this code renders weird, flickes*/formRef.current.querySelector('#logoUrlImgDisplay').src = e.target.value }}></textarea></label>
-            <img id='logoUrlImgDisplay' src={isObjectNew ? '' : websiteObject.logoUrl} />
+            <label>Logo Url: 
+                <textarea required name='logoUrl' type="text" defaultValue={isObjectNew ? '' : websiteObject.logoUrl} onChange={onInputChangeHandler}/>
+                <img id='logoUrlImgDisplay' src={isObjectNew ? '' : websiteObject.logoUrl} />
+            </label>
             <SelectReactive required name='tag' defaultValue={isObjectNew ? '' : websiteObject.tag.id} trigger={websiteObject?.id}>
                 <option value={''} disabled>Select tag</option>
                 <TagsOptions />
