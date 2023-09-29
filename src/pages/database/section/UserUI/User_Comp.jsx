@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import PropTypes from 'prop-types';
 import { default as database, authentication } from '@/assets/database/firebase'
 import { ModalDeleteButton, ModalMessagePopup } from './components/DialogModals'
 import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/CollectionForms'
@@ -18,8 +19,7 @@ export default function User() {
     //userInfo holds... userInfo
     const [userInfo, setUserInfo] = useState(null)
 
-    const [formElementsRender, setFormElementsRender] = useState(<p>Welcome to the database section, this UI auto refresh. <strong> Careful with what you change! </strong></p>)
-    const itemFormRef = useRef(null);
+    const test = useRef(null)
 
     //loading information for component
     useEffect(() => {
@@ -132,50 +132,79 @@ export default function User() {
         */
         const elementArray = collection.map((item, index) => {
             return (
-                <button key={index} onClick={() => rederItemForm(targetCollectionName, item)}>
-                    <span>{item[nameFieldRef]} </span>
+                <button key={index} onClick={() => test.current.loadElement(item)}>
+                    <span>{item[nameFieldRef]}</span>
 
                     {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
                 </button>
             )
         })
 
-
         return elementArray;
     }
 
-    const addNewClickHandler = (e) => {
-        e.preventDefault()
+    return (
+        <>
+            <div className='qs__flex_row'>
+                <div className='qs__flex_column'>
+                    <select defaultValue="websites" onChange={(event) => { setTargetCollectionName(event.target.value) }}>
+                        <option value="websites">Websites</option>
+                        <option value='tags'>Tags</option>
+                        <option value='categories'>Categories</option>
+                    </select>
+                    <button onClick={() => test.current.loadNew()}>Add New</button>
+                    <div className='qs__flex_column'>
+                        {displayDataList != null ? renderCollectionList(displayDataList) : "loading..."}
+                    </div>
+                </div>
+                <main>
+                    <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
+                    <FormLoader ref={test} currentCollection={targetCollectionName} collectionsData={collectionsData} refreshCollectionData={refreshCollectionData}/>
+                </main>
+            </div>
+        </>
+    )
+}
 
-        rederItemForm(targetCollectionName, null)
-    }
+const FormLoader = forwardRef(({currentCollection, collectionsData, refreshCollectionData}, ref) => {
 
-    let messageModalRef = useRef(null);
-    const rederItemForm = (collectionName, itemObject) => {
+    //TODO: is rendering more than necessary
+    // console.log("render...",currentCollection)
 
-        /* Code Explain
+    const defaultElement = <>
+        <p>Welcome to the database section, this UI auto refresh. <strong> Careful with what you change! </strong></p>
+    </>
+
+    const [diplayedElement, setDiplayedElement] = useState(defaultElement)
+    const formRef = useRef(null);
+    const messageModalRef = useRef(null);
+
+    function loadElement(itemObject){
+
+        /*Code Explain
         the next if check if form was already called before,
         is needed to make sure it reset the form before rendering
         sometimes inputs values tranfer to new render forms
         */
-        if (itemFormRef.current != null) {
-            itemFormRef.current.reset()
+
+        if (formRef.current != null) {
+            formRef.current.reset()
         }
 
         let formElement = null;
         const isNull = (itemObject == null); //sets to a boolean
 
-        switch (collectionName) {
+        switch (currentCollection) {
             case ("websites"): {
                 formElement = <>
-                    <WebsiteFormEdit ref={itemFormRef}
+                    <WebsiteFormEdit ref={formRef}
                         isObjectNew={isNull}
                         websiteObject={itemObject}
                         database={collectionsData}
                         onSubmitFunction={async (e) => {
                             e.preventDefault()
 
-                            const formData = itemFormRef.current.getDataObject();
+                            const formData = formRef.current.getDataObject();
 
                             if (isNull) {
                                 await database.addWebsite(formData)
@@ -184,7 +213,7 @@ export default function User() {
                                 await database.updateWebsite(formData)
                             }
 
-                            await refreshCollectionData(targetCollectionName)
+                            await refreshCollectionData(currentCollection)
 
                             messageModalRef.current.openModal()
                         }
@@ -197,7 +226,7 @@ export default function User() {
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteWebsite(itemObject.id);
-                            refreshCollectionData(targetCollectionName)
+                            refreshCollectionData(currentCollection)
                         }
                     } />}
                 </>;
@@ -205,13 +234,13 @@ export default function User() {
             }
             case ("tags"): {
                 formElement = <>
-                    <TagFormEdit ref={itemFormRef}
+                    <TagFormEdit ref={formRef}
                         isObjectNew={isNull}
                         tagObject={itemObject}
                         onSubmitFunction={async (e) => {
                             e.preventDefault()
 
-                            const formData = itemFormRef.current.getDataObject();
+                            const formData = formRef.current.getDataObject();
                             if (isNull) {
                                 await database.addTag(formData)
                             }
@@ -219,7 +248,7 @@ export default function User() {
                                 await database.updateTag(formData)
                             }
 
-                            await refreshCollectionData(targetCollectionName)
+                            await refreshCollectionData(currentCollection)
                             messageModalRef.current.openModal()
                         }
                     } />
@@ -228,7 +257,7 @@ export default function User() {
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteTag(itemObject.id);
-                            refreshCollectionData(targetCollectionName)
+                            refreshCollectionData(currentCollection)
                         }
                     } />}
                 </>
@@ -237,13 +266,13 @@ export default function User() {
             case ("categories"): {
 
                 formElement = <>
-                    <CategoryFormEdit ref={itemFormRef}
+                    <CategoryFormEdit ref={formRef}
                         isObjectNew={isNull}
                         categoryObject={itemObject}
                         onSubmitFunction={async (e) => {
                             e.preventDefault()
 
-                            const formData = itemFormRef.current.getDataObject();
+                            const formData = formRef.current.getDataObject();
                             if (isNull) {
                                 await database.addCategory(formData)
                             }
@@ -251,7 +280,7 @@ export default function User() {
                                 await database.updateCategory(formData)
                             }
 
-                            await refreshCollectionData(targetCollectionName)
+                            await refreshCollectionData(currentCollection)
                             messageModalRef.current.openModal()
                         }
                     } />
@@ -260,7 +289,7 @@ export default function User() {
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteCategory(itemObject.id);
-                            refreshCollectionData(targetCollectionName)
+                            refreshCollectionData(currentCollection)
                         }
                     } />}
                 </>
@@ -268,28 +297,29 @@ export default function User() {
             }
         }
 
-        setFormElementsRender(formElement);
+        setDiplayedElement(formElement);
     }
-    
-    return (
-        <>
-            <div className='qs__flex_row'>
-                <div className='qs__flex_column'>
-                    <select defaultValue="websites" onChange={(event) => { setTargetCollectionName(event.target.value) }}>
-                        <option value="websites">Websites</option>
-                        <option value='tags'>Tags</option>
-                        <option value='categories'>Categories</option>
-                    </select>
-                    <button onClick={addNewClickHandler}>Add New</button>
-                    <div className='qs__flex_column'>
-                        {displayDataList != null ? renderCollectionList(displayDataList) : "loading..."}
-                    </div>
-                </div>
-                <div>
-                    <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    {formElementsRender}
-                </div>
-            </div>
-        </>
-    )
-}
+
+    function loadNew(){
+        console.log('kik')
+        loadElement(null)
+    }
+
+    function loadDefault(){
+        setDiplayedElement(defaultElement);
+    }
+
+    useImperativeHandle(ref, () => ({
+        loadNew,
+        loadElement,
+        loadDefault
+    }));
+
+    return diplayedElement;
+})
+FormLoader.displayName = 'FormLoader';
+FormLoader.propTypes = {
+    currentCollection: PropTypes.string,
+    collectionsData: PropTypes.object,
+    refreshCollectionData: PropTypes.func
+};
