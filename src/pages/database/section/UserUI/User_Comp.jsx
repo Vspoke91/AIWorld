@@ -19,7 +19,11 @@ export default function User() {
     //userInfo holds... userInfo
     const [userInfo, setUserInfo] = useState(null)
 
-    const test = useRef(null)
+    const formLoaderRef = useRef(null)
+
+    const [data, functiones] = useDatabase(1000)
+
+    console.log(data)
 
     //loading information for component
     useEffect(() => {
@@ -132,7 +136,7 @@ export default function User() {
         */
         const elementArray = collection.map((item, index) => {
             return (
-                <button key={index} onClick={() => test.current.loadElement(item)}>
+                <button key={index} onClick={() => formLoaderRef.current.loadElement(item)}>
                     <span>{item[nameFieldRef]}</span>
 
                     {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
@@ -152,14 +156,14 @@ export default function User() {
                         <option value='tags'>Tags</option>
                         <option value='categories'>Categories</option>
                     </select>
-                    <button onClick={() => test.current.loadNew()}>Add New</button>
+                    <button onClick={() => formLoaderRef.current.loadNew()}>Add New</button>
                     <div className='qs__flex_column'>
                         {displayDataList != null ? renderCollectionList(displayDataList) : "loading..."}
                     </div>
                 </div>
                 <main>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <FormLoader ref={test} currentCollection={targetCollectionName} collectionsData={collectionsData} refreshCollectionData={refreshCollectionData}/>
+                    <FormLoader ref={formLoaderRef} currentCollection={targetCollectionName} collectionsData={collectionsData} refreshCollectionData={refreshCollectionData}/>
                 </main>
             </div>
         </>
@@ -300,19 +304,14 @@ const FormLoader = forwardRef(({currentCollection, collectionsData, refreshColle
         setDiplayedElement(formElement);
     }
 
-    function loadNew(){
-        console.log('kik')
-        loadElement(null)
-    }
-
-    function loadDefault(){
-        setDiplayedElement(defaultElement);
-    }
-
     useImperativeHandle(ref, () => ({
-        loadNew,
         loadElement,
-        loadDefault
+        loadNew: function(){
+            loadElement(null)
+        },
+        loadDefault: function(){
+            setDiplayedElement(defaultElement);
+        }
     }));
 
     return diplayedElement;
@@ -323,3 +322,108 @@ FormLoader.propTypes = {
     collectionsData: PropTypes.object,
     refreshCollectionData: PropTypes.func
 };
+
+function useDatabase(time, currentCollection) {
+    const refreshFunction = null;
+
+    const refreshTime = useRef(time);
+
+    const [collectionData, setCollectionsData] = useState(null);
+
+    useEffect(() => {
+        setCollectionsData(getData(currentCollection));
+    },[currentCollection])
+
+    //start auto-refresh
+    useEffect(() => {
+
+        //before it start the interval refresh the variable or it will call it until the timer runs out
+        //refreshCollectionData(targetCollectionName, true);
+        console.log('First Run')
+        const intervalId = setInterval(() => {
+            //it will only refresh the current targetCollection to make sure is not updating all the data collections everytime
+            //refreshCollectionData(targetCollectionName, true);
+            console.log('interval Run')
+        }, refreshTime.current);
+
+        // Clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, []) // when target changes it makes a new interval for refresh
+
+
+    const refreshCollectionData = useCallback(async (collectionName, updateDependant) => {
+
+        let dataUpdate = {}
+
+        switch (collectionName) {
+            case ('websites'): {
+                //updateDependant: update all data when in website, since is used in forms
+                if (updateDependant) {
+                    dataUpdate = {
+                        websites: await database.getWebsites(),
+                        categories: await database.getCategories(),
+                        tags: await database.getTags()
+                    }
+                } else {
+                    dataUpdate = {
+                        websites: await database.getWebsites()
+                    }
+                }
+                break;
+            }
+            case ('categories'): {
+                dataUpdate = {
+                    categories: await database.getCategories()
+                }
+                break;
+            }
+            case ('tags'): {
+                dataUpdate = {
+                    tags: await database.getTags()
+                };
+                break;
+            }
+        }
+
+        setCollectionsData(prev => ({ ...prev, ...dataUpdate }))
+    }, []);
+
+    function getData(collection){
+
+        let data = null;
+
+        switch (collection) {
+            case 'websites':
+                data = {
+                    collectionName: 'websites',
+                    collection: collectionsData.websites,
+                    nameFieldRef: 'name',
+                    logoUrlFieldRef: 'logoUrl'
+                }
+                break;
+            case 'categories':
+                data = {
+                    collectionName: 'categories',
+                    collection: collectionsData.categories,
+                    nameFieldRef: 'text',
+                    logoUrlFieldRef: 'logoUrl'
+                }
+                break;
+            case 'tags':
+                data = {
+                    collectionName: 'tags',
+                    collection: collectionsData.tags,
+                    nameFieldRef: 'text',
+                    logoUrlFieldRef: 'logoUrl'
+                }
+                break;
+            default:
+                console.error(`Error: collection option '${collection}' was not found`)
+                break;
+        }
+
+        return(data);
+    }
+
+    return[collectionData, refreshFunction]
+}
