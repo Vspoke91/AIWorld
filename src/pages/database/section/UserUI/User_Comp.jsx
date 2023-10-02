@@ -23,7 +23,9 @@ export default function User() {
 
     const [data, functiones] = useDatabase(1000)
 
-    console.log(data)
+    useEffect(() => {
+        console.log(data, ': data')
+    }, [data])
 
     //loading information for component
     useEffect(() => {
@@ -331,7 +333,8 @@ function useDatabase(time, currentCollection) {
     const [collectionData, setCollectionsData] = useState(null);
 
     useEffect(() => {
-        setCollectionsData(getData(currentCollection));
+        setCollectionsData(getCollectionsData(currentCollection));
+        console.log("testing")
     },[currentCollection])
 
     //start auto-refresh
@@ -388,41 +391,52 @@ function useDatabase(time, currentCollection) {
         setCollectionsData(prev => ({ ...prev, ...dataUpdate }))
     }, []);
 
-    function getData(collection){
+    async function getCollectionsData(collection, prev){
 
-        let data = null;
+        let dataUpdate = {}
 
         switch (collection) {
-            case 'websites':
-                data = {
-                    collectionName: 'websites',
-                    collection: collectionsData.websites,
+            case ('websites'): {
+                dataUpdate = {
                     nameFieldRef: 'name',
-                    logoUrlFieldRef: 'logoUrl'
+                    collection:{
+                        websites: await database.getWebsites(),
+                        categories: await database.getCategories(),
+                        tags: await database.getTags()
+                    }
                 }
                 break;
-            case 'categories':
-                data = {
-                    collectionName: 'categories',
-                    collection: collectionsData.categories,
+            }
+            case ('categories'): {
+                dataUpdate = {
                     nameFieldRef: 'text',
-                    logoUrlFieldRef: 'logoUrl'
+                    collection: {
+                        categories: await database.getCategories()
+                    }
                 }
                 break;
-            case 'tags':
-                data = {
-                    collectionName: 'tags',
-                    collection: collectionsData.tags,
+            }
+            case ('tags'): {
+                dataUpdate = {
                     nameFieldRef: 'text',
-                    logoUrlFieldRef: 'logoUrl'
+                    collection: {
+                        tags: await database.getTags()
+                    }
                 }
                 break;
-            default:
-                console.error(`Error: collection option '${collection}' was not found`)
-                break;
+            }
         }
 
-        return(data);
+        dataUpdate.logoUrlFieldRef = 'logoUrl';
+        dataUpdate.collectionName = collection;
+
+        return {
+            collection: { 
+                ...dataUpdate.collection,
+                ...prev?.collection
+            },
+            ...dataUpdate,
+        }
     }
 
     return[collectionData, refreshFunction]
