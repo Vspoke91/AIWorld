@@ -5,167 +5,41 @@ import { ModalDeleteButton, ModalMessagePopup } from './components/DialogModals'
 import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/CollectionForms'
 
 export default function User() {
-    //collectionsData keep all the data of the collections and updates in every auto-refresh or when site starts using a useEffect
-    const [collectionsData, setCollectionsData] = useState({ websites: null, tags: null, categories: null });
-    //targetCollectionName keep the current selected target collection the user picks in the <select> element
+    
     const [targetCollectionName, setTargetCollectionName] = useState('websites');
-    /*
-    displayDataList is the list that needs to be updated to show the user the data in the collection targeted.
-    when null the list will show a 'loading' text, 
-    keep displayDatList null until there is data in collectionsData.
-    */
-    const [displayDataList, setDisplayDataList] = useState(null)
 
     //userInfo holds... userInfo
     const [userInfo, setUserInfo] = useState(null)
-
     const formLoaderRef = useRef(null)
 
-    const [data, functiones] = useDatabase(1000)
-
-    useEffect(() => {
-        console.log(data, ': data')
-    }, [data])
+    const [collectionsData, refreshTargetCollection] = useDatabase(300000, targetCollectionName) //300000 == 5 min
 
     //loading information for component
     useEffect(() => {
         (async function () { setUserInfo(await authentication.getUserInfo()) })();
     }, [])
 
-    const refreshCollectionData = useCallback(async (collectionName, updateDependant) => {
-
-        let dataUpdate = {}
-
-        switch (collectionName) {
-            case ('websites'): {
-                //updateDependant: update all data when in website, since is used in forms
-                if (updateDependant) {
-                    dataUpdate = {
-                        websites: await database.getWebsites(),
-                        categories: await database.getCategories(),
-                        tags: await database.getTags()
-                    }
-                } else {
-                    dataUpdate = {
-                        websites: await database.getWebsites()
-                    }
-                }
-                break;
-            }
-            case ('categories'): {
-                dataUpdate = {
-                    categories: await database.getCategories()
-                }
-                break;
-            }
-            case ('tags'): {
-                dataUpdate = {
-                    tags: await database.getTags()
-                };
-                break;
-            }
-        }
-
-        setCollectionsData(prev => ({ ...prev, ...dataUpdate }))
-    }, []);
-
-    //start auto-refresh
-    useEffect(() => {
-        const refreshTime = 300000 // 5 min
-
-        //before it start the interval refresh the variable or it will call it until the timer runs out
-        refreshCollectionData(targetCollectionName, true);
-
-        const intervalId = setInterval(() => {
-            //it will only refresh the current targetCollection to make sure is not updating all the data collections everytime
-            refreshCollectionData(targetCollectionName, true);
-        }, refreshTime);
-
-        // Clear the interval when the component unmounts
-        return () => clearInterval(intervalId);
-    }, [targetCollectionName, refreshCollectionData]) // when target changes it makes a new interval for refresh
-
-    /*
-    updates collection data inside of collectionDisplay everytime collectionData changes or targetCollectionName changes
-    so the only way it displays new data is if collectionData changes in auto-refresh
-    or if targetCollectionName changes when user changes the list display in the <select> element
-    */
-    useEffect(() => {
-        let collectionData = null;
-
-        switch (targetCollectionName) {
-            case 'websites':
-                if (collectionsData.websites != null)
-                    collectionData = {
-                        collectionName: 'websites',
-                        collection: collectionsData.websites,
-                        nameFieldRef: 'name',
-                        logoUrlFieldRef: 'logoUrl'
-                    }
-                break;
-            case 'categories':
-                if (collectionsData.categories != null)
-                    collectionData = {
-                        collectionName: 'categories',
-                        collection: collectionsData.categories,
-                        nameFieldRef: 'text',
-                        logoUrlFieldRef: 'logoUrl'
-                    }
-                break;
-            case 'tags':
-                if (collectionsData.tags != null)
-                    collectionData = {
-                        collectionName: 'tags',
-                        collection: collectionsData.tags,
-                        nameFieldRef: 'text',
-                        logoUrlFieldRef: 'logoUrl'
-                    }
-                break;
-            default:
-                break;
-        }
-
-        //if collectionData is null even after the switch, it will display loading, since displayDataList is set to null
-        setDisplayDataList(collectionData);
-
-    }, [collectionsData, targetCollectionName])
-
-    const renderCollectionList = ({ collection, nameFieldRef, logoUrlFieldRef }) => {
-
-        /*
-        this will check if the collection is null, so it wait for auto-refresh to load it.
-        is null since all fields in collectionData is are not loaded until the user calls it for the first time
-        */
-        const elementArray = collection.map((item, index) => {
-            return (
-                <button key={index} onClick={() => formLoaderRef.current.loadElement(item)}>
-                    <span>{item[nameFieldRef]}</span>
-
-                    {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
-                </button>
-            )
-        })
-
-        return elementArray;
-    }
-
     return (
         <>
             <div className='qs__flex_row'>
                 <div className='qs__flex_column'>
-                    <select defaultValue="websites" onChange={(event) => { setTargetCollectionName(event.target.value) }}>
-                        <option value="websites">Websites</option>
+                    <select defaultValue={targetCollectionName} onChange={(event) => { setTargetCollectionName(event.target.value) }}>
+                        <option value='websites'>Websites</option>
                         <option value='tags'>Tags</option>
                         <option value='categories'>Categories</option>
                     </select>
                     <button onClick={() => formLoaderRef.current.loadNew()}>Add New</button>
                     <div className='qs__flex_column'>
-                        {displayDataList != null ? renderCollectionList(displayDataList) : "loading..."}
+                        {collectionsData != null ? "loaded" : "loading..."}
+                        <CollectionList collectionsData = {collectionsData}/>
                     </div>
                 </div>
                 <main>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <FormLoader ref={formLoaderRef} currentCollection={targetCollectionName} collectionsData={collectionsData} refreshCollectionData={refreshCollectionData}/>
+                    <FormLoader ref={formLoaderRef} 
+                    currentCollection={targetCollectionName} 
+                    collectionsData={collectionsData} 
+                    refreshCollectionData={refreshTargetCollection}/>
                 </main>
             </div>
         </>
@@ -325,53 +199,52 @@ FormLoader.propTypes = {
     refreshCollectionData: PropTypes.func
 };
 
+function CollectionList({collectionsData}) {
+
+    useEffect(()=>{
+        console.log(collectionsData['websites'])
+    },[collectionsData])
+
+    return collectionsData != null ? "loaded" : "loading..."
+}
+
 function useDatabase(time, currentCollection) {
-    const refreshFunction = null;
-
-    const refreshTime = useRef(time);
-
     const [collectionData, setCollectionsData] = useState(null);
 
-    useEffect(() => {
-        setCollectionsData(getCollectionsData(currentCollection));
-        console.log("testing")
-    },[currentCollection])
+    const refreshData = useCallback(async () => {
+        const dataFetch = await getDataByCollectionName(currentCollection)
 
-    //start auto-refresh
-    useEffect(() => {
+        setCollectionsData((prev) => ({
+            ...prev,
+            ...dataFetch
+        }))
+    }, [currentCollection])
 
-        //before it start the interval refresh the variable or it will call it until the timer runs out
-        //refreshCollectionData(targetCollectionName, true);
-        console.log('First Run')
-        const intervalId = setInterval(() => {
-            //it will only refresh the current targetCollection to make sure is not updating all the data collections everytime
-            //refreshCollectionData(targetCollectionName, true);
-            console.log('interval Run')
-        }, refreshTime.current);
+    const refreshCollection = useCallback(async () => {
+        const dataFetch = await getDataByCollectionName(currentCollection, true)
 
-        // Clear the interval when the component unmounts
-        return () => clearInterval(intervalId);
-    }, []) // when target changes it makes a new interval for refresh
+        setCollectionsData((prev) => ({
+            ...prev,
+            ...dataFetch
+        }))
+    }, [currentCollection])
 
-
-    const refreshCollectionData = useCallback(async (collectionName, updateDependant) => {
+    async function getDataByCollectionName(collectionName, strict){
 
         let dataUpdate = {}
 
         switch (collectionName) {
             case ('websites'): {
-                //updateDependant: update all data when in website, since is used in forms
-                if (updateDependant) {
-                    dataUpdate = {
-                        websites: await database.getWebsites(),
-                        categories: await database.getCategories(),
-                        tags: await database.getTags()
-                    }
-                } else {
-                    dataUpdate = {
-                        websites: await database.getWebsites()
-                    }
+                
+                dataUpdate = {
+                    websites: await database.getWebsites(),
                 }
+
+                if(!strict){
+                    dataUpdate['categories'] = await database.getCategories()
+                    dataUpdate['tags'] = await database.getTags()
+                }
+
                 break;
             }
             case ('categories'): {
@@ -382,62 +255,30 @@ function useDatabase(time, currentCollection) {
             }
             case ('tags'): {
                 dataUpdate = {
-                    tags: await database.getTags()
-                };
-                break;
-            }
-        }
-
-        setCollectionsData(prev => ({ ...prev, ...dataUpdate }))
-    }, []);
-
-    async function getCollectionsData(collection, prev){
-
-        let dataUpdate = {}
-
-        switch (collection) {
-            case ('websites'): {
-                dataUpdate = {
-                    nameFieldRef: 'name',
-                    collection:{
-                        websites: await database.getWebsites(),
-                        categories: await database.getCategories(),
-                        tags: await database.getTags()
-                    }
+                    tags: await database.getTags()  
                 }
                 break;
             }
-            case ('categories'): {
-                dataUpdate = {
-                    nameFieldRef: 'text',
-                    collection: {
-                        categories: await database.getCategories()
-                    }
-                }
+            default:
+                console.error(`Error: collection named '${collectionName}' not found!`) 
                 break;
-            }
-            case ('tags'): {
-                dataUpdate = {
-                    nameFieldRef: 'text',
-                    collection: {
-                        tags: await database.getTags()
-                    }
-                }
-                break;
-            }
         }
 
-        dataUpdate.logoUrlFieldRef = 'logoUrl';
-        dataUpdate.collectionName = collection;
-
-        return {
-            collection: { 
-                ...dataUpdate.collection,
-                ...prev?.collection
-            },
-            ...dataUpdate,
-        }
+        return dataUpdate
     }
 
-    return[collectionData, refreshFunction]
+    //initializes collection data and interval
+    useEffect(() => {
+
+        refreshData()
+
+        const intervalId = setInterval(() => {
+            refreshData()
+        }, time);
+
+        // Clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, [time, refreshData])
+
+    return[collectionData, refreshCollection]
 }
