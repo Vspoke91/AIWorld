@@ -241,7 +241,7 @@ function SelectReactive({children, defaultValue, trigger, ...selectProps}) {
     )
 }
 SelectReactive.propTypes = {
-    children: PropTypes.Array,
+    children: PropTypes.array,
     defaultValue: PropTypes.string,
     trigger: PropTypes.any
 };

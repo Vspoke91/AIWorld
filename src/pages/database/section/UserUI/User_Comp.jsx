@@ -6,10 +6,12 @@ import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/Col
 
 export default function User() {
 
-    const [targetCollectionName, setTargetCollectionName] = useState('tags');
+
+    const [targetCollectionName, setTargetCollectionName] = useState('websites');
     const [userInfo, setUserInfo] = useState(null)
     const formLoaderRef = useRef(null)
-    const [collectionsData, refreshTargetCollection] = useDatabase(300000, targetCollectionName) //300000 == 5 min
+    
+    const [collectionsData, refreshTargetCollection] = useDatabase(300000, targetCollectionName)
 
     //loading information for component
     useEffect(() => {
@@ -45,10 +47,10 @@ export default function User() {
     )
 }
 
-const FormLoader = forwardRef(({ currentCollection, collectionsData, refreshCollectionData }, ref) => {
+const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref) => {
 
     //TODO: is rendering more than necessary
-    // console.log("render...",currentCollection)
+    // "render...",currentCollection)
 
     const defaultElement = <>
         <p>Welcome to the database section, this UI auto refresh. <strong> Careful with what you change! </strong></p>
@@ -58,7 +60,8 @@ const FormLoader = forwardRef(({ currentCollection, collectionsData, refreshColl
     const formRef = useRef(null);
     const messageModalRef = useRef(null);
 
-    function loadElement(itemObject) {
+    function loadElement(itemObject, collectionsData) {
+
 
         /*Code Explain
         the next if check if form was already called before,
@@ -206,7 +209,7 @@ function CollectionList({ collectionsData, currentCollection, onClickFunction}) 
 
         const elementArray = collection.map((item, index) => {
             return (
-                <button key={index} onClick={() => onClickFunction(item)}>
+                <button key={index} onClick={() => {onClickFunction(item, collectionsData)}}>
                     <span>{item[nameFieldRef]} </span>
 
                     {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
