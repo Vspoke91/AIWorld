@@ -5,12 +5,14 @@ import { ModalDeleteButton, ModalMessagePopup } from './components/DialogModals'
 import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/CollectionForms'
 
 export default function User() {
-    
-    const [targetCollectionName, setTargetCollectionName] = useState('websites');
+
+    const [targetCollectionName, setTargetCollectionName] = useState('tags');
 
     //userInfo holds... userInfo
     const [userInfo, setUserInfo] = useState(null)
     const formLoaderRef = useRef(null)
+
+    const [displayDataList, setDisplayDataList] = useState(null)
 
     const [collectionsData, refreshTargetCollection] = useDatabase(300000, targetCollectionName) //300000 == 5 min
 
@@ -18,6 +20,75 @@ export default function User() {
     useEffect(() => {
         (async function () { setUserInfo(await authentication.getUserInfo()) })();
     }, [])
+
+    useEffect(() => {
+        
+        if (!collectionsData || !(targetCollectionName in collectionsData)) {
+            setDisplayDataList(null);
+            return;
+        }
+
+        let collectionData = null;
+
+        switch (targetCollectionName) {
+            case 'websites':
+                collectionData = {
+                    collectionName: 'websites',
+                    collection: collectionsData.websites,
+                    nameFieldRef: 'name',
+                    logoUrlFieldRef: 'logoUrl'
+                }
+                break;
+            case 'categories':
+                collectionData = {
+                    collectionName: 'categories',
+                    collection: collectionsData.categories,
+                    nameFieldRef: 'text',
+                    logoUrlFieldRef: 'logoUrl'
+                }
+                break;
+            case 'tags':
+                collectionData = {
+                    collectionName: 'tags',
+                    collection: collectionsData.tags,
+                    nameFieldRef: 'text',
+                    logoUrlFieldRef: 'logoUrl'
+                }
+                break;
+            default:
+                console.error(`ERROR: collection name '${targetCollectionName}' was not found`)
+                break;
+        }
+
+        //if collectionData is null even after the switch, it will display loading, since displayDataList is set to null
+        setDisplayDataList(collectionData);
+
+        /* runs twice
+        one when target changes, so it loads all display, fast.
+        another when collectionsData finishes fetching the updated values.
+        this is done to keep it fast, and when new data is fetch it will load the newest
+        */
+    }, [collectionsData, targetCollectionName])
+
+    const renderCollectionList = ({ collection, nameFieldRef, logoUrlFieldRef }) => {
+
+        /*
+        this will check if the collection is null, so it wait for auto-refresh to load it.
+        is null since all fields in collectionData is are not loaded until the user calls it for the first time
+        */
+        const elementArray = collection.map((item, index) => {
+            return (
+                <button key={index} onClick={() => (null)}>
+                    <span>{item[nameFieldRef]} </span>
+
+                    {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
+                </button>
+            )
+        })
+
+
+        return elementArray;
+    }
 
     return (
         <>
@@ -30,23 +101,22 @@ export default function User() {
                     </select>
                     <button onClick={() => formLoaderRef.current.loadNew()}>Add New</button>
                     <div className='qs__flex_column'>
-                        {collectionsData != null ? "loaded" : "loading..."}
-                        <CollectionList collectionsData = {collectionsData}/>
+                        {displayDataList != null ? renderCollectionList(displayDataList) : "loading..."}
                     </div>
                 </div>
                 <main>
                     <p>Welcome back, {userInfo != null ? userInfo.name.first : 'loading...'}</p>
-                    <FormLoader ref={formLoaderRef} 
-                    currentCollection={targetCollectionName} 
-                    collectionsData={collectionsData} 
-                    refreshCollectionData={refreshTargetCollection}/>
+                    <FormLoader ref={formLoaderRef}
+                        currentCollection={targetCollectionName}
+                        collectionsData={collectionsData}
+                        refreshCollectionData={refreshTargetCollection} />
                 </main>
             </div>
         </>
     )
 }
 
-const FormLoader = forwardRef(({currentCollection, collectionsData, refreshCollectionData}, ref) => {
+const FormLoader = forwardRef(({ currentCollection, collectionsData, refreshCollectionData }, ref) => {
 
     //TODO: is rendering more than necessary
     // console.log("render...",currentCollection)
@@ -59,7 +129,7 @@ const FormLoader = forwardRef(({currentCollection, collectionsData, refreshColle
     const formRef = useRef(null);
     const messageModalRef = useRef(null);
 
-    function loadElement(itemObject){
+    function loadElement(itemObject) {
 
         /*Code Explain
         the next if check if form was already called before,
@@ -97,7 +167,7 @@ const FormLoader = forwardRef(({currentCollection, collectionsData, refreshColle
 
                             messageModalRef.current.openModal()
                         }
-                    } />
+                        } />
 
                     <ModalMessagePopup ref={messageModalRef}
                         message={`'${isNull ? 'New website' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`}
@@ -131,7 +201,7 @@ const FormLoader = forwardRef(({currentCollection, collectionsData, refreshColle
                             await refreshCollectionData(currentCollection)
                             messageModalRef.current.openModal()
                         }
-                    } />
+                        } />
 
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New tag' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
@@ -163,7 +233,7 @@ const FormLoader = forwardRef(({currentCollection, collectionsData, refreshColle
                             await refreshCollectionData(currentCollection)
                             messageModalRef.current.openModal()
                         }
-                    } />
+                        } />
 
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New Category' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
@@ -182,10 +252,10 @@ const FormLoader = forwardRef(({currentCollection, collectionsData, refreshColle
 
     useImperativeHandle(ref, () => ({
         loadElement,
-        loadNew: function(){
+        loadNew: function () {
             loadElement(null)
         },
-        loadDefault: function(){
+        loadDefault: function () {
             setDiplayedElement(defaultElement);
         }
     }));
@@ -199,48 +269,46 @@ FormLoader.propTypes = {
     refreshCollectionData: PropTypes.func
 };
 
-function CollectionList({collectionsData}) {
-
-    useEffect(()=>{
-        console.log(collectionsData['websites'])
-    },[collectionsData])
+function CollectionList({ collectionsData }) {
 
     return collectionsData != null ? "loaded" : "loading..."
 }
 
 function useDatabase(time, currentCollection) {
-    const [collectionData, setCollectionsData] = useState(null);
+    const [collectionsData, setCollectionsData] = useState(null);
 
     const refreshData = useCallback(async () => {
         const dataFetch = await getDataByCollectionName(currentCollection)
 
-        setCollectionsData((prev) => ({
+        setCollectionsData(prev => ({
             ...prev,
             ...dataFetch
         }))
+
     }, [currentCollection])
 
     const refreshCollection = useCallback(async () => {
         const dataFetch = await getDataByCollectionName(currentCollection, true)
 
-        setCollectionsData((prev) => ({
+        setCollectionsData(prev => ({
             ...prev,
             ...dataFetch
         }))
+
     }, [currentCollection])
 
-    async function getDataByCollectionName(collectionName, strict){
+    async function getDataByCollectionName(collectionName, strict) {
 
         let dataUpdate = {}
 
         switch (collectionName) {
             case ('websites'): {
-                
+
                 dataUpdate = {
                     websites: await database.getWebsites(),
                 }
 
-                if(!strict){
+                if (!strict) {
                     dataUpdate['categories'] = await database.getCategories()
                     dataUpdate['tags'] = await database.getTags()
                 }
@@ -255,12 +323,12 @@ function useDatabase(time, currentCollection) {
             }
             case ('tags'): {
                 dataUpdate = {
-                    tags: await database.getTags()  
+                    tags: await database.getTags()
                 }
                 break;
             }
             default:
-                console.error(`Error: collection named '${collectionName}' not found!`) 
+                console.error(`Error: collection named '${collectionName}' not found!`)
                 break;
         }
 
@@ -280,5 +348,5 @@ function useDatabase(time, currentCollection) {
         return () => clearInterval(intervalId);
     }, [time, refreshData])
 
-    return[collectionData, refreshCollection]
+    return [collectionsData, refreshCollection]
 }
