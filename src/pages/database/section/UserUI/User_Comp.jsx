@@ -7,88 +7,14 @@ import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/Col
 export default function User() {
 
     const [targetCollectionName, setTargetCollectionName] = useState('tags');
-
-    //userInfo holds... userInfo
     const [userInfo, setUserInfo] = useState(null)
     const formLoaderRef = useRef(null)
-
-    const [displayDataList, setDisplayDataList] = useState(null)
-
     const [collectionsData, refreshTargetCollection] = useDatabase(300000, targetCollectionName) //300000 == 5 min
 
     //loading information for component
     useEffect(() => {
         (async function () { setUserInfo(await authentication.getUserInfo()) })();
     }, [])
-
-    useEffect(() => {
-        
-        if (!collectionsData || !(targetCollectionName in collectionsData)) {
-            setDisplayDataList(null);
-            return;
-        }
-
-        let collectionData = null;
-
-        switch (targetCollectionName) {
-            case 'websites':
-                collectionData = {
-                    collectionName: 'websites',
-                    collection: collectionsData.websites,
-                    nameFieldRef: 'name',
-                    logoUrlFieldRef: 'logoUrl'
-                }
-                break;
-            case 'categories':
-                collectionData = {
-                    collectionName: 'categories',
-                    collection: collectionsData.categories,
-                    nameFieldRef: 'text',
-                    logoUrlFieldRef: 'logoUrl'
-                }
-                break;
-            case 'tags':
-                collectionData = {
-                    collectionName: 'tags',
-                    collection: collectionsData.tags,
-                    nameFieldRef: 'text',
-                    logoUrlFieldRef: 'logoUrl'
-                }
-                break;
-            default:
-                console.error(`ERROR: collection name '${targetCollectionName}' was not found`)
-                break;
-        }
-
-        //if collectionData is null even after the switch, it will display loading, since displayDataList is set to null
-        setDisplayDataList(collectionData);
-
-        /* runs twice
-        one when target changes, so it loads all display, fast.
-        another when collectionsData finishes fetching the updated values.
-        this is done to keep it fast, and when new data is fetch it will load the newest
-        */
-    }, [collectionsData, targetCollectionName])
-
-    const renderCollectionList = ({ collection, nameFieldRef, logoUrlFieldRef }) => {
-
-        /*
-        this will check if the collection is null, so it wait for auto-refresh to load it.
-        is null since all fields in collectionData is are not loaded until the user calls it for the first time
-        */
-        const elementArray = collection.map((item, index) => {
-            return (
-                <button key={index} onClick={() => (null)}>
-                    <span>{item[nameFieldRef]} </span>
-
-                    {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
-                </button>
-            )
-        })
-
-
-        return elementArray;
-    }
 
     return (
         <>
@@ -101,7 +27,10 @@ export default function User() {
                     </select>
                     <button onClick={() => formLoaderRef.current.loadNew()}>Add New</button>
                     <div className='qs__flex_column'>
-                        {displayDataList != null ? renderCollectionList(displayDataList) : "loading..."}
+                        <CollectionList 
+                        collectionsData={collectionsData} 
+                        currentCollection={targetCollectionName}
+                        onClickFunction={formLoaderRef.current?.loadElement}/>
                     </div>
                 </div>
                 <main>
@@ -269,9 +198,72 @@ FormLoader.propTypes = {
     refreshCollectionData: PropTypes.func
 };
 
-function CollectionList({ collectionsData }) {
+function CollectionList({ collectionsData, currentCollection, onClickFunction}) {
 
-    return collectionsData != null ? "loaded" : "loading..."
+    const [displayDataList, setDisplayDataList] = useState(null)
+
+    const renderCollectionList = ({collection, nameFieldRef, logoUrlFieldRef}) => {
+
+        const elementArray = collection.map((item, index) => {
+            return (
+                <button key={index} onClick={() => onClickFunction(item)}>
+                    <span>{item[nameFieldRef]} </span>
+
+                    {logoUrlFieldRef != undefined ? <img src={item[logoUrlFieldRef]} /> : <></ >}
+                </button>
+            )
+        })
+        return elementArray;
+    }
+
+    useEffect(() => {
+        
+        if (!collectionsData || !(currentCollection in collectionsData)) {
+            setDisplayDataList(null);
+            return;
+        }
+
+        let collectionData = null;
+
+        switch (currentCollection) {
+            case 'websites':
+                collectionData = {
+                    collectionName: 'websites',
+                    collection: collectionsData.websites,
+                    nameFieldRef: 'name',
+                    logoUrlFieldRef: 'logoUrl'
+                }
+                break;
+            case 'categories':
+                collectionData = {
+                    collectionName: 'categories',
+                    collection: collectionsData.categories,
+                    nameFieldRef: 'text',
+                }
+                break;
+            case 'tags':
+                collectionData = {
+                    collectionName: 'tags',
+                    collection: collectionsData.tags,
+                    nameFieldRef: 'text',
+                }
+                break;
+            default:
+                console.error(`ERROR: collection name '${currentCollection}' was not found`)
+                break;
+        }
+
+        //if collectionData is null even after the switch, it will display loading, since displayDataList is set to null
+        setDisplayDataList(collectionData);
+
+        /* runs twice
+        one when target changes, so it loads all display, fast.
+        another when collectionsData finishes fetching the updated values.
+        this is done to keep it fast, and when new data is fetch it will load the newest
+        */
+    }, [collectionsData, currentCollection])
+
+    return displayDataList != null ? renderCollectionList(displayDataList) : "loading..."
 }
 
 function useDatabase(time, currentCollection) {
