@@ -4,16 +4,25 @@ import { default as database, authentication } from '@/assets/database/firebase'
 import { ModalDeleteButton, ModalMessagePopup } from './components/DialogModals'
 import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/CollectionForms'
 
+
 export default function User() {
 
-
+    /* Defaults to 'websites'
+    the default can be change to 'tags' and 'categories' only.
+    default to websites make the first load slow since it populates the variable collectionsData (fetch from database)
+    */
     const [targetCollectionName, setTargetCollectionName] = useState('websites');
     const [userInfo, setUserInfo] = useState(null)
     const formLoaderRef = useRef(null)
-    
+    /* Custome 'use'
+    in this custome 'use' the number is how often database will refresh its data based on the targetCollectionName
+    300000 milli == 5 min
+
+    targetCollectionName is used to update the database based on the target,
+    so it does not update all the database. this is done to lower reads on firebase("expend less money")
+    */
     const [collectionsData, refreshTargetCollection] = useDatabase(300000, targetCollectionName)
 
-    //loading information for component
     useEffect(() => {
         (async function () { setUserInfo(await authentication.getUserInfo()) })();
     }, [])
@@ -47,10 +56,10 @@ export default function User() {
     )
 }
 
+/* FormLoader Usage
+form loader is used to load the form depending on what the user select from the list.
+*/
 const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref) => {
-
-    //TODO: is rendering more than necessary
-    // "render...",currentCollection)
 
     const defaultElement = <>
         <p>Welcome to the database section, this UI auto refresh. <strong> Careful with what you change! </strong></p>
@@ -62,13 +71,11 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
     function loadElement(itemObject, collectionsData) {
 
-
-        /*Code Explain
+        /*Explain Code
         the next if check if form was already called before,
         is needed to make sure it reset the form before rendering
         sometimes inputs values tranfer to new render forms
         */
-
         if (formRef.current != null) {
             formRef.current.reset()
         }
@@ -201,6 +208,11 @@ FormLoader.propTypes = {
     refreshCollectionData: PropTypes.func
 };
 
+/* CollectionList Usage
+CollectionList returns a list of elements,
+is used with FormLoader to display a form based on what was selected form the List,
+if currentCollection or collectionData changes to a new value it will update and display the new values.
+*/
 function CollectionList({ collectionsData, currentCollection, onClickFunction}) {
 
     const [displayDataList, setDisplayDataList] = useState(null)
@@ -220,7 +232,16 @@ function CollectionList({ collectionsData, currentCollection, onClickFunction}) 
     }
 
     useEffect(() => {
-        
+
+        /*why this if?
+        this if is so the switch does not happen if collectionData or if collectionData does not have a property of currentCollection.
+        what this will do is display loading... until collectionData has some data fetch, such as when the website load for the first time.
+
+        if website is not the default section when the website loads for the first time (can change in the User component) and you have it default to tags, 
+        the website will only load the tags from the database, so if you change from tags to categories collectionsData is not going to have categories loaded,
+        that's why the code "!(currentCollection in collectionsData)" check if collectionsData object has currentCollection.
+        FYI, 'websites' as default will load tags and categories too, since is used in its forms.
+        */
         if (!collectionsData || !(currentCollection in collectionsData)) {
             setDisplayDataList(null);
             return;
@@ -269,6 +290,18 @@ function CollectionList({ collectionsData, currentCollection, onClickFunction}) 
     return displayDataList != null ? renderCollectionList(displayDataList) : "loading..."
 }
 
+/* useDatabase Usage
+*arguments
+useDatabase need a time for its auto refresh, is all in milliseconds.
+it also needs a variable of currentCollection that will contain a string with the selected collection,
+this is done so it only updates the collection the user is on.
+*returns
+useDatabase is a use state that returns a function and a useState variable.
+the useState variable return the latest fetch data, from the database, once it gets new data it will render the site.
+
+the function is needed in the top level component 'User', is refresh the currentCollection data only,
+so if I'm in the websites list it will not update the tags.
+*/
 function useDatabase(time, currentCollection) {
     const [collectionsData, setCollectionsData] = useState(null);
 
