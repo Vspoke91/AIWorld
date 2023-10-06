@@ -36,7 +36,7 @@ export default function User() {
                         <option value='tags'>Tags</option>
                         <option value='categories'>Categories</option>
                     </select>
-                    <button onClick={() => formLoaderRef.current.loadNew()}>Add New</button>
+                    <button onClick={() => formLoaderRef.current.loadNew(collectionsData)}>Add New</button>
                     <div className='qs__flex_column'>
                         <CollectionList 
                         collectionsData={collectionsData} 
@@ -191,11 +191,8 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
     useImperativeHandle(ref, () => ({
         loadElement,
-        loadNew: function () {
-            loadElement(null)
-        },
-        loadDefault: function () {
-            setDiplayedElement(defaultElement);
+        loadNew: function (collectionsData) {
+            loadElement(null, collectionsData)
         }
     }));
 
