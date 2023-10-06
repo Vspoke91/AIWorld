@@ -97,13 +97,13 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
                             if (isNull) {
                                 await database.addWebsite(formData)
+
                             }
                             else {
                                 await database.updateWebsite(formData)
                             }
 
                             await refreshCollectionData(currentCollection)
-
                             messageModalRef.current.openModal()
                         }
                         } />
@@ -114,7 +114,8 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
-                            await database.deleteWebsite(itemObject.id);
+                            await database.deleteWebsite(itemObject.id)
+                            loadDefault()
                             refreshCollectionData(currentCollection)
                         }
                     } />}
@@ -145,7 +146,8 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New tag' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
-                            await database.deleteTag(itemObject.id);
+                            await database.deleteTag(itemObject.id)
+                            loadDefault()
                             refreshCollectionData(currentCollection)
                         }
                     } />}
@@ -177,7 +179,8 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New Category' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
-                            await database.deleteCategory(itemObject.id);
+                            await database.deleteCategory(itemObject.id)
+                            loadDefault()
                             refreshCollectionData(currentCollection)
                         }
                     } />}
@@ -187,6 +190,10 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
         }
 
         setDiplayedElement(formElement);
+    }
+
+    function loadDefault(){
+        setDiplayedElement(defaultElement);
     }
 
     useImperativeHandle(ref, () => ({
