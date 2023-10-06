@@ -54,7 +54,6 @@ const database = {
     */
     let dataArray = documentsRef.docs.map(doc => {
       const docData = doc.data();
-      docData['id'] = doc.id;
       return docData;
     })
 
@@ -87,7 +86,6 @@ const database = {
       const documentsRef = await getDocs(collection(firestoreDataBase, 'Public/websites/categoryId'));
       return documentsRef.docs.map(doc => {
         const docData = doc.data();
-        docData['id'] = doc.id;
         return docData;
       })
       
@@ -101,8 +99,6 @@ const database = {
       const documentsRef = await getDocs(collection(firestoreDataBase, 'Public/websites/tagId'));
       return documentsRef.docs.map(doc => {
         const docData = doc.data();
-        docData['id'] = doc.id;
-
         return docData;
       })
     } catch (error) {
@@ -178,7 +174,7 @@ const database = {
       tag: doc(firestoreDataBase, `Public/websites/tagId/${itemInfo.tag}`),
     }
     await setDoc(docRef, uploadableObject);
-    
+
     return itemInfo;
   },
   addTag: async (itemInfo) => {
