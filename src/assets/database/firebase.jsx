@@ -168,26 +168,32 @@ const database = {
       return false;
     }
   },
-  addWebsite: async (siteInfo) => {
-    const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, siteInfo.id);
+  addWebsite: async (itemInfo) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, itemInfo.id);
     const uploadableObject = {
-      ...siteInfo,
-      categories: siteInfo.categories.map(category => {
+      ...itemInfo,
+      categories: itemInfo.categories.map(category => {
         return doc(firestoreDataBase, `Public/websites/categoryId/${category}`)
       }),
-      tag: doc(firestoreDataBase, `Public/websites/tagId/${siteInfo.tag}`),
+      tag: doc(firestoreDataBase, `Public/websites/tagId/${itemInfo.tag}`),
     }
     await setDoc(docRef, uploadableObject);
+    
+    return itemInfo;
   },
-  addTag: async (tagInfo) => {
-    const docRef = doc(firestoreDataBase, `Public/websites/tagId/`, tagInfo.text.toLowerCase());
-    const uploadableObject = {...tagInfo}
+  addTag: async (itemInfo) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/tagId/`, itemInfo.text.toLowerCase());
+    const uploadableObject = {...itemInfo}
     await setDoc(docRef, uploadableObject);
+
+    return itemInfo;
   },
-  addCategory: async (tagInfo) => {
-    const docRef = doc(firestoreDataBase, `Public/websites/categoryId/`, tagInfo.text.toLowerCase());
-    const uploadableObject = {...tagInfo}
+  addCategory: async (itemInfo) => {
+    const docRef = doc(firestoreDataBase, `Public/websites/categoryId/`, itemInfo.text.toLowerCase());
+    const uploadableObject = {...itemInfo}
     await setDoc(docRef, uploadableObject);
+
+    return itemInfo;
   },
   deleteWebsite: async (websiteId) => {
     const docRef = doc(firestoreDataBase, `Public/websites/siteId/`, websiteId);
