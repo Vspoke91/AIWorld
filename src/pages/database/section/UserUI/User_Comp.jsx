@@ -94,19 +94,24 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                             e.preventDefault()
 
                             const formData = formRef.current.getDataObject();
-
+                                
                             if (isNull) {
-                                await database.addWebsite(formData)
-
+                                if(validateID(formData.id, collectionsData.websites)){
+                                    const itemObject = await database.addWebsite(formData)
+                                    //reloads the page with itemObject, this will add the delete button
+                                    loadElement(itemObject, collectionsData)
+                                } else {
+                                    console.error("id is duplicated")
+                                }
                             }
                             else {
                                 await database.updateWebsite(formData)
                             }
 
                             await refreshCollectionData(currentCollection)
-                            messageModalRef.current.openModal()
-                        }
-                        } />
+                            //messageModalRef.current.openModal()
+                        }} 
+                    />
 
                     <ModalMessagePopup ref={messageModalRef}
                         message={`'${isNull ? 'New website' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`}
@@ -132,7 +137,13 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
                             const formData = formRef.current.getDataObject();
                             if (isNull) {
-                                await database.addTag(formData)
+                                if(validateID(formData.id, collectionsData.tags)){
+                                    const itemObject = await database.addTag(formData)
+                                    //reloads the page with itemObject, this will add the delete button
+                                    loadElement(itemObject, collectionsData)
+                                }else{
+                                    console.error("id is duplicated")
+                                }
                             }
                             else {
                                 await database.updateTag(formData)
@@ -165,7 +176,13 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
                             const formData = formRef.current.getDataObject();
                             if (isNull) {
-                                await database.addCategory(formData)
+                                if(validateID(formData.id, collectionsData.categories)){
+                                    const itemObject = await database.addCategory(formData)
+                                    //reloads the page with itemObject, this will add the delete button
+                                    loadElement(itemObject, collectionsData)
+                                }else{
+                                    console.error("id is duplicated")
+                                }
                             }
                             else {
                                 await database.updateCategory(formData)
@@ -194,6 +211,10 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
     function loadDefault(){
         setDiplayedElement(defaultElement);
+    }
+
+    function validateID(checkID, array){
+        return !array.some((object)=> object.id === checkID)
     }
 
     useImperativeHandle(ref, () => ({
