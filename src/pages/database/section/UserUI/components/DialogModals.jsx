@@ -71,9 +71,10 @@ ModalDeleteButton.propTypes = {
     onDeleteFunction: PropTypes.func
 }; 
 
-export const ModalMessagePopup = forwardRef(({message}, ref) => {
+export const ModalMessagePopup = forwardRef((props, ref) => {
 
     const modalRef = useRef(null);
+    const [message, setMessage] = useState(null);
 
     const handleClickOutside = (event) => {
         //mouse pointer coordinates 
@@ -101,8 +102,15 @@ export const ModalMessagePopup = forwardRef(({message}, ref) => {
         document.addEventListener('click', handleClickOutside);
     }
 
+    function openModalWithMessage(newMessage){
+        setMessage(newMessage)
+        modalRef.current.showModal()
+        document.addEventListener('click', handleClickOutside)
+    }
+
     useImperativeHandle(ref, () => ({
-        openModal
+        openModal,
+        openModalWithMessage
     }));
 
     return(<>
