@@ -73,7 +73,14 @@ export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, databas
     }));
 
     return (
-        <form ref={formRef} onSubmit={onSubmitFunction}>
+        <form ref={formRef} onSubmit={async (e) => {
+            e.preventDefault()
+
+            formRef.current.querySelector('button[type="submit"]').disabled = true
+            await onSubmitFunction()
+            formRef.current.querySelector('button[type="submit"]').disabled = false
+            }
+        }>
             <label>Id: {isObjectNew ? "N/A" : websiteObject.id}</label>
             <label>Featured: <input value={true} name='featured' type="checkbox" defaultChecked={isObjectNew ? false : websiteObject.featured} /></label>
             <label>Name: <input required name='name' type="text" defaultValue={isObjectNew ? '' : websiteObject.name} /></label>
@@ -88,7 +95,7 @@ export const WebsiteFormEdit = forwardRef(({ isObjectNew, websiteObject, databas
                 <TagsOptions />
             </SelectReactive>
             <div>categories: <CategoriesInputs /> </div>
-            <SubmitButton isNew={isObjectNew} />
+            <SubmitButton isNew={isObjectNew}/>
         </form>
     );
 })
@@ -130,7 +137,14 @@ export const TagFormEdit = forwardRef(({ isObjectNew, tagObject, onSubmitFunctio
     }));
 
     return (
-        <form ref={formRef} onSubmit={onSubmitFunction}>
+        <form ref={formRef} onSubmit={async (e) => {
+            e.preventDefault()
+            
+            formRef.current.querySelector('button[type="submit"]').disabled = true
+            await onSubmitFunction()
+            formRef.current.querySelector('button[type="submit"]').disabled = false
+            }
+        }>
             <label>Id: {isObjectNew ? "N/A" : tagObject.id}</label>
             <label>Text: <input required name='text' type="text" defaultValue={isObjectNew ? '' : tagObject.text} /></label>
             <label>Color: <input required name='color' type="text" defaultValue={isObjectNew ? '' : tagObject.color} /></label>
@@ -175,7 +189,14 @@ export const CategoryFormEdit = forwardRef(({ isObjectNew, categoryObject, onSub
     }));
 
     return (
-        <form ref={formRef} onSubmit={onSubmitFunction}>
+        <form ref={formRef} onSubmit={async (e) => {
+            e.preventDefault()
+            
+            formRef.current.querySelector('button[type="submit"]').disabled = true
+            await onSubmitFunction()
+            formRef.current.querySelector('button[type="submit"]').disabled = false
+            }
+        }>
             <label>Id: {isObjectNew ? "N/A" : categoryObject.id}</label>
             <label>Text: <input required name='text' type="text" defaultValue={isObjectNew ? '' : categoryObject.text} /></label>
             <label>Color: <input required name='color' type="text" defaultValue={isObjectNew ? '' : categoryObject.color} /></label>

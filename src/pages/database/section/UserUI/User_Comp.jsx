@@ -115,9 +115,7 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                         isObjectNew={isNull}
                         websiteObject={itemObject}
                         database={collectionsData}
-                        onSubmitFunction={async (e) => {
-                            e.preventDefault()
-
+                        onSubmitFunction={async () => { //e.preventDefault is being called before executing this function
                             const formData = formRef.current.getDataObject();
                             await createOrUpdateItem(formData, collectionsData.websites, database.addWebsite, database.updateWebsite)
                         }} 
@@ -142,9 +140,7 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                     <TagFormEdit ref={formRef}
                         isObjectNew={isNull}
                         tagObject={itemObject}
-                        onSubmitFunction={async (e) => {
-                            e.preventDefault()
-
+                        onSubmitFunction={async () => { //e.preventDefault is being called before executing this function
                             const formData = formRef.current.getDataObject();
                             await createOrUpdateItem(formData, collectionsData.tags, database.addTag, database.updateTag)
                         }
@@ -167,9 +163,7 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                     <CategoryFormEdit ref={formRef}
                         isObjectNew={isNull}
                         categoryObject={itemObject}
-                        onSubmitFunction={async (e) => {
-                            e.preventDefault()
-
+                        onSubmitFunction={async () => {  //e.preventDefault is being called before executing this function
                             const formData = formRef.current.getDataObject();
                             await createOrUpdateItem(formData, collectionsData.categories, database.addCategory, database.updateCategory)
                         }
