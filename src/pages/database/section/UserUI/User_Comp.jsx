@@ -71,6 +71,31 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
     function loadElement(itemObject, collectionsData) {
 
+        function validateID(checkID, array){
+            return !array.some((object)=> object.id === checkID)
+        }
+        async function createOrUpdateItem(data, collection, addFunction, updateFuction){
+
+            if (isNull) {
+                if(validateID(data.id, collection)){
+                    const itemObject = await addFunction(data)
+
+                    //reloads the page with itemObject, this will add the delete button
+                    loadElement(itemObject, collectionsData)
+
+                    await refreshCollectionData(currentCollection)
+
+                    messageModalRef.current.openModalWithMessage(`'${data.id}' was created and loaded!`);
+                } else {
+                    messageModalRef.current.openModalWithMessage(`Item with id of '${data.id}' already exist!`);
+                }
+            }
+            else {
+                await updateFuction(data)
+                messageModalRef.current.openModalWithMessage(`'${data.id}' was updated!`);
+            }
+        }
+
         /*Explain Code
         the next if check if form was already called before,
         is needed to make sure it reset the form before rendering
@@ -94,22 +119,7 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                             e.preventDefault()
 
                             const formData = formRef.current.getDataObject();
-                                
-                            if (isNull) {
-                                if(validateID(formData.id, collectionsData.websites)){
-                                    const itemObject = await database.addWebsite(formData)
-                                    //reloads the page with itemObject, this will add the delete button
-                                    loadElement(itemObject, collectionsData)
-                                } else {
-                                    console.error("id is duplicated")
-                                }
-                            }
-                            else {
-                                await database.updateWebsite(formData)
-                            }
-
-                            await refreshCollectionData(currentCollection)
-                            //messageModalRef.current.openModal()
+                            await createOrUpdateItem(formData, collectionsData.websites, database.addWebsite, database.updateWebsite)
                         }} 
                     />
 
@@ -136,23 +146,9 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                             e.preventDefault()
 
                             const formData = formRef.current.getDataObject();
-                            if (isNull) {
-                                if(validateID(formData.id, collectionsData.tags)){
-                                    const itemObject = await database.addTag(formData)
-                                    //reloads the page with itemObject, this will add the delete button
-                                    loadElement(itemObject, collectionsData)
-                                }else{
-                                    console.error("id is duplicated")
-                                }
-                            }
-                            else {
-                                await database.updateTag(formData)
-                            }
-
-                            await refreshCollectionData(currentCollection)
-                            messageModalRef.current.openModal()
+                            await createOrUpdateItem(formData, collectionsData.tags, database.addTag, database.updateTag)
                         }
-                        } />
+                    } />
 
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New tag' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
@@ -175,23 +171,9 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                             e.preventDefault()
 
                             const formData = formRef.current.getDataObject();
-                            if (isNull) {
-                                if(validateID(formData.id, collectionsData.categories)){
-                                    const itemObject = await database.addCategory(formData)
-                                    //reloads the page with itemObject, this will add the delete button
-                                    loadElement(itemObject, collectionsData)
-                                }else{
-                                    console.error("id is duplicated")
-                                }
-                            }
-                            else {
-                                await database.updateCategory(formData)
-                            }
-
-                            await refreshCollectionData(currentCollection)
-                            messageModalRef.current.openModal()
+                            await createOrUpdateItem(formData, collectionsData.categories, database.addCategory, database.updateCategory)
                         }
-                        } />
+                    } />
 
                     <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New Category' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
@@ -211,10 +193,6 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
 
     function loadDefault(){
         setDiplayedElement(defaultElement);
-    }
-
-    function validateID(checkID, array){
-        return !array.some((object)=> object.id === checkID)
     }
 
     useImperativeHandle(ref, () => ({
