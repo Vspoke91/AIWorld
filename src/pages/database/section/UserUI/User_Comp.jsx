@@ -39,9 +39,10 @@ export default function User() {
                     <button onClick={() => formLoaderRef.current.loadNew(collectionsData)}>Add New</button>
                     <div className='qs__flex_column'>
                         <CollectionList 
-                        collectionsData={collectionsData} 
-                        currentCollection={targetCollectionName}
-                        onClickFunction={formLoaderRef.current?.loadElement}/>
+                            collectionsData={collectionsData} 
+                            currentCollection={targetCollectionName}
+                            onClickFunction={formLoaderRef.current?.loadElement}
+                        />
                     </div>
                 </div>
                 <main>
@@ -49,7 +50,8 @@ export default function User() {
                     <FormLoader ref={formLoaderRef}
                         currentCollection={targetCollectionName}
                         collectionsData={collectionsData}
-                        refreshCollectionData={refreshTargetCollection} />
+                        refreshCollectionData={refreshTargetCollection}
+                    />
                 </main>
             </div>
         </>
