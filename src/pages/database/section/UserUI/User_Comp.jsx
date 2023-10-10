@@ -121,9 +121,7 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                         }} 
                     />
 
-                    <ModalMessagePopup ref={messageModalRef}
-                        message={`'${isNull ? 'New website' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`}
-                    />
+                    <ModalMessagePopup ref={messageModalRef}/>
 
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
@@ -146,7 +144,7 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                         }
                     } />
 
-                    <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New tag' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
+                    <ModalMessagePopup ref={messageModalRef} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteTag(itemObject.id)
@@ -169,7 +167,7 @@ const FormLoader = forwardRef(({ currentCollection, refreshCollectionData }, ref
                         }
                     } />
 
-                    <ModalMessagePopup ref={messageModalRef} message={`'${isNull ? 'New Category' : itemObject.id}' was ${isNull ? 'created' : 'updated'}!`} />
+                    <ModalMessagePopup ref={messageModalRef} />
                     {!isNull && <ModalDeleteButton inputRequired={itemObject.id} onDeleteFunction={
                         async () => {
                             await database.deleteCategory(itemObject.id)

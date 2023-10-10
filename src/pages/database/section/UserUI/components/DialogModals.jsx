@@ -121,4 +121,3 @@ export const ModalMessagePopup = forwardRef((props, ref) => {
     </>);
 });
 ModalMessagePopup.displayName = 'ModalMessagePopup';
-ModalMessagePopup.propTypes = {message: PropTypes.string};
