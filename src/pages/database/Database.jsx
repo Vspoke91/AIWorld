@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '@/index.css'
+import '@/tailwind.css'
 import UserUI from './section/UserUI/User_Comp'
 import LoginUI from './section/loginUI/Login_Comp'
 
@@ -9,9 +9,9 @@ function Database (){
 
     return(
         <>
-           <div id='database'>
+           <main className='mx-auto w-fit'>
                 {loggedIn ? <UserUI/> : <LoginUI loggedInState={{loggedIn, setLoggedIn}}/>}
-            </div>
+            </main>
         </>
     );
 }

@@ -27,12 +27,13 @@ export default function Login ({loggedInState}){
     
     return (
         <>
-            <div id='login'>
-                <h1>Login</h1>
-                <form onSubmit={onSubmitLoginHandler}>
-                    <input ref={emailInputRef} type='email'/>
-                    <input ref={passwordInputRef} type='password'/>
-                    <button type='submit'>Login</button>
+            <div className="pt-[5vw] w-[300px]">
+                <img className="w-[150px] mx-auto mb-5"src="/img/logos/AI-World-Small.png" alt="AI World Logo"/>
+                <h1 className="pb-5 mx-auto text-3xl font-bold w-fit">Admin Login</h1>
+                <form className="flex flex-col gap-3" onSubmit={onSubmitLoginHandler}>
+                    <input className="basic-input-text"ref={emailInputRef} type='email' placeholder="Email address"/>
+                    <input className="basic-input-text" ref={passwordInputRef} type='password' placeholder="Password"/>
+                    <button className="basic-button" type='submit'>Login</button>
                 </form>
             </div>
         </>

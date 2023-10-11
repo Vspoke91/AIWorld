@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .basic-button{
+        @apply rounded-md p-3 font-bold my-3 text-white bg-orange-400 border-orange-400 hover:bg-orange-500 transition duration-100 ease-in-out
+    }
+    .basic-input-text{
+        @apply rounded-sm p-2 font-bold text-black focus:outline-gray-300 hover:bg-gray-100
+    }
+}
