@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Database.css'
+import '@/index.css'
 import UserUI from './section/UserUI/User_Comp'
 import LoginUI from './section/loginUI/Login_Comp'
 
@@ -9,7 +9,7 @@ function Database (){
 
     return(
         <>
-            <div id='database'>
+           <div id='database'>
                 {loggedIn ? <UserUI/> : <LoginUI loggedInState={{loggedIn, setLoggedIn}}/>}
             </div>
         </>

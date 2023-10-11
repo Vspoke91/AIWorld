@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import PropTypes from 'prop-types';
-import { authentication } from '@/assets/database/firebase'
+import { authentication } from '@/src/assets/database/firebase'
 
 Login.propTypes = {
     loggedInState: PropTypes.shape({loggedIn: PropTypes.bool, setLoggedIn: PropTypes.func})

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
-import { default as database, authentication } from '@/assets/database/firebase'
+import { default as database, authentication } from '@/src/assets/database/firebase'
 import { ModalDeleteButton, ModalMessagePopup } from './components/DialogModals'
 import { WebsiteFormEdit, TagFormEdit, CategoryFormEdit } from './components/CollectionForms'
 
