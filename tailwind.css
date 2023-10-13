@@ -13,4 +13,29 @@
     focus:outline-black
     dark:bg-neutral-800 dark:text-white  dark:hover:bg-neutral-700 dark:focus:outline-gray-300;
   }
+
+  .list-button {
+    @apply whitespace-nowrap bg-orange-400 p-2 font-bold text-white transition duration-100 ease-in-out 
+    hover:bg-orange-500;
+  }
+  .list-select {
+    @apply bg-amber-300 p-2 font-bold text-black
+    focus:outline-none;
+  }
+
+  .modern-scrollbar {
+  }
+
+  .minimize-scrollbar::-webkit-scrollbar {
+    @apply h-[5px] w-[5px];
+  }
+  .minimize-scrollbar::-webkit-scrollbar-track {
+    @apply rounded-full bg-emerald-900;
+  }
+  .minimize-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-red-50;
+  }
+  .minimize-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-black;
+  }
 }
