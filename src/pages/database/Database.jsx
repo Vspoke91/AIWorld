@@ -7,13 +7,11 @@ function Database() {
 
   return (
     <>
-      <main className="mx-auto w-fit">
-        {loggedIn ? (
-          <UserUI />
-        ) : (
-          <LoginUI loggedInState={{ loggedIn, setLoggedIn }} />
-        )}
-      </main>
+      {loggedIn ? (
+        <UserUI />
+      ) : (
+        <LoginUI loggedInState={{ loggedIn, setLoggedIn }} />
+      )}
     </>
   );
 }

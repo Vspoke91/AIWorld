@@ -1,0 +1,15 @@
+.custom__HorizontalSliderShower_ChildrenSpan:hover span {
+  animation: HorizontalSliderShower 5s infinite normal linear;
+}
+
+@keyframes HorizontalSliderShower {
+  0% {
+    transform: translateX(0);
+  }
+  80% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

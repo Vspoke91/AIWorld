@@ -28,7 +28,7 @@ export default function Login({ loggedInState }) {
   };
 
   return (
-    <>
+    <main className="mx-auto w-fit">
       <div className="w-[300px] pt-[5vw]">
         <img
           className="pointer-events-none mx-auto mb-5 w-[150px]"
@@ -54,6 +54,6 @@ export default function Login({ loggedInState }) {
           </button>
         </form>
       </div>
-    </>
+    </main>
   );
 }

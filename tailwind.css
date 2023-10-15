@@ -23,9 +23,6 @@
     focus:outline-none;
   }
 
-  .modern-scrollbar {
-  }
-
   .minimize-scrollbar::-webkit-scrollbar {
     @apply h-[5px] w-[5px];
   }
@@ -37,5 +34,8 @@
   }
   .minimize-scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-black;
+  }
+  .disapear-scrollbar::-webkit-scrollbar {
+    @apply h-[0px] w-[0px];
   }
 }
