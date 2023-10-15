@@ -21,7 +21,10 @@ import {
   CategoryFormEdit,
 } from "./components/CollectionForms";
 
-import { autoScrollOnHover } from "@/src/assets/custom/CustomAnimations";
+import {
+  autoScrollOnHover,
+  autoScrollUnHover,
+} from "@/src/assets/custom/CustomAnimations";
 
 export default function User() {
   /* Defaults to 'websites'
@@ -317,6 +320,7 @@ function CollectionList({
             onClickFunction(item, collectionsData);
           }}
           onMouseOver={autoScrollOnHover}
+          onMouseOut={autoScrollUnHover}
         >
           {logoUrlFieldRef != undefined ? (
             <img
@@ -326,10 +330,9 @@ function CollectionList({
           ) : (
             <></>
           )}
-
-          <span className="disapear-scrollbar pointer-events-none my-auto ml-2 w-fit overflow-x-auto font-bold">
-            {item[nameFieldRef]}
-          </span>
+          <div className="disapear-scrollbar pointer-events-none my-auto ml-2 block overflow-x-auto">
+            <span className="block w-fit font-bold">{item[nameFieldRef]}</span>
+          </div>
         </button>
       );
     });
