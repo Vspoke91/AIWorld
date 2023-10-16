@@ -1,10 +1,12 @@
 import "@/src/assets/custom/CustomAnimations.css";
 
-/**How to use?
- * targetElement has to be have a style of "pointer-events: none;"
- * and has to be the first child with that tag
+/** Info
+ * autoScroll_onHover is used in User_comp
+ *
+ * it checks if the scroll container is smaller than the element
+ * then adds a scrollEffect
  */
-export function autoScrollOnHover(event) {
+export function scrollEffect_onHover(event) {
   const element = event.target.querySelector("span");
   const scroll = event.target.querySelector("div");
 
@@ -13,35 +15,36 @@ export function autoScrollOnHover(event) {
   }
 
   if (scroll.offsetWidth < element.offsetWidth) {
-    const difference = element.offsetWidth - scroll.offsetWidth;
+    const elementOverFlow = element.offsetWidth - scroll.offsetWidth;
 
     element.animate(
       [
-        { transform: "translateX(0)", offset: 0 },
+        { transform: "translateX(0)" },
         {
-          transform: `translateX(-${difference + 3}px)`,
-          offset: 0.6,
+          transform: `translateX(0)`,
         },
         {
-          transform: `translateX(-${difference + 3}px)`,
-          offset: 0.7,
+          transform: `translateX(-${elementOverFlow + 8}px)`,
         },
-        { transform: "translateX(0)", offset: 0.9 },
+        {
+          transform: `translateX(-${elementOverFlow + 8}px)`,
+        },
+        {
+          transform: `translateX(0)`,
+        },
       ],
       {
-        duration: difference * 50,
-        iterations: Infinity,
-        direction: "normal",
+        duration: 3000,
         easing: "linear",
+        fill: "forwards",
+        iterations: Infinity,
       },
     );
-  }
-}
 
-export function autoScrollUnHover(event) {
-  const element = event.target.querySelector("span");
-
-  if (element.getAnimations().length) {
-    element.getAnimations()[0].cancel();
+    event.target.onmouseout = () => {
+      element.getAnimations().forEach((animation) => {
+        animation.cancel();
+      });
+    };
   }
 }

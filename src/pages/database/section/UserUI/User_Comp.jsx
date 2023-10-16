@@ -21,10 +21,7 @@ import {
   CategoryFormEdit,
 } from "./components/CollectionForms";
 
-import {
-  autoScrollOnHover,
-  autoScrollUnHover,
-} from "@/src/assets/custom/CustomAnimations";
+import { scrollEffect_onHover } from "@/src/assets/custom/CustomAnimations";
 
 export default function User() {
   /* Defaults to 'websites'
@@ -319,8 +316,7 @@ function CollectionList({
           onClick={() => {
             onClickFunction(item, collectionsData);
           }}
-          onMouseOver={autoScrollOnHover}
-          onMouseOut={autoScrollUnHover}
+          onMouseOver={scrollEffect_onHover}
         >
           {logoUrlFieldRef != undefined ? (
             <img
