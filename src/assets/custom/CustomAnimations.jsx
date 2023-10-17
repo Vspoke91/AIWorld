@@ -1,5 +1,3 @@
-import "@/src/assets/custom/CustomAnimations.css";
-
 /** Info
  * autoScroll_onHover is used in User_comp
  *
