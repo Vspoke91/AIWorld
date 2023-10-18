@@ -2,9 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    @apply bg-[#313131];
+  }
+
+  * {
+    @apply text-[#dbdbdb];
+  }
+}
+
 @layer components {
   .basic-button {
-    @apply my-3 rounded-md border-orange-400 bg-orange-400 p-3 font-bold text-white transition duration-100 ease-in-out 
+    @apply my-3 rounded-md border-orange-400 bg-orange-400 p-3 font-bold text-white  transition duration-100 ease-in-out 
     hover:bg-orange-500;
   }
   .basic-input-text {
@@ -15,11 +25,11 @@
   }
 
   .list-button {
-    @apply whitespace-nowrap bg-orange-400 p-2 font-bold text-white transition duration-100 ease-in-out 
+    @apply whitespace-nowrap bg-orange-400 p-2 font-bold  transition duration-100 ease-in-out 
     hover:bg-orange-500;
   }
   .list-select {
-    @apply bg-amber-300 p-2 font-bold text-black
+    @apply bg-amber-300 p-2 text-center font-bold
     focus:outline-none;
   }
 
@@ -27,13 +37,11 @@
     @apply h-[5px] w-[5px];
   }
   .minimize-scrollbar::-webkit-scrollbar-track {
-    @apply rounded-full bg-emerald-900;
+    @apply rounded-full bg-[#adadad];
   }
   .minimize-scrollbar::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-red-50;
-  }
-  .minimize-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-black;
+    @apply rounded-full bg-[#5d5d5d]
+    hover:bg-[#3b3b3b];
   }
   .disapear-scrollbar::-webkit-scrollbar {
     @apply h-[0px] w-[0px];
