@@ -8,20 +8,19 @@
   }
 
   * {
-    @apply text-[#dbdbdb];
+    @apply text-[#dbdbdb] 
+    outline-2 outline-[#e7a006] focus:outline;
   }
 }
 
 @layer components {
   .basic-button {
-    @apply my-3 rounded-md border-orange-400 bg-orange-400 p-3 font-bold text-white  transition duration-100 ease-in-out 
-    hover:bg-orange-500;
+    @apply my-3 rounded-md p-3 font-bold transition duration-100 ease-in-out;
   }
   .basic-input-text {
-    @apply rounded-sm p-2 font-bold text-black 
+    @apply rounded-sm p-2 font-bold text-black
     hover:bg-gray-100
-    focus:outline-black
-    dark:bg-neutral-800 dark:text-white  dark:hover:bg-neutral-700 dark:focus:outline-gray-300;
+    dark:bg-neutral-800 dark:text-white  dark:hover:bg-neutral-700;
   }
 
   .list-button {
@@ -29,8 +28,7 @@
     hover:bg-orange-500;
   }
   .list-select {
-    @apply bg-amber-300 p-2 text-center font-bold
-    focus:outline-none;
+    @apply bg-amber-300 p-2 text-center font-bold;
   }
 
   .minimize-scrollbar::-webkit-scrollbar {
