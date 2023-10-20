@@ -51,38 +51,43 @@ export default function User() {
 
   return (
     <>
-      <div className="flex">
-        <aside className="flex h-screen max-w-[200px] flex-[0.3] flex-col gap-0.5 overflow-x-hidden overflow-y-scroll bg-zinc-600">
-          <select
-            className="list-select"
-            defaultValue={targetCollectionName}
-            onChange={(event) => {
-              setTargetCollectionName(event.target.value);
-            }}
-          >
-            <option value="websites">Websites</option>
-            <option value="tags">Tags</option>
-            <option value="categories">Categories</option>
-          </select>
-          <button
-            className="list-button"
-            onClick={() => formLoaderRef.current.loadNew(collectionsData)}
-          >
-            Add New
-          </button>
-          <div className="flex flex-col">
-            <CollectionList
-              collectionsData={collectionsData}
-              currentCollection={targetCollectionName}
-              onClickFunction={formLoaderRef.current?.loadElement}
-            />
-          </div>
-        </aside>
-        <main className="flex-1">
+      <div className="flex h-screen flex-col">
+        <header className="flex justify-between border-b-2 border-b-black bg-[#3b3b3b] px-6 py-1 text-lg">
           <p>
-            Welcome back,{" "}
-            {userInfo != null ? userInfo.name.first : "loading..."}
+            {`Welcome back, ${
+              userInfo != null ? userInfo.name.first : "Admin"
+            }`}
           </p>
+          <h1 className="font-bold">Admin Dashboard</h1>
+          <button>Log out</button>
+        </header>
+        <main className="flex flex-grow">
+          <aside className="flex max-w-[200px] flex-[0.3] flex-col gap-0.5 bg-[#181818] px-0.5">
+            <select
+              className="list-select mx-3 my-2 rounded-lg border border-[#757575] bg-[#4b4b4b] text-xl hover:bg-[#525252] [&>*]:text-lg"
+              defaultValue={targetCollectionName}
+              onChange={(event) => {
+                setTargetCollectionName(event.target.value);
+              }}
+            >
+              <option value="websites">Websites</option>
+              <option value="tags">Tags</option>
+              <option value="categories">Categories</option>
+            </select>
+            <button
+              className="list-button bg-[#3b633b] hover:bg-[#497d49]"
+              onClick={() => formLoaderRef.current.loadNew(collectionsData)}
+            >
+              Add New
+            </button>
+            <div className="minimize-scrollbar flex flex-col gap-0.5 overflow-y-auto overflow-x-hidden">
+              <CollectionList
+                collectionsData={collectionsData}
+                currentCollection={targetCollectionName}
+                onClickFunction={formLoaderRef.current?.loadElement}
+              />
+            </div>
+          </aside>
           <FormLoader
             ref={formLoaderRef}
             currentCollection={targetCollectionName}
@@ -281,7 +286,7 @@ const FormLoader = forwardRef(
       },
     }));
 
-    return diplayedElement;
+    return <div className="flex-1">{diplayedElement}</div>;
   },
 );
 FormLoader.displayName = "FormLoader";
@@ -309,24 +314,29 @@ function CollectionList({
     logoUrlFieldRef,
   }) => {
     const elementArray = collection.map((item, index) => {
+      const hasPicture = logoUrlFieldRef != undefined;
+
       return (
         <button
-          className="flex bg-black p-2 text-lg"
+          className="flex bg-[#272727] p-1 text-lg hover:bg-[#202020] hover:underline"
           key={index}
           onClick={() => {
             onClickFunction(item, collectionsData);
           }}
           onMouseOver={scrollEffect_onHover}
         >
-          {logoUrlFieldRef != undefined ? (
+          {hasPicture ? (
             <img
-              className="pointer-events-none w-[60px] rounded-full"
+              className="pointer-events-none w-[50px] rounded-full"
               src={item[logoUrlFieldRef]}
             />
-          ) : (
-            <></>
-          )}
-          <div className="disapear-scrollbar pointer-events-none my-auto ml-2 block overflow-x-auto">
+          ) : null}
+
+          <div
+            className={`disapear-scrollbar pointer-events-none my-auto block overflow-x-auto ${
+              hasPicture ? "ml-2" : "mx-auto"
+            }`}
+          >
             <span className="block w-fit font-bold">{item[nameFieldRef]}</span>
           </div>
         </button>
