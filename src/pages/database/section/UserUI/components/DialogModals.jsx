@@ -1,51 +1,54 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-export function ModalDeleteButton ({inputRequired, onDeleteFunction}){
+export function ModalDeleteButton({ inputRequired, onDeleteFunction }) {
+  const modalRef = useRef(null);
+  const [isDisable, setDisable] = useState(true);
 
-    const modalRef = useRef(null);
-    const [isDisable, setDisable] = useState(true);
+  const closeModal = () => {
+    modalRef.current.close();
+    document.removeEventListener("click", onClickOutsideHandler);
+  };
 
-    const closeModal = () => {
-        modalRef.current.close();
-        document.removeEventListener('click', onClickOutsideHandler);
+  const openModal = () => {
+    modalRef.current.showModal();
+    document.addEventListener("click", onClickOutsideHandler);
+  };
+
+  function onClickOutsideHandler(event) {
+    //mouse pointer coordinates
+    const x = event.clientX;
+    const y = event.clientY;
+
+    const element = modalRef.current;
+
+    //check if click is outside of element border else it was clicked inside
+    if (
+      x < element.offsetLeft ||
+      x > element.offsetLeft + element.offsetWidth ||
+      y < element.offsetTop ||
+      y > element.offsetTop + element.offsetHeight
+    ) {
+      closeModal();
     }
+  }
 
-    const openModal= () => {
-        modalRef.current.showModal();
-        document.addEventListener('click', onClickOutsideHandler);
-    }
+  function onInputChangeHandler(event) {
+    if (event.target.value === inputRequired) setDisable(false);
+    else setDisable(true);
+  }
 
-    function onClickOutsideHandler (event){
-        //mouse pointer coordinates 
-        const x = event.clientX;
-        const y = event.clientY;
+  function onClickDeleteHandler() {
+    onDeleteFunction();
+    closeModal();
+  }
 
-        const element = modalRef.current;
-
-        //check if click is outside of element border else it was clicked inside
-        if (x < element.offsetLeft || x > element.offsetLeft + element.offsetWidth ||
-            y < element.offsetTop || y > element.offsetTop + element.offsetHeight) {
-            closeModal();
-        }
-    }
-
-    function onInputChangeHandler (event){
-        if(event.target.value === inputRequired) 
-            setDisable(false);
-        else
-            setDisable(true);
-    }
-    
-    function onClickDeleteHandler () {
-        onDeleteFunction();
-        closeModal();
-    }
-
-    return(
-        <>
-            <button onClick={(e) => {
-                /* Explanation for e.stopPropagation()
+  return (
+    <>
+      <button
+        className={"basic-button"}
+        onClick={(e) => {
+          /* Explanation for e.stopPropagation()
                 when click on button it shows model and adds the listener, 
                 but because of propagation after everything was run on click function
                 it was also clicking the 'document' witch was outside of the model,
@@ -54,70 +57,81 @@ export function ModalDeleteButton ({inputRequired, onDeleteFunction}){
                 the only way it would work as intended without the stopPropagation() was
                 if you position the delete button right were the modal was going to popup.
                 */
-                e.stopPropagation(); 
-                openModal();
-            }}>Delete</button>
+          e.stopPropagation();
+          openModal();
+        }}
+      >
+        Delete
+      </button>
 
-            <dialog ref={modalRef}>
-                    <p>{`To confirm, type "${inputRequired}" in the box below`}</p>
-                    <input type='text' placeholder={inputRequired} onChange={onInputChangeHandler}/>
-                    <button disabled={isDisable} onClick={onClickDeleteHandler}>Delete</button>
-            </dialog>
-        </>
-    )
+      <dialog ref={modalRef}>
+        <p>{`To confirm, type "${inputRequired}" in the box below`}</p>
+        <input
+          type="text"
+          placeholder={inputRequired}
+          onChange={onInputChangeHandler}
+        />
+        <button disabled={isDisable} onClick={onClickDeleteHandler}>
+          Delete
+        </button>
+      </dialog>
+    </>
+  );
 }
 ModalDeleteButton.propTypes = {
-    inputRequired: PropTypes.string,
-    onDeleteFunction: PropTypes.func
-}; 
+  inputRequired: PropTypes.string,
+  onDeleteFunction: PropTypes.func,
+};
 
 export const ModalMessagePopup = forwardRef((props, ref) => {
+  const modalRef = useRef(null);
+  const [message, setMessage] = useState(null);
 
-    const modalRef = useRef(null);
-    const [message, setMessage] = useState(null);
+  const handleClickOutside = (event) => {
+    //mouse pointer coordinates
+    const x = event.clientX;
+    const y = event.clientY;
 
-    const handleClickOutside = (event) => {
-        //mouse pointer coordinates 
-        const x = event.clientX;
-        const y = event.clientY;
+    const element = modalRef.current;
 
-        const element = modalRef.current;
+    //check if click is outside of element border else it was clicked inside
+    if (
+      x < element.offsetLeft ||
+      x > element.offsetLeft + element.offsetWidth ||
+      y < element.offsetTop ||
+      y > element.offsetTop + element.offsetHeight
+    )
+      closeModal();
+  };
 
-        //check if click is outside of element border else it was clicked inside
-        if (x < element.offsetLeft || 
-            x > element.offsetLeft + element.offsetWidth ||
-            y < element.offsetTop || 
-            y > element.offsetTop + element.offsetHeight
-        )
-            closeModal();
-    };
+  const closeModal = () => {
+    modalRef.current.close();
+    document.removeEventListener("click", handleClickOutside);
+  };
 
-    const closeModal = () => {
-        modalRef.current.close();
-        document.removeEventListener('click', handleClickOutside);
-    }
+  const openModal = () => {
+    modalRef.current.showModal();
+    document.addEventListener("click", handleClickOutside);
+  };
 
-    const openModal= () => {
-        modalRef.current.showModal();
-        document.addEventListener('click', handleClickOutside);
-    }
+  function openModalWithMessage(newMessage) {
+    setMessage(newMessage);
+    modalRef.current.showModal();
+    document.addEventListener("click", handleClickOutside);
+  }
 
-    function openModalWithMessage(newMessage){
-        setMessage(newMessage)
-        modalRef.current.showModal()
-        document.addEventListener('click', handleClickOutside)
-    }
+  useImperativeHandle(ref, () => ({
+    openModal,
+    openModalWithMessage,
+  }));
 
-    useImperativeHandle(ref, () => ({
-        openModal,
-        openModalWithMessage
-    }));
-
-    return(<>
-        <dialog ref={modalRef}>
-                <p>{message}</p>
-                <button onClick={closeModal}>Close</button>
-        </dialog>
-    </>);
+  return (
+    <>
+      <dialog ref={modalRef}>
+        <p>{message}</p>
+        <button onClick={closeModal}>Close</button>
+      </dialog>
+    </>
+  );
 });
-ModalMessagePopup.displayName = 'ModalMessagePopup';
+ModalMessagePopup.displayName = "ModalMessagePopup";
