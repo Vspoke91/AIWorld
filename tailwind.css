@@ -9,26 +9,29 @@
 
   * {
     @apply text-[#dbdbdb] 
-    outline-2 outline-[#e7a006] focus:outline;
+    outline-2 outline-[#e7a006] focus-visible:outline;
   }
 }
 
 @layer components {
   .basic-button {
-    @apply my-3 rounded-md p-3 font-bold transition duration-100 ease-in-out;
+    @apply my-3 rounded-md bg-black p-3 font-bold transition duration-100 ease-in-out;
   }
   .basic-input-text {
     @apply rounded-sm p-2 font-bold text-black
-    hover:bg-gray-100
+    hover:bg-gray-200
     dark:bg-neutral-800 dark:text-white  dark:hover:bg-neutral-700;
   }
-
+  .basic-input-check {
+    @apply ml-1 inline-flex h-6 w-6 cursor-pointer appearance-none items-center justify-center rounded-sm bg-white 
+    after:font-[fontawesome] after:text-[1.2rem] after:leading-none after:text-gray-200 after:content-['\f00c'] checked:after:text-black hover:bg-gray-200 
+    dark:bg-neutral-800 dark:text-neutral-700 dark:after:text-neutral-700 checked:after:dark:text-white dark:hover:bg-neutral-700;
+  }
   .list-button {
-    @apply whitespace-nowrap bg-orange-400 p-2 font-bold  transition duration-100 ease-in-out 
-    hover:bg-orange-500;
+    @apply whitespace-nowrap  p-2 font-bold transition duration-100 ease-in-out;
   }
   .list-select {
-    @apply bg-amber-300 p-2 text-center font-bold;
+    @apply p-2 text-center font-bold;
   }
 
   .minimize-scrollbar::-webkit-scrollbar {
