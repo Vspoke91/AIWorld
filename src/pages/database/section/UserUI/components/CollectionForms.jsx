@@ -19,9 +19,13 @@ export const WebsiteFormEdit = forwardRef(
       }
 
       return database.categories.map((category, index) => (
-        <label key={index}>
-          {`${category.text}: `}
+        <label
+          key={index}
+          className="flex flex-row-reverse justify-end gap-1 font-bold"
+        >
+          <span>{`${category.text}`}</span>
           <input
+            className="basic-input-check"
             type="checkbox"
             name="categories"
             value={category.id}
@@ -87,6 +91,7 @@ export const WebsiteFormEdit = forwardRef(
 
     return (
       <form
+        className="flex flex-col gap-4"
         ref={formRef}
         onSubmit={async (e) => {
           e.preventDefault();
@@ -100,20 +105,22 @@ export const WebsiteFormEdit = forwardRef(
           ).disabled = false;
         }}
       >
-        <label className="text-center text-lg font-bold">
-          ID: {isObjectNew ? "N/A" : websiteObject.id}
+        <label className="mt-3 flex text-lg font-bold">
+          <span className="mr-1 w-[15%] text-right">ID:</span>
+          {isObjectNew ? "N/A" : websiteObject.id}
         </label>
-        <label className="">
-          Featured:{" "}
+        <label className="flex">
+          <span className="w-[15%] text-right">Featured:</span>
           <input
+            className="basic-input-check"
             value={true}
             name="featured"
             type="checkbox"
             defaultChecked={isObjectNew ? false : websiteObject.featured}
           />
         </label>
-        <label className="block">
-          Name:{" "}
+        <label className="flex items-center">
+          <span className="w-[15%] text-right">Name:</span>
           <input
             className="basic-input-text"
             required
@@ -122,18 +129,19 @@ export const WebsiteFormEdit = forwardRef(
             defaultValue={isObjectNew ? "" : websiteObject.name}
           />
         </label>
-        <label className="block">
-          Description:{" "}
+        <label className="flex">
+          <span className="w-[15%] text-right">Description:</span>
           <textarea
-            className="basic-input-text"
+            className="basic-input-text min-h-[50px] min-w-[20%] max-w-[50%] resize"
+            maxLength="20px"
             required
             name="description"
             type="text"
             defaultValue={isObjectNew ? "" : websiteObject.description}
           />
         </label>
-        <label className="block">
-          Web Link:{" "}
+        <label className="flex items-center">
+          <span className="w-[15%] text-right">Web Link:</span>
           <input
             className="basic-input-text"
             required
@@ -142,37 +150,51 @@ export const WebsiteFormEdit = forwardRef(
             defaultValue={isObjectNew ? "" : websiteObject.webLink}
           />
         </label>
-        <label className="block">
-          Logo Url:
-          <textarea
-            className="basic-input-text"
-            required
-            name="logoUrl"
-            type="text"
-            defaultValue={isObjectNew ? "" : websiteObject.logoUrl}
-            onChange={onInputChangeHandler}
-          />
-          <img
-            className="h-auto w-[200px]"
-            id="logoUrlImgDisplay"
-            src={isObjectNew ? "" : websiteObject.logoUrl}
-          />
+        <label className="flex">
+          <span className="w-[15%] text-right">Logo Url:</span>
+          <div className="flex max-w-[50%] flex-col">
+            <img
+              className="mb-1 ml-1 h-auto w-[150px] min-w-[20%]"
+              id="logoUrlImgDisplay"
+              src={isObjectNew ? "" : websiteObject.logoUrl}
+            />
+            <textarea
+              className="basic-input-text min-h-[50px] min-w-[100%] max-w-[100%] resize"
+              required
+              name="logoUrl"
+              type="text"
+              defaultValue={isObjectNew ? "" : websiteObject.logoUrl}
+              onChange={onInputChangeHandler}
+            />
+          </div>
         </label>
-        <SelectReactive
-          required
-          name="tag"
-          defaultValue={isObjectNew ? "" : websiteObject.tag.id}
-          trigger={websiteObject?.id}
-        >
-          <option value={""} disabled>
-            Select tag
-          </option>
-          <TagsOptions />
-        </SelectReactive>
-        <div>
-          categories: <CategoriesInputs />{" "}
+        <label className="flex items-center">
+          <span className="w-[15%] text-right">Tag:</span>
+          <SelectReactive
+            className="basic-select"
+            required
+            name="tag"
+            defaultValue={isObjectNew ? "" : websiteObject.tag.id}
+            trigger={websiteObject?.id}
+          >
+            <option value={""} disabled>
+              Select tag
+            </option>
+            <TagsOptions />
+          </SelectReactive>
+        </label>
+        <div className="flex">
+          <span className="w-[15%] text-right">Categories:</span>
+          <div className="ml-1 grid grid-cols-3 gap-2">
+            <CategoriesInputs />
+          </div>
         </div>
-        <SubmitButton className={"basic-button"} isNew={isObjectNew} />
+        <SubmitButton
+          className={
+            "basic-button ml-[15%] w-[150px] bg-[#236e91] text-white hover:bg-[#2685b1]"
+          }
+          isNew={isObjectNew}
+        />
       </form>
     );
   },

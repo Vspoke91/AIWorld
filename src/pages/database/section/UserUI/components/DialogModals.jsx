@@ -46,7 +46,7 @@ export function ModalDeleteButton({ inputRequired, onDeleteFunction }) {
   return (
     <>
       <button
-        className={"basic-button"}
+        className="basic-button my-0 mb-3 ml-[15%] w-[100px] bg-[#ad2727] hover:bg-[#e21f1f]"
         onClick={(e) => {
           /* Explanation for e.stopPropagation()
                 when click on button it shows model and adds the listener, 

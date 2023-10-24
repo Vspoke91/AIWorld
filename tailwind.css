@@ -18,7 +18,7 @@
     @apply my-3 rounded-md bg-black p-3 font-bold transition duration-100 ease-in-out;
   }
   .basic-input-text {
-    @apply rounded-sm p-2 font-bold text-black
+    @apply ml-1 rounded-sm p-2 font-bold text-black
     hover:bg-gray-200
     dark:bg-neutral-800 dark:text-white  dark:hover:bg-neutral-700;
   }
@@ -26,6 +26,11 @@
     @apply ml-1 inline-flex h-6 w-6 cursor-pointer appearance-none items-center justify-center rounded-sm bg-white 
     after:font-[fontawesome] after:text-[1.2rem] after:leading-none after:text-gray-200 after:content-['\f00c'] checked:after:text-black hover:bg-gray-200 
     dark:bg-neutral-800 dark:text-neutral-700 dark:after:text-neutral-700 checked:after:dark:text-white dark:hover:bg-neutral-700;
+  }
+  .basic-select {
+    @apply ml-1 rounded-sm p-2 font-bold text-black hover:bg-gray-200 
+    dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700
+    [&>*]:text-black dark:[&>*]:text-white;
   }
   .list-button {
     @apply whitespace-nowrap  p-2 font-bold transition duration-100 ease-in-out;

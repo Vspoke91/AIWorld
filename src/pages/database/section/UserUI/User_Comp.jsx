@@ -59,7 +59,9 @@ export default function User() {
             }`}
           </p>
           <h1 className="font-bold">Admin Dashboard</h1>
-          <button>Log out</button>
+          <button className="basic-button my-0 h-full bg-[#a01e1e] py-0 text-base hover:bg-[#c52424]">
+            Logout
+          </button>
         </header>
         <main className="flex flex-grow">
           <aside className="flex max-w-[200px] flex-[0.3] flex-col gap-0.5 bg-[#181818] px-0.5">
@@ -286,7 +288,7 @@ const FormLoader = forwardRef(
       },
     }));
 
-    return <div className="flex-1">{diplayedElement}</div>;
+    return <div className="w-full">{diplayedElement}</div>;
   },
 );
 FormLoader.displayName = "FormLoader";
@@ -318,7 +320,7 @@ function CollectionList({
 
       return (
         <button
-          className="flex bg-[#272727] p-1 text-lg hover:bg-[#202020] hover:underline"
+          className="flex bg-[#272727] p-1 text-lg outline-offset-[-2px] hover:bg-[#202020] hover:underline"
           key={index}
           onClick={() => {
             onClickFunction(item, collectionsData);

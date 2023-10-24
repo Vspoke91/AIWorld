@@ -49,7 +49,10 @@ export default function Login({ loggedInState }) {
             type="password"
             placeholder="Password"
           />
-          <button className="basic-button" type="submit">
+          <button
+            className="basic-button hover:bg-orange-500; border-orange-400 bg-orange-400 text-white outline-white"
+            type="submit"
+          >
             Login
           </button>
         </form>
