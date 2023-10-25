@@ -59,7 +59,13 @@ export default function User() {
             }`}
           </p>
           <h1 className="font-bold">Admin Dashboard</h1>
-          <button className="basic-button my-0 h-full bg-[#a01e1e] py-0 text-base hover:bg-[#c52424]">
+          <button
+            className="basic-button my-0 h-full bg-[#a01e1e] py-0 text-base hover:bg-[#c52424]"
+            onClick={() => {
+              authentication.logout();
+              location.reload(true);
+            }}
+          >
             Logout
           </button>
         </header>
