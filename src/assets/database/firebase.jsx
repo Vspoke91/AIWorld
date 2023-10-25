@@ -296,6 +296,14 @@ export const authentication = {
       return false;
     }
   },
+  logout: async () => {
+    try {
+      await signOut(getAuth());
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
   getUserInfo: async () => {
     try {
       const collectionRef = collection(
