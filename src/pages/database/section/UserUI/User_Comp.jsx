@@ -51,7 +51,7 @@ export default function User() {
 
   return (
     <>
-      <div className="flex h-screen flex-col">
+      <div className="flex h-screen flex-col overflow-auto">
         <header className="flex justify-between border-b-2 border-b-black bg-[#3b3b3b] px-6 py-1 text-lg">
           <p>
             {`Welcome back, ${
