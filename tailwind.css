@@ -14,17 +14,41 @@
 }
 
 @layer components {
+  .colors-form-white {
+    @apply [&_input[type='text']]:color-text_field-white
+    [&_input[type='password']]:color-text_field-white
+    [&_input[type='email']]:color-text_field-white
+    [&_textarea]:color-text_field-white
+    [&_button]:color-button-red;
+  }
+  .color-button-red {
+    @apply bg-red-400 text-white outline-white hover:bg-red-500;
+  }
+  .color-button-orange {
+    @apply bg-orange-400 text-white outline-white hover:bg-orange-500 !important;
+  }
+  .color-button-red {
+    @apply bg-[#ad2727] text-white hover:bg-[#e21f1f] 
+    disabled:cursor-not-allowed disabled:bg-[#852222] disabled:text-[#999999];
+  }
+
+  .color-text-black {
+    @apply text-black dark:text-white;
+  }
+
+  .color-text_field-white {
+    @apply text-black hover:bg-gray-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
+  }
+
   .basic-dialog-modal {
     @apply min-h-[100px] min-w-[100px] rounded-lg bg-white shadow-xl backdrop:bg-[#bbbbbb54] 
     dark:bg-[#131313] dark:shadow-[#272727] dark:backdrop:bg-[#00000054];
   }
   .basic-button {
-    @apply my-3 rounded-md p-3 font-bold transition duration-100 ease-in-out;
+    @apply rounded-md p-3 font-bold transition duration-100 ease-in-out;
   }
   .basic-input-text {
-    @apply ml-1 rounded-sm p-2 font-bold text-black
-    hover:bg-gray-200
-    dark:bg-neutral-800 dark:text-white  dark:hover:bg-neutral-700;
+    @apply ml-1 rounded-sm p-2 font-bold;
   }
   .basic-input-check {
     @apply ml-1 inline-flex h-6 w-6 cursor-pointer appearance-none items-center justify-center rounded-sm bg-white 
@@ -36,6 +60,14 @@
     dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700
     [&>*]:text-black dark:[&>*]:text-white;
   }
+  .basic-all-form {
+    @apply [&_input[type='text']]:basic-input-text
+    [&_input[type='password']]:basic-input-text
+    [&_input[type='email']]:basic-input-text
+    [&_textarea]:basic-input-text
+    [&_button]:basic-button;
+  }
+
   .list-button {
     @apply whitespace-nowrap  p-2 font-bold transition duration-100 ease-in-out;
   }
