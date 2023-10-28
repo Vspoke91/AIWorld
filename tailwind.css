@@ -14,18 +14,8 @@
 }
 
 @layer components {
-  .colors-form-white {
-    @apply [&_input[type='text']]:color-text_field-white
-    [&_input[type='password']]:color-text_field-white
-    [&_input[type='email']]:color-text_field-white
-    [&_textarea]:color-text_field-white
-    [&_button]:color-button-red;
-  }
-  .color-button-red {
-    @apply bg-red-400 text-white outline-white hover:bg-red-500;
-  }
   .color-button-orange {
-    @apply bg-orange-400 text-white outline-white hover:bg-orange-500 !important;
+    @apply bg-orange-400 text-white outline-white  hover:bg-orange-500;
   }
   .color-button-red {
     @apply bg-[#ad2727] text-white hover:bg-[#e21f1f] 
@@ -36,7 +26,7 @@
     @apply text-black dark:text-white;
   }
 
-  .color-text_field-white {
+  .color-input_text-white {
     @apply text-black hover:bg-gray-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
   }
 
@@ -47,7 +37,7 @@
   .basic-button {
     @apply rounded-md p-3 font-bold transition duration-100 ease-in-out;
   }
-  .basic-input-text {
+  .basic-input_text {
     @apply ml-1 rounded-sm p-2 font-bold;
   }
   .basic-input-check {
@@ -59,13 +49,6 @@
     @apply ml-1 rounded-sm p-2 font-bold text-black hover:bg-gray-200 
     dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700
     [&>*]:text-black dark:[&>*]:text-white;
-  }
-  .basic-all-form {
-    @apply [&_input[type='text']]:basic-input-text
-    [&_input[type='password']]:basic-input-text
-    [&_input[type='email']]:basic-input-text
-    [&_textarea]:basic-input-text
-    [&_button]:basic-button;
   }
 
   .list-button {
