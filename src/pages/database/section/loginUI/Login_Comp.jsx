@@ -38,21 +38,20 @@ export default function Login({ loggedInState }) {
         <h1 className="mx-auto w-fit pb-5 text-3xl font-bold">Admin Login</h1>
         <form className="flex flex-col gap-3" onSubmit={onSubmitLoginHandler}>
           <input
-            className="basic-input-text"
+            className="basic-input_text color-input_text-white"
             ref={emailInputRef}
             type="email"
             placeholder="Email address"
+            required
           />
           <input
-            className="basic-input-text"
+            className="basic-input_text color-input_text-white"
             ref={passwordInputRef}
             type="password"
             placeholder="Password"
+            required
           />
-          <button
-            className="basic-button hover:bg-orange-500; border-orange-400 bg-orange-400 text-white outline-white"
-            type="submit"
-          >
+          <button className="basic-button color-button-orange" type="submit">
             Login
           </button>
         </form>
