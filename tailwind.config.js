@@ -8,7 +8,7 @@ export default {
         custom_highlight: "#F59E0B",
       },
       fontFamily: {
-        fontawesome: ["Font Awesome 6 Free", "sans-serif"],
+        fontawesome: ["fontawesome", "sans-serif"],
       },
     },
   },
