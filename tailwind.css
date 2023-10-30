@@ -14,20 +14,37 @@
 }
 
 @layer components {
-  .color-button-orange {
-    @apply bg-orange-400 text-white outline-white  hover:bg-orange-500;
+  .palet-white {
+    @apply bg-white text-black placeholder-neutral-500 hover:bg-gray-200 focus-visible:bg-gray-200
+    dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700;
+
+    @apply [.basic-input\_check&]:text-gray-200 
+    [.basic-input\_check&]:checked:text-black
+    [.basic-input\_check&]:focus:bg-gray-200
+    [.basic-input\_check&]:dark:text-neutral-700
+    [.basic-input\_check&]:checked:dark:text-white
+    [.basic-input\_check&]:dark:focus:bg-neutral-700;
   }
-  .color-button-red {
-    @apply bg-[#ad2727] text-white hover:bg-[#e21f1f] 
-    disabled:cursor-not-allowed disabled:bg-[#852222] disabled:text-[#999999];
+
+  .palet-orange\! {
+    @apply bg-orange-500 text-white hover:bg-orange-600;
+  }
+  .palet-red\! {
+    @apply bg-red-700 text-white hover:bg-red-600 
+    disabled:cursor-not-allowed disabled:bg-red-900 disabled:text-neutral-400;
+  }
+  .palet-gray\! {
+    @apply bg-neutral-600 text-white hover:bg-neutral-500 focus-visible:bg-neutral-500;
+  }
+  .palet-gray_dark\! {
+    @apply bg-neutral-800 text-white hover:bg-neutral-700 focus-visible:bg-neutral-700;
+  }
+  .palet-green_dark\! {
+    @apply bg-green-900 text-white hover:bg-green-700;
   }
 
   .color-text-black {
     @apply text-black dark:text-white;
-  }
-
-  .color-input_text-white {
-    @apply text-black hover:bg-gray-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
   }
 
   .basic-dialog-modal {
