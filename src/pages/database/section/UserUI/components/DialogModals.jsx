@@ -7,6 +7,8 @@ export function ModalDeleteButton({ inputRequired, onDeleteFunction }) {
 
   const closeModal = () => {
     modalRef.current.close();
+    modalRef.current.querySelector("input").value = "";
+    setDisable(true);
     document.removeEventListener("click", onClickOutsideHandler);
   };
 
@@ -46,7 +48,7 @@ export function ModalDeleteButton({ inputRequired, onDeleteFunction }) {
   return (
     <>
       <button
-        className="basic-button my-0 mb-3 ml-[15%] w-[100px] bg-[#ad2727] hover:bg-[#e21f1f]"
+        className="basic-button color-button-red my-3 ml-[15%] w-[100px]"
         onClick={(e) => {
           /* Explanation for e.stopPropagation()
                 when click on button it shows model and adds the listener, 
@@ -64,14 +66,25 @@ export function ModalDeleteButton({ inputRequired, onDeleteFunction }) {
         Delete
       </button>
 
-      <dialog ref={modalRef}>
-        <p>{`To confirm, type "${inputRequired}" in the box below`}</p>
+      <dialog className="basic-dialog-modal" ref={modalRef}>
+        <h1 className="color-text-black w-full border-b-2 py-2 text-center font-bold">
+          Confirmation
+        </h1>
+        <p className="color-text-black m-4">
+          To confirm, type <strong>&quot;{inputRequired}&quot;</strong> in the
+          box below
+        </p>
         <input
+          className="basic-input-text color-input_text-white mx-auto block w-[90%] outline outline-red-600"
           type="text"
           placeholder={inputRequired}
           onChange={onInputChangeHandler}
         />
-        <button disabled={isDisable} onClick={onClickDeleteHandler}>
+        <button
+          className="basic-button color-button-red mx-auto my-2 block w-[90%] py-2"
+          disabled={isDisable}
+          onClick={onClickDeleteHandler}
+        >
           Delete
         </button>
       </dialog>
@@ -127,9 +140,17 @@ export const ModalMessagePopup = forwardRef((props, ref) => {
 
   return (
     <>
-      <dialog ref={modalRef}>
-        <p>{message}</p>
-        <button onClick={closeModal}>Close</button>
+      <dialog className="basic-dialog-modal" ref={modalRef}>
+        <h1 className="color-text-black w-full border-b-2 py-2 text-center font-bold">
+          Message
+        </h1>
+        <p className="color-text-black m-4">{message}</p>
+        <button
+          className="basic-button color-button-orange mx-auto my-2 block outline-black dark:outline-white"
+          onClick={closeModal}
+        >
+          Close
+        </button>
       </dialog>
     </>
   );
