@@ -60,7 +60,7 @@ export default function User() {
           </p>
           <h1 className="font-bold">Admin Dashboard</h1>
           <button
-            className="basic-button color-button-red my-0 h-full py-0 text-base"
+            className="basic-button palet-red! my-0 h-full py-0 text-base"
             onClick={() => {
               authentication.logout();
               location.reload(true);
@@ -70,9 +70,9 @@ export default function User() {
           </button>
         </header>
         <main className="flex flex-grow">
-          <aside className="flex max-w-[200px] flex-[0.3] flex-col gap-0.5 bg-[#181818] px-0.5">
+          <aside className="flex max-w-[200px] flex-[0.3] flex-col gap-0.5 bg-neutral-900 px-0.5">
             <select
-              className="list-select mx-3 my-2 rounded-lg border border-[#757575] bg-[#4b4b4b] text-xl hover:bg-[#525252] [&>*]:text-lg"
+              className="basic-select palet-gray! [&>*]:palet-gray! mx-3 my-2 rounded-lg border border-neutral-500 text-center text-xl [&>*]:text-lg"
               defaultValue={targetCollectionName}
               onChange={(event) => {
                 setTargetCollectionName(event.target.value);
@@ -83,7 +83,7 @@ export default function User() {
               <option value="categories">Categories</option>
             </select>
             <button
-              className="list-button bg-[#3b633b] hover:bg-[#497d49]"
+              className="list-button palet-green_dark!"
               onClick={() => formLoaderRef.current.loadNew(collectionsData)}
             >
               Add New
@@ -326,7 +326,7 @@ function CollectionList({
 
       return (
         <button
-          className="flex bg-[#272727] p-1 text-lg outline-offset-[-2px] hover:bg-[#202020] hover:underline"
+          className="list-button palet-gray_dark! flex text-lg hover:underline"
           key={index}
           onClick={() => {
             onClickFunction(item, collectionsData);
@@ -345,7 +345,9 @@ function CollectionList({
               hasPicture ? "ml-2" : "mx-auto"
             }`}
           >
-            <span className="block w-fit font-bold">{item[nameFieldRef]}</span>
+            <span className="block w-fit font-bold text-white">
+              {item[nameFieldRef]}
+            </span>
           </div>
         </button>
       );
