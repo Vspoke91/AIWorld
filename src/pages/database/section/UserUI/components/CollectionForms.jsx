@@ -23,9 +23,9 @@ export const WebsiteFormEdit = forwardRef(
           key={index}
           className="flex flex-row-reverse justify-end gap-1 font-bold"
         >
-          <span>{`${category.text}`}</span>
+          <span className="cursor-pointer select-none">{`${category.text}`}</span>
           <input
-            className="basic-input-check"
+            className="basic-input_check palet-white"
             type="checkbox"
             name="categories"
             value={category.id}
@@ -112,7 +112,7 @@ export const WebsiteFormEdit = forwardRef(
         <label className="flex">
           <span className="w-[15%] text-right">Featured:</span>
           <input
-            className="basic-input-check"
+            className="basic-input_check palet-white"
             value={true}
             name="featured"
             type="checkbox"
@@ -122,7 +122,7 @@ export const WebsiteFormEdit = forwardRef(
         <label className="flex items-center">
           <span className="w-[15%] text-right">Name:</span>
           <input
-            className="basic-input-text"
+            className="basic-input_text palet-white"
             required
             name="name"
             type="text"
@@ -132,7 +132,7 @@ export const WebsiteFormEdit = forwardRef(
         <label className="flex">
           <span className="w-[15%] text-right">Description:</span>
           <textarea
-            className="basic-input-text min-h-[50px] min-w-[20%] max-w-[50%] resize"
+            className="basic-input_text palet-white min-h-[50px] min-w-[20%] max-w-[50%] resize"
             maxLength="20px"
             required
             name="description"
@@ -143,7 +143,7 @@ export const WebsiteFormEdit = forwardRef(
         <label className="flex items-center">
           <span className="w-[15%] text-right">Web Link:</span>
           <input
-            className="basic-input-text"
+            className="basic-input_text palet-white"
             required
             name="webLink"
             type="text"
@@ -159,7 +159,7 @@ export const WebsiteFormEdit = forwardRef(
               src={isObjectNew ? "" : websiteObject.logoUrl}
             />
             <textarea
-              className="basic-input-text min-h-[50px] min-w-[100%] max-w-[100%] resize"
+              className="basic-input_text palet-white min-h-[50px] min-w-[100%] max-w-[100%] resize"
               required
               name="logoUrl"
               type="text"
@@ -170,18 +170,20 @@ export const WebsiteFormEdit = forwardRef(
         </label>
         <label className="flex items-center">
           <span className="w-[15%] text-right">Tag:</span>
-          <SelectReactive
-            className="basic-select"
-            required
-            name="tag"
-            defaultValue={isObjectNew ? "" : websiteObject.tag.id}
-            trigger={websiteObject?.id}
-          >
-            <option value={""} disabled>
-              Select tag
-            </option>
-            <TagsOptions />
-          </SelectReactive>
+          <div className="basic-select_wrapper palet-white">
+            <SelectReactive
+              className="basic-select palet-white [&>*]:palet-white"
+              required
+              name="tag"
+              defaultValue={isObjectNew ? "" : websiteObject.tag.id}
+              trigger={websiteObject?.id}
+            >
+              <option value={""} disabled>
+                Select tag
+              </option>
+              <TagsOptions />
+            </SelectReactive>
+          </div>
         </label>
         <div className="flex">
           <span className="w-[15%] text-right">Categories:</span>
@@ -190,9 +192,7 @@ export const WebsiteFormEdit = forwardRef(
           </div>
         </div>
         <SubmitButton
-          className={
-            "basic-button ml-[15%] w-[150px] bg-[#236e91] text-white hover:bg-[#2685b1]"
-          }
+          className={"basic-button palet-cyan! ml-[15%] w-[150px]"}
           isNew={isObjectNew}
         />
       </form>
