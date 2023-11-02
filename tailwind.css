@@ -8,8 +8,8 @@
   }
 
   * {
-    @apply text-[#dbdbdb] 
-    outline-2 outline-[#e7a006] focus-visible:outline;
+    @apply outline-custom_colors_highlight 
+    text-[#dbdbdb] outline-2 focus-visible:outline;
   }
 }
 

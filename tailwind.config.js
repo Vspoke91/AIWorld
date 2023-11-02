@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        custom_highlight: "#F59E0B",
+        custom_colors_highlight: "#F59E0B",
       },
       fontFamily: {
         fontawesome: ["fontawesome", "sans-serif"],
