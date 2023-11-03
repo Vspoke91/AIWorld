@@ -110,7 +110,7 @@ export const WebsiteFormEdit = forwardRef(
           {isObjectNew ? "N/A" : websiteObject.id}
         </label>
         <label className="flex">
-          <span className="w-[15%] text-right">Featured:</span>
+          <span className="mr-1 w-[15%] text-right">Featured:</span>
           <input
             className="basic-input_check palet-white"
             value={true}
@@ -120,7 +120,7 @@ export const WebsiteFormEdit = forwardRef(
           />
         </label>
         <label className="flex items-center">
-          <span className="w-[15%] text-right">Name:</span>
+          <span className="mr-1 w-[15%] text-right">Name:</span>
           <input
             className="basic-input_text palet-white"
             required
@@ -130,7 +130,7 @@ export const WebsiteFormEdit = forwardRef(
           />
         </label>
         <label className="flex">
-          <span className="w-[15%] text-right">Description:</span>
+          <span className="mr-1 w-[15%] text-right">Description:</span>
           <textarea
             className="basic-input_text palet-white min-h-[50px] min-w-[20%] max-w-[50%] resize"
             maxLength="20px"
@@ -141,7 +141,7 @@ export const WebsiteFormEdit = forwardRef(
           />
         </label>
         <label className="flex items-center">
-          <span className="w-[15%] text-right">Web Link:</span>
+          <span className="mr-1 w-[15%] text-right">Web Link:</span>
           <input
             className="basic-input_text palet-white"
             required
@@ -151,7 +151,7 @@ export const WebsiteFormEdit = forwardRef(
           />
         </label>
         <label className="flex">
-          <span className="w-[15%] text-right">Logo Url:</span>
+          <span className="mr-1 w-[15%] text-right">Logo Url:</span>
           <div className="flex max-w-[50%] flex-col">
             <img
               className="mb-1 ml-1 h-auto w-[150px] min-w-[20%]"
@@ -237,6 +237,7 @@ export const TagFormEdit = forwardRef(
 
     return (
       <form
+        className="flex flex-col gap-4"
         ref={formRef}
         onSubmit={async (e) => {
           e.preventDefault();
@@ -250,26 +251,34 @@ export const TagFormEdit = forwardRef(
           ).disabled = false;
         }}
       >
-        <label>Id: {isObjectNew ? "N/A" : tagObject.id}</label>
-        <label>
-          Text:{" "}
+        <label className="mt-3 flex text-lg font-bold">
+          <span className="mr-1 w-[15%] text-right">ID:</span>
+          {isObjectNew ? "N/A" : tagObject.id}
+        </label>
+        <label className="flex items-center">
+          <span className="mr-1 w-[15%] text-right">Text:</span>
           <input
+            className="basic-input_text palet-white"
             required
             name="text"
             type="text"
             defaultValue={isObjectNew ? "" : tagObject.text}
           />
         </label>
-        <label>
-          Color:{" "}
+        <label className="flex items-center">
+          <span className="mr-1 w-[15%] text-right">Color:</span>
           <input
+            className="basic-input_text palet-white"
             required
             name="color"
             type="text"
             defaultValue={isObjectNew ? "" : tagObject.color}
           />
         </label>
-        <SubmitButton isNew={isObjectNew} />
+        <SubmitButton
+          className={"basic-button palet-cyan! ml-[15%] w-[150px]"}
+          isNew={isObjectNew}
+        />
       </form>
     );
   },
@@ -311,6 +320,7 @@ export const CategoryFormEdit = forwardRef(
 
     return (
       <form
+        className="flex flex-col gap-4"
         ref={formRef}
         onSubmit={async (e) => {
           e.preventDefault();
@@ -324,26 +334,34 @@ export const CategoryFormEdit = forwardRef(
           ).disabled = false;
         }}
       >
-        <label>Id: {isObjectNew ? "N/A" : categoryObject.id}</label>
-        <label>
-          Text:{" "}
+        <label className="mt-3 flex text-lg font-bold">
+          <span className="mr-1 w-[15%] text-right">ID:</span>
+          {isObjectNew ? "N/A" : categoryObject.id}
+        </label>
+        <label className="flex items-center">
+          <span className="mr-1 w-[15%] text-right">Text:</span>
           <input
+            className="basic-input_text palet-white"
             required
             name="text"
             type="text"
             defaultValue={isObjectNew ? "" : categoryObject.text}
           />
         </label>
-        <label>
-          Color:{" "}
+        <label className="flex items-center">
+          <span className="mr-1 w-[15%] text-right">Color:</span>
           <input
+            className="basic-input_text palet-white"
             required
             name="color"
             type="text"
             defaultValue={isObjectNew ? "" : categoryObject.color}
           />
         </label>
-        <SubmitButton isNew={isObjectNew} />
+        <SubmitButton
+          className={"basic-button palet-cyan! ml-[15%] w-[150px]"}
+          isNew={isObjectNew}
+        />
       </form>
     );
   },
