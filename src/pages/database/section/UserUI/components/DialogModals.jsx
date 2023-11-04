@@ -48,7 +48,7 @@ export function ModalDeleteButton({ inputRequired, onDeleteFunction }) {
   return (
     <>
       <button
-        className="basic-button color-button-red my-3 ml-[15%] w-[100px]"
+        className="basic-button palet-red! my-3 ml-[15%] w-[100px]"
         onClick={(e) => {
           /* Explanation for e.stopPropagation()
                 when click on button it shows model and adds the listener, 
@@ -66,22 +66,28 @@ export function ModalDeleteButton({ inputRequired, onDeleteFunction }) {
         Delete
       </button>
 
-      <dialog className="basic-dialog-modal" ref={modalRef}>
-        <h1 className="color-text-black w-full border-b-2 py-2 text-center font-bold">
+      <dialog
+        className="basic-dialog-modal bg-white backdrop:bg-[#ffffff54] dark:bg-neutral-950 dark:shadow-neutral-950 dark:backdrop:bg-[#00000054]"
+        ref={modalRef}
+      >
+        <h1 className="w-full border-b-2 py-2 text-center font-bold text-black dark:text-white">
           Confirmation
         </h1>
-        <p className="color-text-black m-4">
-          To confirm, type <strong>&quot;{inputRequired}&quot;</strong> in the
-          box below
+        <p className="m-4 text-black dark:text-white">
+          To confirm, type{" "}
+          <strong className="text-black dark:text-white">
+            &quot;{inputRequired}&quot;
+          </strong>{" "}
+          in the box below
         </p>
         <input
-          className="basic-input-text color-input_text-white mx-auto block w-[90%] outline outline-red-600"
+          className="basic-input_text palet-white mx-auto block w-[90%] outline outline-red-600 focus:outline-custom_colors_highlight"
           type="text"
           placeholder={inputRequired}
           onChange={onInputChangeHandler}
         />
         <button
-          className="basic-button color-button-red mx-auto my-2 block w-[90%] py-2"
+          className="basic-button palet-red! mx-auto my-2 block w-[90%] py-2"
           disabled={isDisable}
           onClick={onClickDeleteHandler}
         >
@@ -140,13 +146,16 @@ export const ModalMessagePopup = forwardRef((props, ref) => {
 
   return (
     <>
-      <dialog className="basic-dialog-modal" ref={modalRef}>
-        <h1 className="color-text-black w-full border-b-2 py-2 text-center font-bold">
+      <dialog
+        className="basic-dialog-modal bg-white backdrop:bg-[#ffffff54] dark:bg-neutral-950 dark:shadow-neutral-950 dark:backdrop:bg-[#00000054]"
+        ref={modalRef}
+      >
+        <h1 className="w-full border-b-2 py-2 text-center font-bold text-black dark:text-white">
           Message
         </h1>
         <p className="color-text-black m-4">{message}</p>
         <button
-          className="basic-button color-button-orange mx-auto my-2 block outline-black dark:outline-white"
+          className="basic-button palet-orange! mx-auto my-2 block outline-black dark:outline-white"
           onClick={closeModal}
         >
           Close
