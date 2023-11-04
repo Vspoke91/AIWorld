@@ -71,17 +71,19 @@ export default function User() {
         </header>
         <main className="flex flex-grow">
           <aside className="flex max-w-[200px] flex-[0.3] flex-col gap-0.5 bg-neutral-900 px-0.5">
-            <select
-              className="basic-select palet-gray! [&>*]:palet-gray! mx-3 my-2 rounded-lg border border-neutral-500 text-center text-xl [&>*]:text-lg"
-              defaultValue={targetCollectionName}
-              onChange={(event) => {
-                setTargetCollectionName(event.target.value);
-              }}
-            >
-              <option value="websites">Websites</option>
-              <option value="tags">Tags</option>
-              <option value="categories">Categories</option>
-            </select>
+            <div className="basic-select_wrapper palet-gray! mx-3 my-2 w-fit rounded-lg border border-neutral-500">
+              <select
+                className="basic-select palet-gray! [&>*]:palet-gray! w-[inherit] rounded-[inherit] text-center text-xl [&>*]:text-lg"
+                defaultValue={targetCollectionName}
+                onChange={(event) => {
+                  setTargetCollectionName(event.target.value);
+                }}
+              >
+                <option value="websites">Websites</option>
+                <option value="tags">Tags</option>
+                <option value="categories">Categories</option>
+              </select>
+            </div>
             <button
               className="list-button palet-green_dark!"
               onClick={() => formLoaderRef.current.loadNew(collectionsData)}
@@ -114,12 +116,16 @@ form loader is used to load the form depending on what the user select from the 
 const FormLoader = forwardRef(
   ({ currentCollection, refreshCollectionData }, ref) => {
     const defaultElement = (
-      <>
-        <p>
-          Welcome to the database section, this UI auto refresh.{" "}
-          <strong> Careful with what you change! </strong>
+      <div className="mx-2">
+        <h2 className="mx-auto my-3 w-fit text-lg font-bold">
+          AI World Database
+        </h2>
+        <p className="mx-auto w-fit">
+          Welcome admin,
+          <strong> careful with what you change! </strong>
+          any change on any item will take effect immediately.
         </p>
-      </>
+      </div>
     );
 
     const [diplayedElement, setDiplayedElement] = useState(defaultElement);
