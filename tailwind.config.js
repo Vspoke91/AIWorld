@@ -9,6 +9,7 @@ export default {
       },
       fontFamily: {
         fontawesome: ["fontawesome", "sans-serif"],
+        Bruno_Ace_SC: ["Bruno Ace SC", "sans-serif"],
       },
     },
   },
