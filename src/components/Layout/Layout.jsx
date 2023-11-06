@@ -62,9 +62,9 @@ const Layout = () => {
           <Link
             to="/"
             className="logo qs__flex_column __flex_center"
-            onMouseEnter={tittleAnimation}
-          >
-            <img src="/img/logos/AI-World-Small.png" />
+          />
+          <span className="gradient-text bg-white from-white via-[#fff_40%,#ff9c29_50%,#fff_60%] to-white bg-200 font-Bruno_Ace_SC text-2xl group-hover:animate-[sliderbg_1.2s_ease-in-out_infinite_alternate] group-hover:bg-gradient-to-r">
+            AI World
             <span className="title">{titleChanger}</span>
           </Link>
 

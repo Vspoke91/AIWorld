@@ -75,6 +75,10 @@
     @apply after:pointer-events-none after:absolute after:right-2 after:font-fontawesome after:text-2xl after:content-['\f0d7'];
   }
 
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+  }
+
   .list-button {
     @apply w-full whitespace-nowrap px-1 py-2 font-bold outline-offset-[-2px] transition duration-100 ease-in-out;
   }
