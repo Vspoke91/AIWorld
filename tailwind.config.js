@@ -4,7 +4,7 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     backgroundSize: {
-      200: "200%",
+      50: "50%",
     },
     extend: {
       keyframes: {
