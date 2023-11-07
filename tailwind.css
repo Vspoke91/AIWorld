@@ -46,10 +46,6 @@
     @apply bg-cyan-700 text-white hover:bg-cyan-600;
   }
 
-  .color-text-black {
-    @apply text-black dark:text-white;
-  }
-
   .basic-dialog-modal {
     @apply min-h-[100px] min-w-[100px] rounded-lg shadow-xl;
   }
@@ -65,7 +61,6 @@
 
     @apply appearance-none after:pointer-events-none after:font-fontawesome after:text-[1.2rem] after:leading-none after:content-['\f00c'];
   }
-
   .basic-select {
     @apply rounded-sm p-2 font-bold;
   }
