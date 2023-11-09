@@ -28,10 +28,7 @@ const Layout = () => {
 
   return (
     <div className="ml-[188px] flex h-screen flex-col">
-      <header
-        className="fixed inset-y-0 left-0 flex w-[188px] flex-col bg-neutral-800 shadow-[2px_0_5px_#000] 
-        after:absolute after:left-[180px] after:top-[20%] after:z-[-1] after:h-fit after:w-[30px] after:rounded-r-lg after:bg-neutral-600 after:text-center after:font-fontawesome after:text-2xl after:content-['\f053']"
-      >
+      <header className="z-1 group fixed inset-y-0 left-0 flex w-[188px] flex-col bg-neutral-800">
         <Link
           to="/"
           className="list-button group flex flex-col items-center px-0 pb-0 pt-2 font-medium"
@@ -76,6 +73,14 @@ const Layout = () => {
           </q>
           <cite className="block">- Sam Altman</cite>
         </blockquote>
+
+        <button
+          className="palet-gray! absolute right-0 top-[20%] w-[35px] translate-x-[100%] rounded-r-md outline-none
+          after:py-1 after:text-center after:font-fontawesome after:text-2xl after:content-['\f053'] 
+          focus-visible:bg-custom_colors_highlight"
+        />
+
+        <div className="gradient-black_trasparent-shadow absolute right-0 h-full w-[5px] translate-x-[100%]" />
 
         <div
           ref={headerRef}
