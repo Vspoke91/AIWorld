@@ -15,6 +15,8 @@ const Layout = () => {
   const headerMobileRef = useRef(null);
   const [headerExpandedMobile, setHeaderExpandedMobile] = useState(true);
 
+  const [headerAriaExpanded, setHeaderAriaExpanded] = useState(true);
+
   const useLocationPath = () => {
     let newPathName = useLocation().pathname.slice(1);
 
@@ -28,7 +30,10 @@ const Layout = () => {
 
   return (
     <div className="ml-[188px] flex h-screen flex-col">
-      <header className="z-1 group fixed inset-y-0 left-0 flex w-[188px] flex-col bg-neutral-800">
+      <header
+        className="z-1 group/header fixed inset-y-0 left-0 flex w-0 flex-col bg-neutral-800 aria-expanded:w-[188px]"
+        aria-expanded={headerAriaExpanded}
+      >
         <Link
           to="/"
           className="list-button group flex flex-col items-center px-0 pb-0 pt-2 font-medium"
@@ -75,12 +80,15 @@ const Layout = () => {
         </blockquote>
 
         <button
-          className="palet-gray! absolute right-0 top-[20%] w-[35px] translate-x-[100%] rounded-r-md outline-none
-          after:py-1 after:text-center after:font-fontawesome after:text-2xl after:content-['\f053'] 
-          focus-visible:bg-custom_colors_highlight"
+          className="palet-gray! absolute right-0 top-[20%] z-[1] w-[35px] translate-x-[100%] rounded-r-md outline-none after:py-1
+          after:text-center after:font-fontawesome after:text-2xl after:content-['\f053'] focus-visible:bg-custom_colors_highlight
+          group-aria-expanded/header:z-0"
+          onClick={() => {
+            setHeaderAriaExpanded((prev) => !prev);
+          }}
         />
 
-        <div className="gradient-black_trasparent-shadow absolute right-0 h-full w-[5px] translate-x-[100%]" />
+        <div className="gradient-black_trasparent-shadow pointer-events-none absolute right-0 h-full w-[15px] translate-x-[100%] group-aria-expanded/header:w-[5px]" />
 
         <div
           ref={headerRef}
