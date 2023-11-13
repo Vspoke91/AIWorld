@@ -37,7 +37,7 @@
     @apply bg-neutral-600 text-white hover:bg-neutral-500 focus-visible:bg-neutral-500;
   }
   .palet-gray_dark\! {
-    @apply bg-neutral-800 text-white hover:bg-neutral-700 focus-visible:bg-neutral-700;
+    @apply bg-neutral-800 text-white hover:bg-neutral-700 hover:text-white focus-visible:bg-neutral-700 focus-visible:text-white;
   }
   .palet-green_dark\! {
     @apply bg-green-900 text-white hover:bg-green-700;
@@ -75,7 +75,7 @@
   }
 
   .list-button {
-    @apply w-full whitespace-nowrap px-1 py-2 font-bold outline-offset-[-2px] transition duration-100 ease-in-out;
+    @apply w-full whitespace-nowrap px-1 py-2 font-bold outline-offset-[-2px] transition-all;
   }
 
   .minimize-scrollbar::-webkit-scrollbar {
@@ -103,6 +103,14 @@
       rgb(255, 255, 255) 50%,
       rgb(255, 152, 0) 75%,
       rgb(255, 255, 255) 100%
+    );
+  }
+  .gradient-black_trasparent-shadow {
+    background: rgb(0, 0, 0, 0.5);
+    background: linear-gradient(
+      90deg,
+      rgb(0, 0, 0, 1) 0%,
+      rgb(0, 0, 0, 0) 100%
     );
   }
 }
