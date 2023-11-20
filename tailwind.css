@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    @apply bg-[#313131];
+  }
+
+  * {
+    @apply text-[#dbdbdb] 
+    outline-2 outline-custom_colors_highlight focus-visible:outline;
+  }
+}
+
+@layer components {
+  .palet-white {
+    @apply bg-white text-black placeholder-neutral-500 hover:bg-[#f5f5f5] focus-visible:bg-[#f5f5f5]
+    dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700 dark:focus-visible:bg-neutral-700;
+
+    @apply [.basic-input\_check&]:text-[#f5f5f5]
+    [.basic-input\_check&]:checked:text-black
+    [.basic-input\_check&]:focus:bg-[#f5f5f5]
+    [.basic-input\_check&]:dark:text-neutral-700
+    [.basic-input\_check&]:checked:dark:text-white
+    [.basic-input\_check&]:dark:focus:bg-neutral-700;
+  }
+
+  .palet-orange\! {
+    @apply bg-orange-500 text-white hover:bg-orange-600;
+  }
+  .palet-red\! {
+    @apply bg-red-700 text-white hover:bg-red-600 
+    disabled:cursor-not-allowed disabled:bg-red-900 disabled:text-neutral-400;
+  }
+  .palet-gray\! {
+    @apply bg-neutral-600 text-white hover:bg-neutral-500 focus-visible:bg-neutral-500;
+  }
+  .palet-gray_dark\! {
+    @apply bg-neutral-800 text-white hover:bg-neutral-700 hover:text-white focus-visible:bg-neutral-700 focus-visible:text-white;
+  }
+  .palet-green_dark\! {
+    @apply bg-green-900 text-white hover:bg-green-700;
+  }
+  .palet-cyan\! {
+    @apply bg-cyan-700 text-white hover:bg-cyan-600;
+  }
+
+  .basic-dialog-modal {
+    @apply min-h-[100px] min-w-[100px] rounded-lg shadow-xl;
+  }
+  .basic-button {
+    @apply rounded-md p-3 font-bold transition duration-100 ease-in-out;
+  }
+  .basic-input_text {
+    @apply rounded-sm p-2 font-bold;
+  }
+  .basic-input_check {
+    @apply inline-flex h-6 w-6 cursor-pointer appearance-none items-center justify-center rounded-sm outline-offset-1 
+    focus:outline;
+
+    @apply appearance-none after:pointer-events-none after:font-fontawesome after:text-[1.2rem] after:leading-none after:content-['\f00c'];
+  }
+  .basic-select {
+    @apply rounded-sm p-2 font-bold;
+  }
+  .basic-select_wrapper {
+    @apply [&>select]:appearance-none [&>select]:pr-[1.7rem];
+    @apply relative flex items-center justify-center rounded-sm;
+    @apply after:pointer-events-none after:absolute after:right-2 after:font-fontawesome after:text-2xl after:content-['\f0d7'];
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+  }
+
+  .list-button {
+    @apply w-full whitespace-nowrap px-1 py-2 font-bold outline-offset-[-2px] transition-all;
+  }
+
+  .minimize-scrollbar::-webkit-scrollbar {
+    @apply h-[5px] w-[5px];
+  }
+  .minimize-scrollbar::-webkit-scrollbar-track {
+    @apply rounded-full bg-[#adadad];
+  }
+  .minimize-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-[#5d5d5d]
+    hover:bg-[#3b3b3b];
+  }
+  .disapear-scrollbar::-webkit-scrollbar {
+    @apply h-[0px] w-[0px];
+  }
+}
+
+@layer utilities {
+  .gradient-white_orange-stripes {
+    background-color: white;
+    background-image: linear-gradient(
+      90deg,
+      rgb(255, 255, 255) 0%,
+      rgb(255, 152, 0) 25%,
+      rgb(255, 255, 255) 50%,
+      rgb(255, 152, 0) 75%,
+      rgb(255, 255, 255) 100%
+    );
+  }
+  .gradient-black_trasparent-shadow {
+    background: rgb(0, 0, 0, 0.5);
+    background: linear-gradient(
+      90deg,
+      rgb(0, 0, 0, 1) 0%,
+      rgb(0, 0, 0, 0) 100%
+    );
+  }
+}
