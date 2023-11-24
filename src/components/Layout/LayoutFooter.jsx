@@ -19,38 +19,48 @@ export default function Default() {
           <p className="font-mono text-lg font-bold">Follow Us</p>
           <ul className="flex gap-1">
             <li title="Instagram">
-              <a href="">
+              <a href="https://www.instagram.com/veltaproject/">
                 <FontAwesomeIcon icon={faInstagram} className="text-2xl" />
               </a>
             </li>
             <li title="Twitter">
-              <a href="">
+              <a href="https://twitter.com/veltaproject">
                 <FontAwesomeIcon icon={faXTwitter} className="text-2xl" />
               </a>
             </li>
             <li title="Github">
-              <a href="">
+              <a href="https://github.com/veltaproject">
                 <FontAwesomeIcon icon={faGithub} className="text-2xl" />
               </a>
             </li>
           </ul>
         </div>
         <nav className="flex flex-1 justify-center p-2">
-          <ul className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-2 transition-all">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" className="hover:text-blue-500">
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/search">Search</Link>
+              <Link to="/search" className="hover:text-blue-500">
+                Search
+              </Link>
             </li>
             <li>
-              <Link to="/feedback">Feedback</Link>
+              <Link to="/feedback" className="hover:text-blue-500">
+                Feedback
+              </Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/about" className="hover:text-blue-500">
+                About
+              </Link>
             </li>
             <li>
-              <Link to="/database">Database</Link>
+              <Link to="/database" className="hover:text-blue-500">
+                Database
+              </Link>
             </li>
           </ul>
         </nav>
