@@ -9,7 +9,7 @@ const Layout = () => {
   return (
     <div className="flex h-screen flex-col">
       <LayoutHeader />
-      <main className="flex-grow">
+      <main className="peer-aria-expanded/header:ml-custom_header flex-grow transition-all">
         <Outlet />
       </main>
       <LayoutFooter />
