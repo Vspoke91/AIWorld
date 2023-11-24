@@ -6,6 +6,12 @@ const rotateY = plugin(({ addUtilities }) => {
     ".rotate-y-180": {
       transform: "rotateY(180deg)",
     },
+    ".rotate-y-90": {
+      transform: "rotateY(90deg)",
+    },
+    ".rotate-y-0": {
+      transform: "rotateY(0deg)",
+    },
   });
 });
 
@@ -19,6 +25,9 @@ export default {
       50: "50%",
     },
     extend: {
+      height: {
+        inherit: "inherit",
+      },
       width: {
         custom_header: headerWidth,
       },
