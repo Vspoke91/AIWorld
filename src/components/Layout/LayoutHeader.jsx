@@ -5,7 +5,6 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 // React imports
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import PropTypes from "prop-types";
 
 export default function Default() {
   // React Variables
