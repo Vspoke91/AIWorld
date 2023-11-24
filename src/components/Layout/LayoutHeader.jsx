@@ -1,18 +1,19 @@
-//Icon imports
+// Icon imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 // React imports
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function Default() {
+export default function Default({ width }) {
   // React Variables
   const [ariaExpanded, setAriaExpanded] = useState(true);
 
   return (
     <div
-      className={`group/header fixed h-full w-[188px] -translate-x-full transition-all aria-expanded:translate-x-0`}
+      className={`group/header peer/header fixed h-full w-[${width}] -translate-x-full transition-all aria-expanded:translate-x-0`}
       aria-expanded={ariaExpanded}
     >
       <header className="fixed z-[2] flex h-[inherit] w-[inherit] flex-col bg-neutral-800 shadow-[10px_0_5px_#000] group-aria-expanded/header:shadow-[2px_0_5px_#000]">
@@ -51,7 +52,7 @@ export default function Default() {
         </nav>
 
         <blockquote
-          className="mt-auto p-2 pb-3 text-center"
+          className="mt-auto p-2 pb-3 text-center [@media(max-height:475px)]:hidden"
           cite="https://www.vox.com/future-perfect/2023/5/24/23735698/openai-sam-altman-ai-safety-legislation-risks-development-regulation"
         >
           <q>
@@ -62,6 +63,7 @@ export default function Default() {
         </blockquote>
       </header>
       <button
+        title="Toggle Menu"
         className="palet-gray! absolute right-0 top-[50px] z-[3] flex translate-x-full rounded-r-md outline-none transition-all
         focus-visible:bg-custom_colors_highlight group-aria-expanded/header:z-[1] group-aria-expanded/header:translate-x-0 
         group-aria-expanded/header:focus-visible:translate-x-full group-aria-expanded/header:group-hover/header:translate-x-full"
@@ -77,3 +79,6 @@ export default function Default() {
     </div>
   );
 }
+Default.propTypes = {
+  width: PropTypes.string.isRequired,
+};
