@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-export default function Default({ width }) {
+export default function Default() {
   // React Variables
   const [ariaExpanded, setAriaExpanded] = useState(true);
 
   return (
     <div
-      className={`group/header peer/header fixed h-full w-[${width}] -translate-x-full transition-all aria-expanded:translate-x-0`}
+      className={`group/header peer/header w-custom_header fixed h-full -translate-x-full transition-all aria-expanded:translate-x-0`}
       aria-expanded={ariaExpanded}
     >
       <header className="fixed z-[2] flex h-[inherit] w-[inherit] flex-col bg-neutral-800 shadow-[10px_0_5px_#000] group-aria-expanded/header:shadow-[2px_0_5px_#000]">
@@ -73,12 +73,9 @@ export default function Default({ width }) {
       >
         <FontAwesomeIcon
           icon={faChevronRight}
-          className="y-1 group-aria-expanded/header:rotate-y-180 mx-2 my-1 text-center text-2xl transition-all delay-200 duration-500 ease-in-out [&>path]:fill-white"
+          className="y-1 mx-2 my-1 text-center text-2xl transition-all delay-200 duration-500 ease-in-out group-aria-expanded/header:rotate-y-180 [&>path]:fill-white"
         />
       </button>
     </div>
   );
 }
-Default.propTypes = {
-  width: PropTypes.string.isRequired,
-};

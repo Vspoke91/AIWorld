@@ -9,6 +9,9 @@ const rotateY = plugin(({ addUtilities }) => {
   });
 });
 
+//Multi-use variables
+const headerWidth = "188px";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -16,6 +19,12 @@ export default {
       50: "50%",
     },
     extend: {
+      width: {
+        custom_header: headerWidth,
+      },
+      margin: {
+        custom_header: headerWidth,
+      },
       keyframes: {
         sliderbg: {
           "0%": { backgroundPosition: "100%" },
