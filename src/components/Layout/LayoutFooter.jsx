@@ -71,7 +71,7 @@ export default function Default() {
           <span>&copy; 2023, </span>
           <a
             href="http://www.veltaproject.com"
-            className="text-blue-600 underline"
+            className="text-blue-600 hover:underline"
           >
             VeltaProject
           </a>
