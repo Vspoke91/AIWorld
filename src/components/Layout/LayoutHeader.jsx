@@ -19,6 +19,7 @@ export default function Default() {
         <Link
           to="/"
           className="list-button group flex flex-col items-center px-0 pb-0 pt-2 font-medium"
+          title="Go to Home Page"
         >
           <img
             className="h-[75px] w-[75px]"
