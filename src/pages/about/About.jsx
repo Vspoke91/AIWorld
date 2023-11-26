@@ -1,93 +1,127 @@
-import { CopySVG } from "../../assets/CustomIcons";
-import { useRef } from "react";
+// Icon imports
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInstagram,
+  faXTwitter,
+  faGithub,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faEnvelope,
+  faCircleArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
+
+// React imports
+import { Link } from "react-router-dom";
 
 function About() {
-  const companyEmail = "aiworld@veltaproject.com";
-  const copyButtonRef = useRef(0);
-  const copyTextRef = useRef(0);
-
-  const CopyEmailClickHandler = () => {
-    navigator.clipboard.writeText(companyEmail);
-
-    const classNameHolder = copyButtonRef.current.className;
-    const textHolder = copyTextRef.current.innerText;
-
-    copyButtonRef.current.className += " copied";
-    copyTextRef.current.innerText = "Copied!";
-
-    setTimeout(() => {
-      copyButtonRef.current.className = classNameHolder;
-      copyTextRef.current.innerText = textHolder;
-    }, 2000);
-  };
-
   return (
     <>
-      <div id="MissionSection_About">
-        <div className="img-part">
-          <img className="frontSide" src="/img/logos/AI-World-Large.png" />
+      <div className="mx-auto mt-[50px] max-w-[800px] px-4">
+        <a
+          title="Go to Velta Project"
+          className="group mx-auto grid h-[250px] w-[250px] grid-cols-1 grid-rows-1"
+          href="https://veltaproject.com/"
+        >
           <img
-            className="backSide"
-            src="https://veltaproject.com/VeltaLogo.png"
+            src="/img/logos/AI-World-Large.png"
+            className="h-inherit group-hover:rotate-y-90 rotate-y-0 group-focus-visible:rotate-y-90 rounded-full 
+            shadow-[0_0_11px_black] transition-all delay-200 duration-200 ease-linear
+            group-hover:delay-0 group-focus-visible:delay-0"
           />
-        </div>
-        <h1>About AI World</h1>
-        <p>
-          At AIWorld, we believe that artificial intelligence can make your life
-          easier, smarter, and more fun. That’s why we created a platform that
-          connects you with the best AI-powered websites for your personal,
-          academic, and professional needs. Whether you want to find a new
-          recipe, write an essay, or design a logo, we have the right AI tool
-          for you. <br />
-          <br />
-          AIWorld is your gateway to the world of artificial intelligence. Our
-          mission is to democratize access to artificial intelligence and
-          empower everyone to benefit from its potential. We value innovation,
-          creativity, and diversity, and we strive to provide a safe and
-          friendly environment for our users and creators. AIWorld is more than
-          just a website, it’s a community of AI enthusiasts and learners.
+          <img
+            src="https://veltaproject.com/VeltaLogo.png"
+            className="h-inherit rotate-y-90 group-hover:rotate-y-0 group-focus-visible:rotate-y-0 rounded-full bg-black 
+            shadow-[0_0_11px_black] transition-all delay-0 duration-200 ease-linear
+            group-hover:delay-200 group-focus-visible:delay-200"
+          />
+        </a>
+        <h1 className="mt-4 text-center font-mono text-2xl">
+          Stay Connected with AI!
+        </h1>
+        <p className="mt-2">
+          At AIWorld, we believe that&nbsp;
+          <strong>
+            artificial intelligence can make your life easier, smarter, and more
+            fun.
+          </strong>
+          &nbsp;That&apos;s why we created a platform that connects you with the
+          best AI-powered websites for your personal, academic, and professional
+          needs. Whether you want to find a new recipe, write an essay, or
+          design a logo, <strong>we have the right AI tool for you.</strong>
         </p>
       </div>
 
-      <div id="MediaSection_About">
-        <h2>Social Media</h2>
-        <span>check our latest news!</span>
-        <div>
-          <a
-            href="https://instagram.com/veltaproject?utm_source=qr&igshid=ZDc4ODBmNjlmNQ%3D%3D"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src="/img/media/Instagram.svg" />
-          </a>
-          <a
-            href="https://github.com/Vspoke91/AIWorld#readme"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src="/img/media/Github.svg" />
-          </a>
+      <div className="mx-auto mt-10 flex max-w-[800px] px-4 [@media(max-width:700px)]:flex-col [@media(max-width:700px)]:gap-2">
+        <div className="flex-1">
+          <h2 className="mb-1 text-lg font-bold">Check our latest news!</h2>
+          <ul className="flex">
+            <li title="Instagram">
+              <a href="https://www.instagram.com/veltaproject/">
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  className="text-4xl transition-all hover:scale-110"
+                />
+              </a>
+            </li>
+            <li title="Twitter">
+              <a href="https://twitter.com/veltaproject">
+                <FontAwesomeIcon
+                  icon={faXTwitter}
+                  className="text-4xl transition-all hover:scale-110"
+                />
+              </a>
+            </li>
+            <li title="Github">
+              <a href="https://github.com/veltaproject">
+                <FontAwesomeIcon
+                  icon={faGithub}
+                  className="text-4xl transition-all hover:scale-110"
+                />
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="flex-1">
+          <h2 className="text-lg font-bold">Open Source</h2>
+          <p className="text-sm">
+            AIWorld is an open-source project. If you want to contribute, check
+            out our&nbsp;
+            <a
+              href="https://github.com/Vspoke91/AIWorld"
+              className="text-blue-600 hover:underline"
+            >
+              GitHub repository
+            </a>
+            .
+          </p>
         </div>
       </div>
 
-      <div id="ContactSection_About">
-        <h2>Contact Us</h2>
-        <span>any questions? ask us!</span>
-        <div>
-          <a className="email" href={`mailto:${companyEmail}`}>
-            E-mail: <span>{companyEmail}</span>
-          </a>
-          <button
-            ref={copyButtonRef}
-            className="copyButton"
-            onClick={CopyEmailClickHandler}
-          >
-            <span ref={copyTextRef} id="copyTextButton">
-              Copy
-            </span>
-            <CopySVG fill="#e3e3e3" />
-          </button>
-        </div>
+      <div className="mx-auto mb-10 mt-[50px] max-w-[800px] px-4">
+        <h2 className="text-lg font-bold">
+          Question or Feedback? let us know!
+        </h2>
+        <ul>
+          <li>
+            <a
+              href="mailto:aiworld@veltaproject.com?subject=Question/Feedback!"
+              className="flex w-fit items-center text-xl hover:underline"
+              title="Send Email"
+            >
+              <FontAwesomeIcon icon={faEnvelope} />
+              <span className="pl-2 text-base">aiworld@veltaproject.com</span>
+            </a>
+          </li>
+          <li className="mt-3">
+            <Link
+              to="/feedback"
+              className="palet-orange! rounded-xl px-2 py-1 text-white"
+            >
+              <span className="pr-2 font-bold">Go to feedback</span>
+              <FontAwesomeIcon icon={faCircleArrowRight} />
+            </Link>
+          </li>
+        </ul>
       </div>
     </>
   );
