@@ -12,7 +12,7 @@ export default function Default() {
 
   return (
     <div
-      className={`group/header peer/header w-custom_header fixed h-full -translate-x-full transition-all aria-expanded:translate-x-0`}
+      className={`group/header peer/header fixed h-full w-custom_header -translate-x-full transition-all aria-expanded:translate-x-0`}
       aria-expanded={ariaExpanded}
     >
       <header className="fixed z-[2] flex h-[inherit] w-[inherit] flex-col bg-neutral-800 shadow-[10px_0_5px_#000] group-aria-expanded/header:shadow-[2px_0_5px_#000]">
