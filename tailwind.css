@@ -8,8 +8,9 @@
   }
 
   * {
-    @apply text-[#dbdbdb] 
-    outline-2 outline-custom_colors_highlight focus-visible:outline;
+    @apply text-[#dbdbdb]
+    outline-2 outline-custom_colors_highlight focus-visible:outline
+    [&:-moz-focusring]:outline-2 [&:-moz-focusring]:outline-custom_colors_highlight;
   }
 }
 
