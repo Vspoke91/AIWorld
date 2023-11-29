@@ -24,15 +24,15 @@ function About() {
         >
           <img
             src="/img/logos/AI-World-Large.png"
-            className="h-inherit group-hover:rotate-y-90 rotate-y-0 group-focus-visible:rotate-y-90 rounded-full 
-            shadow-[0_0_11px_black] transition-all delay-200 duration-200 ease-linear
-            group-hover:delay-0 group-focus-visible:delay-0"
+            className="h-inherit rounded-full shadow-[0_0_11px_black] transition-all delay-200 
+            duration-200 ease-linear rotate-y-0 group-hover:delay-0 group-hover:rotate-y-90
+            group-focus-visible:delay-0 group-focus-visible:rotate-y-90"
           />
           <img
             src="https://veltaproject.com/VeltaLogo.png"
-            className="h-inherit rotate-y-90 group-hover:rotate-y-0 group-focus-visible:rotate-y-0 rounded-full bg-black 
-            shadow-[0_0_11px_black] transition-all delay-0 duration-200 ease-linear
-            group-hover:delay-200 group-focus-visible:delay-200"
+            className="h-inherit rounded-full bg-black shadow-[0_0_11px_black] transition-all delay-0 
+            duration-200 ease-linear rotate-y-90 group-hover:delay-200 group-hover:rotate-y-0
+            group-focus-visible:delay-200 group-focus-visible:rotate-y-0"
           />
         </a>
         <h1 className="mt-4 text-center font-mono text-2xl">
@@ -102,13 +102,16 @@ function About() {
           Question or Feedback? let us know!
         </h2>
         <ul>
-          <li>
+          <li className="group">
             <a
               href="mailto:aiworld@veltaproject.com?subject=Question/Feedback!"
               className="flex w-fit items-center text-xl hover:underline"
               title="Send Email"
             >
-              <FontAwesomeIcon icon={faEnvelope} />
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                className="group-hover:scale-110"
+              />
               <span className="pl-2 text-base">aiworld@veltaproject.com</span>
             </a>
           </li>
