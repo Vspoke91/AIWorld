@@ -1,6 +1,6 @@
 //styles imports
 import { useRef, useState, useEffect } from "react";
-import { default as database } from "../../assets/database/firebase";
+import { default as database } from "@Data/firebase";
 
 function Feedback() {
   const [feedbackRenderElement, setFeedbackRenderElement] = useState(<></>);

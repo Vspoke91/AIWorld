@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FilterSVG, ExitSVG } from "../../assets/CustomIcons";
 import PropTypes from "prop-types";
-import { default as database } from "../../assets/database/firebase";
+import { default as database } from "@Data/firebase";
 
 function Search() {
   //useState for sorting names that will be use to create buttons and change main when filterting

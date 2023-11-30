@@ -7,10 +7,7 @@ import {
   useImperativeHandle,
 } from "react";
 import PropTypes from "prop-types";
-import {
-  default as database,
-  authentication,
-} from "@/src/assets/database/firebase";
+import { default as database, authentication } from "@Data/firebase";
 import {
   ModalDeleteButton,
   ModalMessagePopup,
