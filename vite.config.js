@@ -8,6 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve("./"),
+      "@Comp": path.resolve("./src/components"),
+      "@Data": path.resolve("./src/data"),
     },
   },
 });
