@@ -15,6 +15,19 @@ const rotateY = plugin(({ addUtilities }) => {
   });
 });
 
+const scrollHide = plugin(({ addUtilities }) => {
+  addUtilities({
+    ".scroll-hide": {
+      "-ms-overflow-style": "none" /* IE and Edge */,
+      "scrollbar-width": "none" /* Firefox */,
+    },
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    ".scroll-hide::-webkit-scrollbar": {
+      display: "none",
+    },
+  });
+});
+
 //Multi-use variables
 const headerWidth = "188px";
 
@@ -49,5 +62,5 @@ export default {
       },
     },
   },
-  plugins: [rotateY],
+  plugins: [rotateY, scrollHide],
 };
