@@ -1,9 +1,9 @@
-//styles imports
+// React imports
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
-
-import { default as database } from "../../assets/database/firebase";
+// Components imports
+import Featured from "./HomeFeatured";
 
 function Home() {
   return (
@@ -17,42 +17,6 @@ function Home() {
       </div>
       <div id="DevelopmentSection">
         <Development />
-      </div>
-    </>
-  );
-}
-
-function Featured() {
-  const [featuredWebsites, setFeaturedWebsites] = useState([]);
-
-  useEffect(() => {
-    (async function () {
-      setFeaturedWebsites(await database.getFeaturedWebsites());
-    })();
-  }, []);
-
-  const getWebsiteItemElement = (item, index) => {
-    return (
-      <div key={index} className="item">
-        <a href={item.webLink} target="_black">
-          <img src={item.logoUrl} />
-          <h3 className="title-part">{item.name}</h3>
-        </a>
-      </div>
-    );
-  };
-
-  return (
-    <>
-      <h2>Featured</h2>
-      <div>
-        {featuredWebsites.length > 0 ? (
-          featuredWebsites.map((item, index) =>
-            getWebsiteItemElement(item, index),
-          )
-        ) : (
-          <strong>Loading...</strong>
-        )}
       </div>
     </>
   );
