@@ -15,8 +15,9 @@ export default function Default() {
         Featured<span className="text-lg font-normal"> Quicklinks</span>
       </h2>
       <ul
-        className="scroll-hide flex h-[150px] items-center justify-start 
-      gap-4 overflow-y-hidden overflow-x-scroll border-y-2 border-black bg-neutral-800 px-4 shadow-[0_0_4px_5px_#3f3f3f]"
+        className="scroll-hide flex h-[150px] snap-x snap-mandatory scroll-p-4 
+      items-center justify-start gap-4 overflow-y-hidden overflow-x-scroll 
+      border-y-2 border-black bg-neutral-800 px-4 shadow-[0_0_4px_5px_#3f3f3f]"
       >
         <WebsitesList />
       </ul>
@@ -38,7 +39,7 @@ function WebsitesList() {
       <li
         key={index}
         title={`Go to ${item.name}`}
-        className="group box-content h-inherit flex-shrink-0 bg-neutral-900"
+        className="group box-content h-inherit flex-shrink-0 snap-start bg-neutral-900"
       >
         <a
           href={item.webLink}
