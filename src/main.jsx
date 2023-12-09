@@ -6,7 +6,7 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import "@/tailwind.css";
+import "./tailwind.css";
 import LayoutComponent from "./components/Layout/Layout";
 import HomePage from "./pages/home/Home";
 import SearchPage from "./pages/search/Search";
