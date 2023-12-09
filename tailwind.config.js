@@ -1,33 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import plugin from "tailwindcss/plugin";
 
-const rotateY = plugin(({ addUtilities }) => {
-  addUtilities({
-    ".rotate-y-180": {
-      transform: "rotateY(180deg)",
-    },
-    ".rotate-y-90": {
-      transform: "rotateY(90deg)",
-    },
-    ".rotate-y-0": {
-      transform: "rotateY(0deg)",
-    },
-  });
-});
-
-const scrollHide = plugin(({ addUtilities }) => {
-  addUtilities({
-    ".scroll-hide": {
-      "-ms-overflow-style": "none" /* IE and Edge */,
-      "scrollbar-width": "none" /* Firefox */,
-    },
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    ".scroll-hide::-webkit-scrollbar": {
-      display: "none",
-    },
-  });
-});
-
 //Multi-use variables
 const headerWidth = "188px";
 
@@ -62,5 +35,37 @@ export default {
       },
     },
   },
-  plugins: [rotateY, scrollHide],
+  plugins: [rotateY(), scrollHide()],
 };
+
+function scrollHide() {
+  return plugin(({ addUtilities }) => {
+    addUtilities({
+      /* Hide scrollbar for Chrome, Safari, Edge and Opera */
+      ".scroll-no-style::-webkit-scrollbar": {
+        display: "none",
+      },
+      /* Hide scrollbar for Firefox and IE */
+      ".scroll-no-style": {
+        "-ms-overflow-style": "none", // IE
+        "scrollbar-width": "none", // Firefox
+      },
+    });
+  });
+}
+
+function rotateY() {
+  return plugin(({ addUtilities }) => {
+    addUtilities({
+      ".rotate-y-180": {
+        transform: "rotateY(180deg)",
+      },
+      ".rotate-y-90": {
+        transform: "rotateY(90deg)",
+      },
+      ".rotate-y-0": {
+        transform: "rotateY(0deg)",
+      },
+    });
+  });
+}
