@@ -35,7 +35,7 @@ export default {
       },
     },
   },
-  plugins: [rotateY(), scrollHide(), perspective()],
+  plugins: [rotateY(), rotateX(), scrollHide(), perspective()],
 };
 
 function scrollHide() {
@@ -76,5 +76,37 @@ function perspective() {
     },
   );
 }
+
+function rotateX() {
+  return plugin(({ matchUtilities, theme }) => {
+    matchUtilities(
+      {
+        //adds rotate-x utility (ex: rotate-x-180),
+        //works with custom values (ex: rotate-x-[variable])
+        "rotate-x": (value) => ({
+          transform: `rotateX(${value})`,
+        }),
+      },
+      //adds values from theme "rotate" (default values of rotate in tailwind ex: rotate-180),
+      //and supports negative values (ex: -rotate-x-180)
+      { values: theme("rotate"), supportsNegativeValues: true },
+    );
+  });
+}
+
+function rotateY() {
+  return plugin(({ matchUtilities, theme }) => {
+    matchUtilities(
+      {
+        //adds rotate-y utility (ex: rotate-y-180),
+        //and works with custom values (ex: rotate-y-[variable])
+        "rotate-y": (value) => ({
+          transform: `rotateY(${value})`,
+        }),
+      },
+      //adds values from theme "rotate" (default values of rotate in tailwind ex: rotate-180),
+      //and supports negative values (ex: -rotate-y-180)
+      { values: theme("rotate"), supportsNegativeValues: true },
+    );
   });
 }
