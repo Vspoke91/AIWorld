@@ -33,7 +33,7 @@ export default function Default({ children }) {
     function createLiElement(
       index,
       element,
-      Styles = "h-inherit shrink-0 snap-start bg-neutral-900",
+      Styles = "h-inherit shrink-0 snap-start bg-neutral-900 min-w-[150px]",
     ) {
       return (
         <li key={index} className={Styles}>
