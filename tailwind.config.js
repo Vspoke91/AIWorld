@@ -35,7 +35,7 @@ export default {
       },
     },
   },
-  plugins: [rotateY(), scrollHide()],
+  plugins: [rotateY(), scrollHide(), perspective()],
 };
 
 function scrollHide() {
@@ -54,18 +54,27 @@ function scrollHide() {
   });
 }
 
-function rotateY() {
-  return plugin(({ addUtilities }) => {
-    addUtilities({
-      ".rotate-y-180": {
-        transform: "rotateY(180deg)",
+function perspective() {
+  return plugin(
+    ({ matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          perspective: (value) => ({
+            perspective: value,
+          }),
+        },
+        { values: theme("perspective") },
+      );
+    },
+    {
+      theme: {
+        perspective: {
+          none: "none",
+          "50em": "50em",
+        },
       },
-      ".rotate-y-90": {
-        transform: "rotateY(90deg)",
-      },
-      ".rotate-y-0": {
-        transform: "rotateY(0deg)",
-      },
-    });
+    },
+  );
+}
   });
 }
