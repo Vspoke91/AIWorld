@@ -15,6 +15,7 @@ export default {
         inherit: "inherit",
       },
       width: {
+        inherit: "inherit",
         custom_header: headerWidth,
       },
       margin: {
@@ -25,6 +26,13 @@ export default {
           "0%": { backgroundPosition: "100%" },
           "100%": { backgroundPosition: "0%" },
         },
+        rocketRightOutIn: {
+          "30%": { transform: "translateX(10px)", opacity: 0 },
+          "31%": { transform: "translateX(-10px)", opacity: 0 },
+        },
+      },
+      animation: {
+        rocketRightOutIn: "rocketRightOutIn 1s ease-in-out 1",
       },
       colors: {
         custom_colors_highlight: "#F59E0B",
