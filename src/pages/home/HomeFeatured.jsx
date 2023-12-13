@@ -33,6 +33,7 @@ function WebsitesList() {
   }, []);
 
   function createAElement(item, index) {
+    let imgLoaded = false;
     return (
       <a
         key={index + item.name}
@@ -41,9 +42,18 @@ function WebsitesList() {
         title={`Go to ${item.name}`}
         className="group z-0 grid h-inherit select-none grid-cols-1 grid-rows-1 outline-none"
       >
+        {!imgLoaded && (
+          <span className="z-0 col-[1] row-[1] place-self-center self-center px-3 font-bold">
+            Loading...
+          </span>
+        )}
         <img
           src={item.logoUrl}
           className="pointer-events-none z-0 col-[1] row-[1] mx-auto h-inherit scale-90 transition-all  group-hover:scale-100 group-focus-visible:scale-100"
+          alt={item.name}
+          onLoad={() => {
+            imgLoaded = true;
+          }}
         />
         <h3 className="font-xl z-[1] col-[1] row-[1] self-end bg-[#00000089] py-1 text-center text-xl font-bold transition-all group-hover:text-orange-400 group-focus-visible:text-orange-400">
           {item.name}
