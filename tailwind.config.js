@@ -78,7 +78,7 @@ function perspective() {
       theme: {
         perspective: {
           none: "none",
-          "50em": "50em",
+          50: "50em",
         },
       },
     },
