@@ -79,11 +79,11 @@ function checkFont(line) {
             index + 1 === boldWordsArray.length && splitedArray[index + 1];
 
           return (
-            <>
+            <React.Fragment key={index}>
               {beforeBoldText}
               {boldElement}
               {lastText}
-            </>
+            </React.Fragment>
           );
         })}
       </>
