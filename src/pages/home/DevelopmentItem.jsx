@@ -27,7 +27,7 @@ export default function Default({ infoObject }) {
   ];
 
   const optionsAnimate = {
-    duration: 500, // Animation duration in milliseconds
+    duration: 200, // Animation duration in milliseconds
     easing: "ease-in-out", // Easing function
     fill: "forwards", // Determines what values are applied by the end of the animation
     iterations: 1, // Number of times the animation should repeat
