@@ -48,60 +48,87 @@ export default function Default({ mdText }) {
 }
 
 function formatTextWithTags(line) {
-  const fonts = {
+    const tags = {
     bold: {
-      regex: /\*\*(.*?)\*\*/g,
-      element: function (text) {
-        return <strong>{text}</strong>;
+        regex: /(\*\*.+?\*\*)/g,
+        match: function (text) {
+          return this.regex.test(text);
       },
-      replace: function (text) {
-        return text.replace(/\*\*/g, (_, capturedText) => {
-          return <strong>{capturedText}</strong>;
-        });
+        clean: function (text) {
+          return text.replace(/\*\*/g, "");
+        },
+        element: function (text, index) {
+          return <strong key={index}>{text}</strong>;
       },
     },
-  };
+      link: {
+        regex: /(https?:\/\/[^\s]*(?<!\*)\b)/g,
+        match: function (text) {
+          return text.match(this.regex);
+        },
+        element: function (text, index) {
+          return (
+            <a key={index} href={text} className={linkStyle}>
+              {text}
+            </a>
+          );
+        },
+      },
+    };
 
-  if (line.match(fonts.bold.regex)) {
-    const boldWordsArray = [];
+    const formatedArray = [];
 
-    /** split the line by taking out bolded words and pushing them to boldWordsArray
-     *  exp:
-     *  splitedArray = "This is a **bold** text" => ["This is a "," text"]
-     *  boldWordsArray = ["bold"]
-     */
-    const splitedArray = line
-      //reaplce **bold** words with ****
-      .replace(fonts.bold.regex, (_, capturedText) => {
-        boldWordsArray.push(capturedText);
-        return "****";
-      })
-      //split the string with ****
-      .split("****");
+    // Main loop to handle line
+    for (const text of line.split(tags.bold.regex)) {
+      handleText(text);
+    }
+
+    // Main function to handle each text
+    function handleText(text) {
+      let textFragment = null;
+
+      if (tags.bold.match(text)) {
+        textFragment = handleBoldText(text);
+      } else if (tags.link.match(text)) {
+        textFragment = handleLinkText(text);
+      } else {
+        textFragment = text;
+      }
+      formatedArray.push(textFragment);
+    }
+
+    // Function to handle bold text
+    function handleBoldText(text) {
+      let cleanText = tags.bold.clean(text);
+
+      //if link is matched in cleanText, create a link with cleanText
+      if (tags.link.match(cleanText)) {
+        cleanText = tags.link.element(cleanText);
+      }
+
+      return tags.bold.element(cleanText);
+    }
+
+    // Function to handle link text
+    function handleLinkText(textFragment) {
+      let refragmentedText = [];
+
+      //textFragment gets refragmented to replace links with link elements
+
+      textFragment.split(tags.link.regex).forEach((text, index) => {
+        if (tags.link.match(text)) {
+          refragmentedText.push(tags.link.element(text, index));
+        } else {
+          refragmentedText.push(text);
+        }
+      });
+      return refragmentedText;
+    }
 
     return (
       <>
-        {boldWordsArray.map((word, index) => {
-          //get the text before the bold word (if line starts with a bold word, it will be an empty string)
-          const beforeBoldText = splitedArray[index];
-          //create the bold element
-          const boldElement = <strong>{word}</strong>;
-
-          /** get the text after the bold word if it's the last bold word in the line
-           *  exp:
-           *  "This is a **bold** text"
-           *   lastText = " text"
-           */
-          const lastText =
-            index + 1 === boldWordsArray.length && splitedArray[index + 1];
-
-          return (
-            <React.Fragment key={index}>
-              {beforeBoldText}
-              {boldElement}
-              {lastText}
-            </React.Fragment>
-          );
+        {formatedArray.map((item, index) => {
+          return <React.Fragment key={index}>{item}</React.Fragment>;
         })}
       </>
     );
