@@ -35,9 +35,9 @@ export default function Default({
           return text.replace(this.regex, "$1");
         },
         element: (text, index) => (
-          <p key={index} className={listStyle}>
+          <li key={index} className={listStyle}>
             {text}
-          </p>
+          </li>
         ),
       },
       br: {
@@ -54,19 +54,41 @@ export default function Default({
         ),
       },
     };
+
+    const ulArray = [];
     return mdTextArray.map((line, index) => {
       //loop through mdObject to find a match
       for (let key in mdObject) {
+        let element = null;
+
         if (mdObject[key].match(line)) {
           //if mdObject[key].clean is undefined, it will return the line as is else it will return the clean line
           const cleanLine = mdObject[key].clean
             ? mdObject[key].clean(line)
             : line;
 
-          return mdObject[key].element(
+          element = mdObject[key].element(
             formatTextWithTags(cleanLine),
             `${key}-${index}`,
           );
+
+          //if key is li, push element to ulArray
+          if (key === "li") {
+            ulArray.push(element);
+            return null;
+          }
+          //if key is something else, return ulArray and element to finish the list
+          else if (ulArray.length) {
+            //make a copy of ulArray and empty ulArray
+            const copyUlArray = [...ulArray];
+            ulArray.length = 0;
+
+            //return ulArray and element
+            const ulElement = <ul key={`ul-${index}`}>{copyUlArray}</ul>;
+            return [ulElement, element];
+          }
+
+          return element;
         }
       }
     });
