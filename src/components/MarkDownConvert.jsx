@@ -1,66 +1,91 @@
 import React from "react";
 
-export default function Default({ mdText }) {
+export default function Default({
+  mdText,
+  headerTwoStyle = "text-xl font-bold",
+  listStyle = "",
+  linkStyle = "underline",
+}) {
   const mdTextArray = mdText.split("\r\n");
-  const mdObject = {
-    "##": {
-      match: (text) => /^##.*/.test(text),
-      element: (text, index) => (
-        <p key={index} className="text-xl font-bold">
-          {text.replace(/^##/, "")}
-        </p>
-      ),
-    },
-    li: {
-      match: (text) => /^\* |\+ /.test(text),
-      element: (text, index) => (
-        <p key={index} className="text-base">
-          {text.replace(/^\* |\+ /, "")}
-        </p>
-      ),
-    },
-    br: {
-      match: (text) => !text.length,
-      element: (_, index) => <br key={index} />,
-    },
-    p: {
-      match: () => true,
-      element: (text, index) => (
-        <p key={index} className="text-base">
-          {text}
-        </p>
-      ),
-    },
-  };
 
-  const htmlArray = mdTextArray.map((line, index) => {
-    for (let key in mdObject) {
-      if (mdObject[key].match(line)) {
-        return mdObject[key].element(
-          formatTextWithTags(line),
-          `${key}-${index}`,
-        );
+  function formatMDText(mdTextArray) {
+    const mdObject = {
+      "##": {
+        regex: /^## (.*)/,
+        match: function (text) {
+          return this.regex.test(text);
+        },
+        clean: function (text) {
+          return text.replace(this.regex, "$1");
+        },
+        element: (text, index) => {
+          return (
+            <p key={index} className={headerTwoStyle}>
+              {text}
+            </p>
+          );
+        },
+      },
+      li: {
+        regex: /^\* |\+ (.*)/,
+        match: function (text) {
+          return this.regex.test(text);
+        },
+        clean: function (text) {
+          return text.replace(this.regex, "$1");
+        },
+        element: (text, index) => (
+          <p key={index} className={listStyle}>
+            {text}
+          </p>
+        ),
+      },
+      br: {
+        match: (text) => !text.length,
+        element: (_, index) => <br key={index} />,
+      },
+      //always the last to check
+      p: {
+        match: () => true,
+        element: (text, index) => (
+          <p key={index} className="text-base">
+            {text}
+          </p>
+        ),
+      },
+    };
+    return mdTextArray.map((line, index) => {
+      //loop through mdObject to find a match
+      for (let key in mdObject) {
+        if (mdObject[key].match(line)) {
+          //if mdObject[key].clean is undefined, it will return the line as is else it will return the clean line
+          const cleanLine = mdObject[key].clean
+            ? mdObject[key].clean(line)
+            : line;
+
+          return mdObject[key].element(
+            formatTextWithTags(cleanLine),
+            `${key}-${index}`,
+          );
+        }
       }
-    }
-  });
+    });
+  }
 
-  return htmlArray;
-}
-
-function formatTextWithTags(line) {
+  function formatTextWithTags(line) {
     const tags = {
-    bold: {
+      bold: {
         regex: /(\*\*.+?\*\*)/g,
         match: function (text) {
           return this.regex.test(text);
-      },
+        },
         clean: function (text) {
           return text.replace(/\*\*/g, "");
         },
         element: function (text, index) {
           return <strong key={index}>{text}</strong>;
+        },
       },
-    },
       link: {
         regex: /(https?:\/\/[^\s]*(?<!\*)\b)/g,
         match: function (text) {
@@ -134,5 +159,5 @@ function formatTextWithTags(line) {
     );
   }
 
-  return line;
+  return formatMDText(mdTextArray);
 }
