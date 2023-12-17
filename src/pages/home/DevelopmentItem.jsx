@@ -6,15 +6,11 @@ import MarkDownConvert from "@Comp/MarkDownConvert";
 export default function Default({ infoObject }) {
   return (
     <>
-      <li
-        role="button"
-        tabIndex="0"
-        className="rounded-lg border-2 border-black bg-neutral-900"
-      >
-        <div className="group relative flex items-center justify-center rounded-lg border-b-2 border-black bg-neutral-800 p-3">
-          <h3 className="text-2xl font-bold transition-all group-hover:text-red-600">
+      <li className="rounded-lg border-2 border-black bg-neutral-900">
+        <button className="group relative flex w-full items-center justify-center rounded-lg border-b-2 border-black bg-neutral-800 p-3">
+          <h3 className="text-2xl font-bold transition-all group-hover:text-red-600 group-focus-visible:text-red-600">
             {infoObject.name}{" "}
-            <span className="text-base font-normal text-neutral-400 transition-all group-hover:text-white">
+            <span className="text-base font-normal text-neutral-400 transition-all group-focus-within:text-white group-hover:text-white">
               {infoObject.tag_name}
             </span>
           </h3>
@@ -24,7 +20,7 @@ export default function Default({ infoObject }) {
               addSuffix: true,
             })}
           </p>
-        </div>
+        </button>
         <div className="w-full overflow-hidden px-3 transition-all">
           <p className="my-2">
             Released:{" "}
