@@ -1,36 +1,53 @@
+import React from "react";
+
 export default function Default({ mdText }) {
   const mdTextArray = mdText.split("\r\n");
-  const elements = {
-    "##": function (text) {
-      return <p className="text-xl font-bold">{text}</p>;
+  const mdObject = {
+    "##": {
+      match: (text) => /^##.*/.test(text),
+      element: (text, index) => (
+        <p key={index} className="text-xl font-bold">
+          {text.replace(/^##/, "")}
+        </p>
+      ),
     },
-    li: function (text) {
-      return <li className="text-sm">{text}</li>;
+    li: {
+      match: (text) => /^\* |\+ /.test(text),
+      element: (text, index) => (
+        <p key={index} className="text-base">
+          {text.replace(/^\* |\+ /, "")}
+        </p>
+      ),
     },
-    p: function (text) {
-      return <p className="text-base">{text}</p>;
+    br: {
+      match: (text) => !text.length,
+      element: (_, index) => <br key={index} />,
     },
-    br: <br />,
+    p: {
+      match: () => true,
+      element: (text, index) => (
+        <p key={index} className="text-base">
+          {text}
+        </p>
+      ),
+    },
   };
 
-  const htmlArray = mdTextArray.map((line) => {
-    if (line.match(/^##.*/)) {
-      const cleanText = line.replace(/^##/, "");
-      return elements["##"](checkFont(cleanText));
-    } else if (line.match(/^\* |\+ /)) {
-      const cleanText = line.replace(/^\* |\+ /, "");
-      return elements["li"](checkFont(cleanText));
-    } else if (!line.length) {
-      return elements["br"];
-    } else {
-      return elements["p"](checkFont(line));
+  const htmlArray = mdTextArray.map((line, index) => {
+    for (let key in mdObject) {
+      if (mdObject[key].match(line)) {
+        return mdObject[key].element(
+          formatTextWithTags(line),
+          `${key}-${index}`,
+        );
+      }
     }
   });
 
   return htmlArray;
 }
 
-function checkFont(line) {
+function formatTextWithTags(line) {
   const fonts = {
     bold: {
       regex: /\*\*(.*?)\*\*/g,
