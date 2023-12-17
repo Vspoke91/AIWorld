@@ -28,7 +28,11 @@ export default function Default({ infoObject }) {
           </p>
           <hr className="mx-auto border-neutral-700" />
           <div className="my-2">
-            <MarkDownConvert mdText={infoObject.body} />
+            <MarkDownConvert
+              mdText={infoObject.body}
+              linkStyle="underline hover:text-blue-500 transition-all focus-within:text-blue-500"
+              listStyle="text-base before:content-['-'] before:mr-2"
+            />
           </div>
         </div>
       </li>
