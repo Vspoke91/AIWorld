@@ -1,129 +1,24 @@
+// React Imports
 import { useEffect, useState } from "react";
-import { FilterSVG, ExitSVG } from "../../assets/CustomIcons";
 import PropTypes from "prop-types";
+// Icons Imports
+import { ExitSVG } from "../../assets/CustomIcons";
+// Data Imports
 import { default as database } from "@Data/firebase";
+// Components Imports
+import SortingBar from "./SearchFilterBar";
 
 function Search() {
-  //useState for sorting names that will be use to create buttons and change main when filterting
-  let [sortingButtonNames, setSortingButtonNames] = useState([]);
+  //updating this state will update the sorting buttons, sorting checkboxes and the cards
+  const [activeCategories, setActiveCategories] = useState([]);
 
   return (
     <>
-      <div className="qs__flex_column __flex_extend">
-        <div id="filter">
-          <Sorting
-            sortingButtonNames={sortingButtonNames}
-            setSortingButtonNames={setSortingButtonNames}
-          />
-        </div>
+      <SortingBar
+        activeCategoriesState={[activeCategories, setActiveCategories]}
+      />
 
-        <div id="cards">
-          <MainCards sortingButtonNames={sortingButtonNames} />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function Sorting({ sortingButtonNames, setSortingButtonNames }) {
-  //--DATABASE--//
-  let [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    (async function () {
-      setCategories(await database.getCategories());
-    })();
-  }, []);
-  //-|DATABASE|-//
-
-  //created buttons from sortingButtonNames array and return them as elements array for DOM
-  const renderSortingButtons = () => {
-    return sortingButtonNames.map((buttonName) => (
-      <button key={buttonName} onClick={buttonClickHandler}>
-        {buttonName}
-      </button>
-    ));
-  };
-
-  //create checkbox from categories(sitesDataBase) and return them as elements array for DOM
-  const renderSortingCheckBoxes = (categoriesArray) => {
-    return (
-      <>
-        {Object.keys(categoriesArray).map((key) => (
-          <label className="item" key={key}>
-            <input
-              type="checkbox"
-              name={categoriesArray[key].text} //name attribute is used to name buttons and to find input checkbox
-              onChange={checkboxChangeHandler}
-            />
-
-            {categoriesArray[key].text}
-          </label>
-        ))}
-      </>
-    );
-  };
-
-  //if button is click it will filter out its name out of sortingButtonNames so it will unrender, plus uncheck checkbox with the same name
-  const buttonClickHandler = (event) => {
-    const buttonName = event.target.innerText;
-    setSortingButtonNames(
-      sortingButtonNames.filter((item) => item !== buttonName),
-    );
-
-    /*find checkbox with the same name as button and uncheck it*/
-
-    const checkbox = document.querySelector(
-      `input[type="checkbox"][name="${buttonName}"]`,
-    );
-    if (checkbox) checkbox.checked = false;
-  };
-
-  //if checkbox is checked it will add a new String in sortingButtonNames, else if checkbox was uncheck it will filter out the button name from the sortingButtonNames.
-  const checkboxChangeHandler = (event) => {
-    //button name from checkbox name attribute
-    let newButtonName = event.target.name;
-
-    if (event.target.checked)
-      setSortingButtonNames([...sortingButtonNames, newButtonName]);
-    //filter returns items that are not equal to newButtonName
-    else
-      setSortingButtonNames(
-        sortingButtonNames.filter((item) => item !== newButtonName),
-      );
-  };
-
-  const clearClickHandler = () => {
-    Object.keys(categories).map((key) => {
-      const checkbox = document.querySelector(
-        `input[type="checkbox"][name="${categories[key].text}"]`,
-      );
-
-      if (checkbox) checkbox.checked = false;
-    });
-
-    setSortingButtonNames([]);
-  };
-
-  return (
-    <>
-      <div className="drop_down_div">
-        <span className="icon">
-          <FilterSVG className="icon" />
-          <span>Filter</span>
-        </span>
-        <div className="items-holder">
-          {categories.length ? (
-            renderSortingCheckBoxes(categories)
-          ) : (
-            <label className="item">Loading...</label>
-          )}
-        </div>
-      </div>
-      <button className="clear-button" onClick={clearClickHandler}>
-        Clear
-      </button>
-      <div className="sorting-buttons-holder">{renderSortingButtons()}</div>
+      <MainCards sortingButtonNames={activeCategories} />
     </>
   );
 }
@@ -300,11 +195,6 @@ function MainCards({ sortingButtonNames }) {
     </>
   );
 }
-
-Sorting.propTypes = {
-  sortingButtonNames: PropTypes.array.isRequired,
-  setSortingButtonNames: PropTypes.func.isRequired,
-};
 
 MainCards.propTypes = {
   sortingButtonNames: PropTypes.array.isRequired,
