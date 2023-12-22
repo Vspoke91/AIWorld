@@ -15,13 +15,16 @@ export default function Default({ activeCategoriesState }) {
 
   return (
     <>
-      <ul>
-        {activeCategories &&
+      <ul className="flex items-center px-2 py-1">
+        {activeCategories && activeCategories.length ? (
           activeCategories.map((category) => (
-            <button key={category} onClick={deactivateButtonHandler}>
-              {category}
-            </button>
-          ))}
+            <li key={category} className="h-full rounded-lg bg-slate-800">
+              <button onClick={deactivateButtonHandler}>{category}</button>
+            </li>
+          ))
+        ) : (
+          <li className="font-bold">No category selected!</li>
+        )}
       </ul>
     </>
   );
