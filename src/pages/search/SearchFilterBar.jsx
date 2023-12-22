@@ -16,7 +16,7 @@ export default function Default({ activeCategoriesState }) {
 
   return (
     <>
-      <div className="sticky top-[10px] mx-auto flex h-[50px] w-[80%] rounded-lg border-2 border-black bg-neutral-900">
+      <div className="sticky top-[10px] mx-auto my-[20px] flex h-[50px] w-[calc(100%-70px)] max-w-[1200px] rounded-lg border-2 border-black bg-neutral-900">
         <div className="group relative flex cursor-pointer items-center justify-center gap-1 rounded-l-lg bg-black px-3">
           <FontAwesomeIcon icon={faFilter} className="text-2xl" />
           <span className="text-lg font-bold">Filter</span>
@@ -29,6 +29,7 @@ export default function Default({ activeCategoriesState }) {
         >
           Clear
         </button>
+
         <SortingButtons activeCategoriesState={activeCategoriesState} />
       </div>
     </>
