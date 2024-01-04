@@ -16,9 +16,9 @@ export default function Default({ activeCategoriesState }) {
 
   return (
     <>
-      <div className="sticky top-[10px] mx-auto my-[20px] flex h-[50px] w-[calc(100%-70px)] max-w-[1200px] [&_*]:border-black">
+      <div className="sticky top-[10px] mx-auto my-[20px] flex h-[50px] w-[calc(100%-70px)] max-w-[1200px]">
         <div>
-          <button className="peer relative flex h-full items-center justify-center gap-1 rounded-l-lg border-2 bg-neutral-900 px-3">
+          <button className="peer relative flex h-full items-center justify-center gap-1 rounded-l-lg bg-neutral-900 px-3">
             <FontAwesomeIcon icon={faFilter} className="text-2xl" />
             <span className="text-lg font-bold">Filter</span>
           </button>
@@ -27,7 +27,7 @@ export default function Default({ activeCategoriesState }) {
         </div>
 
         <button
-          className="basic-button palet-red! rounded-none border-y-2"
+          className="basic-button palet-red! rounded-none border-y-2 border-neutral-900"
           onClick={clearActiveCategoriesHandler}
         >
           Clear
