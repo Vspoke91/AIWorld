@@ -15,17 +15,26 @@ export default function Default({ activeCategoriesState }) {
 
   return (
     <>
-      <ul className="flex items-center px-2 py-1">
-        {activeCategories && activeCategories.length ? (
-          activeCategories.map((category) => (
-            <li key={category} className="h-full rounded-lg bg-slate-800">
-              <button onClick={deactivateButtonHandler}>{category}</button>
+      <div className="flex h-fit min-h-full w-full gap-1 overflow-hidden rounded-r-lg border-y-2 border-r-2 border-neutral-900 bg-neutral-800 bg-opacity-75 px-2 py-1 hover:flex-wrap hover:bg-opacity-100">
+        <ul className="contents">
+          {activeCategories?.length ? (
+            activeCategories.map((category) => (
+              <li key={category} className="contents">
+                <button
+                  onClick={deactivateButtonHandler}
+                  className="h-inherit w-min whitespace-nowrap rounded-lg border border-neutral-500 bg-neutral-600 px-2 font-semibold transition-all hover:border-white hover:bg-red-700 hover:text-white"
+                >
+                  {category}
+                </button>
+              </li>
+            ))
+          ) : (
+            <li className="my-auto h-min w-min whitespace-nowrap font-bold">
+              No category selected!
             </li>
-          ))
-        ) : (
-          <li className="font-bold">No category selected!</li>
-        )}
-      </ul>
+          )}
+        </ul>
+      </div>
     </>
   );
 }
