@@ -35,7 +35,7 @@ export default function Default() {
           Explore AI Tools
           <FontAwesomeIcon
             icon={faChevronRight}
-            className="group-hover:animate-rocketRightOutIn ml-1 [&>*]:text-white"
+            className="ml-1 group-hover:animate-rocketRightOutIn [&>*]:text-white"
           />
         </Link>
       </div>
@@ -53,7 +53,7 @@ export default function Default() {
             src="https://firebasestorage.googleapis.com/v0/b/ai-world-eae98.appspot.com/o/Logos%2FBlueWillow.png?alt=media&token=da9910cf-6c39-4436-a72c-380411f9f46c"
           />
           <div
-            className={`${sideLinksStyles.textBoxDiv} group-hover:rotate-x-0 -rotate-x-90 group-focus-visible:rotate-x-0 origin-top`}
+            className={`${sideLinksStyles.textBoxDiv} origin-top -rotate-x-90 group-hover:rotate-x-0 group-focus-visible:rotate-x-0`}
           >
             <span className={sideLinksStyles.spanTag}>BlueWillow</span>
             <p className={sideLinksStyles.pTag}>
@@ -95,7 +95,7 @@ export default function Default() {
             src="https://firebasestorage.googleapis.com/v0/b/ai-world-eae98.appspot.com/o/Logos%2FPhind.png?alt=media&token=51c09dd3-22ea-4b62-b5b5-b121882a69ce"
           />
           <div
-            className={`${sideLinksStyles.textBoxDiv} rotate-x-90 group-hover:rotate-x-0 group-focus-visible:rotate-x-0 origin-bottom`}
+            className={`${sideLinksStyles.textBoxDiv} origin-bottom rotate-x-90 group-hover:rotate-x-0 group-focus-visible:rotate-x-0`}
           >
             <span className={sideLinksStyles.spanTag}>Phind</span>
             <p className={sideLinksStyles.pTag}>
