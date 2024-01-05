@@ -43,7 +43,7 @@ export default {
       },
     },
   },
-  plugins: [rotateY(), rotateX(), scrollHide(), perspective()],
+  plugins: [rotateY(), rotateX(), scrollHide(), perspective(), clipPath()],
 };
 
 function scrollHide() {
@@ -117,4 +117,31 @@ function rotateY() {
       { values: theme("rotate"), supportsNegativeValues: true },
     );
   });
+}
+
+function clipPath() {
+  return plugin(
+    ({ matchUtilities, theme }) => {
+      // Adds a new utility called clipPath
+      matchUtilities(
+        {
+          clipPath: (value) => ({
+            // clipPath-[value]
+            "clip-path": value, // css property and value
+          }),
+        },
+        { values: theme("clipPath") }, // theme values
+      );
+    },
+    {
+      // create a new theme object for clipPath values
+      theme: {
+        // add values to the clipPath property
+        clipPath: {
+          "top-flat": "polygon(0 0, 100% 0, 100% 0, 0 0)",
+          full: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+        },
+      },
+    },
+  );
 }
