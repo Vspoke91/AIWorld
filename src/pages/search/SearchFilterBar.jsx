@@ -27,6 +27,7 @@ export default function Default({ activeCategoriesState }) {
         </div>
 
         <button
+          title="Clear all filters"
           className="basic-button palet-red! rounded-none border-y-2 border-neutral-900"
           onClick={clearActiveCategoriesHandler}
         >

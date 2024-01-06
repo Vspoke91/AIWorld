@@ -21,6 +21,7 @@ export default function Default({ activeCategoriesState }) {
             activeCategories.map((category) => (
               <li key={category} className="contents">
                 <button
+                  title={`Remove ${category}`}
                   onClick={deactivateButtonHandler}
                   className="h-inherit w-min whitespace-nowrap rounded-lg border border-neutral-500 bg-neutral-600 px-2 font-semibold transition-all hover:border-white hover:bg-red-700 hover:text-white"
                 >
