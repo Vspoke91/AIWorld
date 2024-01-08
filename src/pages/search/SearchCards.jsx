@@ -29,7 +29,7 @@ export default function Default({ activeCategories }) {
 
   return (
     <>
-      <div className="mx-[30px] grid auto-rows-[350px] grid-cols-[repeat(auto-fit,300px)] justify-center gap-5">
+      <div className="z-[1] mx-[30px] mb-3 grid auto-rows-[350px] grid-cols-[repeat(auto-fit,300px)] justify-center">
         {websitesData?.length ? (
           websitesData.map((website, index) => {
             // #region Website Categories Sorte
@@ -41,23 +41,40 @@ export default function Default({ activeCategories }) {
             if (!hasEveryCategory(activeCategories, categories)) return;
             // #endregion
 
+            console.log(website.categories);
             // render the section
             return (
-              <section key={index} className="overflow-hidden bg-black">
+              <section
+                key={index}
+                className="flex scale-95 flex-col rounded-lg bg-black  transition-all hover:scale-100"
+              >
                 <h2 className="py-2 text-center text-2xl font-semibold">
                   {website.name}
                 </h2>
                 <img
                   src={website.logoUrl}
                   alt={`${website.name} Logo`}
-                  className="mx-auto h-[200px] w-auto"
+                  className="mx-auto my-2 h-[150px] w-auto"
                 />
-                <p>{website.description}</p>
-                <ul>
-                  {website.categories.map((category, index) => {
-                    return <li key={index}>{category.text}</li>;
-                  })}
+                <ul className="flex gap-1 overflow-auto bg-neutral-700 p-2">
+                  {website.categories.length ? (
+                    website.categories.map((category, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className="whitespace-nowrap rounded bg-neutral-400 px-1"
+                        >
+                          {category.text}
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <li className="rounded bg-red-600 px-1 text-white">
+                      No Category
+                    </li>
+                  )}
                 </ul>
+                <p className="box-content p-2">{website.description}</p>
               </section>
             );
           })
