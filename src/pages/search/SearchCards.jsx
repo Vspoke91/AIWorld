@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { default as database } from "@Data/firebase";
 // Components imports
 import LoadingIcon from "@Comp/LoadingIcon";
+import UlScroll from "./CardsCategoriesHorizontalScroll";
 
 export default function Default({ activeCategories }) {
   //--DATABASE--//
@@ -56,13 +57,13 @@ export default function Default({ activeCategories }) {
                   alt={`${website.name} Logo`}
                   className="mx-auto my-2 h-[150px] w-auto"
                 />
-                <ul className="flex gap-1 overflow-auto bg-neutral-700 p-2">
+                <UlScroll className="flex shrink-0 cursor-default gap-1 bg-white p-1">
                   {website.categories.length ? (
                     website.categories.map((category, index) => {
                       return (
                         <li
                           key={index}
-                          className="whitespace-nowrap rounded bg-neutral-400 px-1"
+                          className="whitespace-nowrap rounded bg-black px-2"
                         >
                           {category.text}
                         </li>
@@ -73,8 +74,10 @@ export default function Default({ activeCategories }) {
                       No Category
                     </li>
                   )}
-                </ul>
-                <p className="box-content p-2">{website.description}</p>
+                </UlScroll>
+                <p className="box-content overflow-hidden px-2">
+                  {website.description}
+                </p>
               </section>
             );
           })
